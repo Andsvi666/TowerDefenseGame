@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4pwfpo1punnh"]
+
+[ext_resource type="PackedScene" uid="uid://dek3h7xwe0vf6" path="res://scenes/main/tower/base/tower_base.tscn" id="1_vf88q"]
+[ext_resource type="Texture2D" uid="uid://bpbxognnpraoa" path="res://assets/tiles/tower/turret/turret_1.png" id="2_eqyrh"]
+[ext_resource type="Script" uid="uid://bih2tc1xqt4nd" path="res://scenes/main/tower/turret/tower_turret.gd" id="2_hnlru"]
+[ext_resource type="Texture2D" uid="uid://dwk6puacbawcv" path="res://assets/tiles/enemy/troop_3.png" id="4_2ug87"]
+
+[node name="TurretTower" instance=ExtResource("1_vf88q")]
+script = ExtResource("2_hnlru")
+stats = null
+firing_duration = 0.1
+
+[node name="TowerSprite" parent="." index="0"]
+texture = ExtResource("2_eqyrh")
+
+[node name="Muzzle" parent="." index="1"]
+position = Vector2(24, 0)
+
+[node name="FiringSprite" type="Sprite2D" parent="." index="2"]
+visible = false
+position = Vector2(44, 0)
+texture = ExtResource("4_2ug87")

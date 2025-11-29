@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dek3h7xwe0vf6"]
+
+[ext_resource type="Script" uid="uid://dpj4wbplbgd3g" path="res://scenes/main/tower/base/tower_base.gd" id="1_vs3l5"]
+
+[node name="BaseTower" type="Node2D"]
+script = ExtResource("1_vs3l5")
+
+[node name="TowerSprite" type="Sprite2D" parent="."]
+
+[node name="Muzzle" type="Marker2D" parent="."]

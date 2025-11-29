@@ -1,0 +1,18 @@
+[gd_scene load_steps=8 format=3 uid="uid://m3brq8u7uk53"]
+
+[ext_resource type="Script" uid="uid://bkbkhwlmon57c" path="res://scenes/main/managers/building/manager_building.gd" id="1_fys8a"]
+[ext_resource type="PackedScene" uid="uid://b4pwfpo1punnh" path="res://scenes/main/tower/turret/tower_turret.tscn" id="2_fwj2t"]
+[ext_resource type="PackedScene" uid="uid://2okrvhpsxuqg" path="res://scenes/main/tower/cannon/tower_cannon.tscn" id="3_dk3oo"]
+[ext_resource type="PackedScene" uid="uid://crhjpbylxkdr6" path="res://scenes/main/tower/missile/tower_missile.tscn" id="4_6viq7"]
+[ext_resource type="Resource" uid="uid://nou6tgdtapj" path="res://scenes/main/tower/turret/tiers/turret_tier_1.tres" id="6_rev2d"]
+[ext_resource type="Resource" uid="uid://cl7j2im4d4vl5" path="res://scenes/main/tower/cannon/tiers/cannon_tier_1.tres" id="7_xrric"]
+[ext_resource type="Resource" uid="uid://dsmsfmle133at" path="res://scenes/main/tower/missile/tiers/missile_tier_1.tres" id="8_8257e"]
+
+[node name="ManagerBuilder" type="Node"]
+script = ExtResource("1_fys8a")
+turret_tower_scene = ExtResource("2_fwj2t")
+cannon_tower_scene = ExtResource("3_dk3oo")
+missile_tower_scene = ExtResource("4_6viq7")
+turret_tier = ExtResource("6_rev2d")
+cannon_tier = ExtResource("7_xrric")
+missile_tier = ExtResource("8_8257e")

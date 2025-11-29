@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="TowerStats" load_steps=2 format=3 uid="uid://uf6hkh31tqug"]
+
+[ext_resource type="Script" uid="uid://biket7frvhfd4" path="res://scenes/main/tower/tower_stats.gd" id="1_v7354"]
+
+[resource]
+script = ExtResource("1_v7354")
+tower_name = "support"
+attack_cooldown = 10.0
+attack_damage = 10.0
+build_cost = 1200
+target_group = "base"
+tower_sprite = "repair/repair_2"
+firing_sprite = ""
+projectile_sprite = ""
+metadata/_custom_type_script = "uid://biket7frvhfd4"

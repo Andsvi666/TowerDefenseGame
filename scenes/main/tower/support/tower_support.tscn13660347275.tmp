@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjqch8oos3qv1"]
+
+[ext_resource type="PackedScene" uid="uid://dek3h7xwe0vf6" path="res://scenes/main/tower/base/tower_base.tscn" id="1_ykyha"]
+[ext_resource type="Script" uid="uid://cg6ta8kms41ek" path="res://scenes/main/tower/support/tower_support.gd" id="2_qmldi"]
+[ext_resource type="Script" uid="uid://bepfnxbj2gd6o" path="res://scenes/main/tower/support/activation_node.gd" id="3_tixls"]
+
+[node name="TowerSupport" instance=ExtResource("1_ykyha")]
+script = ExtResource("2_qmldi")
+stats = null
+firing_duration = null
+attack_range = null
+attack_cooldown = null
+attack_damage = null
+build_cost = null
+target_group = null
+tower_sprite = null
+firing_sprite = null
+projectile_sprite = null
+projectile_speed = null
+
+[node name="ActivationNode" type="Node2D" parent="." index="2"]
+script = ExtResource("3_tixls")

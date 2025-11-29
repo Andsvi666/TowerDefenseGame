@@ -1,0 +1,27 @@
+[gd_scene load_steps=8 format=3 uid="uid://e8vdfcw0vmuy"]
+
+[ext_resource type="PackedScene" uid="uid://ccqblom4kx2tw" path="res://scenes/main/enemy/base/enemy_base.tscn" id="1_2qydh"]
+[ext_resource type="Script" uid="uid://bqmm86k5shbti" path="res://scenes/main/enemy/troop/enemy_troop.gd" id="2_pc8kw"]
+[ext_resource type="Script" uid="uid://jv4co8imrtom" path="res://scenes/main/enemy/enemy_stats.gd" id="3_x8q6g"]
+[ext_resource type="Texture2D" uid="uid://lr3bngo1ue06" path="res://assets/tiles/enemy/troop_1.png" id="4_0okbo"]
+[ext_resource type="Script" uid="uid://di4c8xqkmtxwk" path="res://scenes/main/enemy/health_ring.gd" id="5_1fn2c"]
+[ext_resource type="Texture2D" uid="uid://shkjjry5nb4b" path="res://assets/tiles/tower/turret/turret_2_fire.png" id="6_0kvoq"]
+
+[sub_resource type="Resource" id="Resource_ek6sd"]
+script = ExtResource("3_x8q6g")
+metadata/_custom_type_script = "uid://jv4co8imrtom"
+
+[node name="EnemyTroop" instance=ExtResource("1_2qydh")]
+script = ExtResource("2_pc8kw")
+stats = SubResource("Resource_ek6sd")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+texture = ExtResource("4_0okbo")
+
+[node name="HealthRing" type="Node2D" parent="." index="1"]
+script = ExtResource("5_1fn2c")
+radius = 25.0
+
+[node name="FiringSprite" type="Sprite2D" parent="." index="2"]
+visible = false
+texture = ExtResource("6_0kvoq")

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="TowerStats" load_steps=2 format=3 uid="uid://dkk2eihdav2b0"]
+
+[ext_resource type="Script" uid="uid://biket7frvhfd4" path="res://scenes/main/tower/tower_stats.gd" id="1_nt65p"]
+
+[resource]
+script = ExtResource("1_nt65p")
+tower_name = "turret"
+attack_range = 400.0
+attack_cooldown = 0.1
+attack_damage = 5.0
+build_cost = 600
+target_group = "troop"
+tower_sprite = "turret/turret_2"
+firing_sprite = "turret/turret_2_fire"
+projectile_sprite = ""
+metadata/_custom_type_script = "uid://biket7frvhfd4"

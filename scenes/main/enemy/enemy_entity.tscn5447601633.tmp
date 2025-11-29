@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://bad26qi1cke4i"]
+
+[ext_resource type="Texture2D" uid="uid://lr3bngo1ue06" path="res://assets/tiles/towerDefense_tile245.png" id="1_e1dtm"]
+[ext_resource type="Script" uid="uid://c7jbnopnk044g" path="res://scenes/main/enemy/enemy_entity.gd" id="1_pn256"]
+[ext_resource type="Script" uid="uid://dccpwhnoino6g" path="res://scenes/main/enemy/health_ring.gd" id="3_05uvk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pn256"]
+radius = 14.035668
+
+[node name="EnemyEntity" type="CharacterBody2D"]
+script = ExtResource("1_pn256")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_e1dtm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pn256")
+
+[node name="HealthRing" type="Node2D" parent="."]
+script = ExtResource("3_05uvk")

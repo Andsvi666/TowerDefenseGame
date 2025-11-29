@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://2okrvhpsxuqg"]
+
+[ext_resource type="PackedScene" uid="uid://dek3h7xwe0vf6" path="res://scenes/main/tower/base/tower_base.tscn" id="1_b6sl7"]
+[ext_resource type="Script" uid="uid://d3qnhd21hbbt7" path="res://scenes/main/tower/cannon/tower_cannon.gd" id="2_2ksbk"]
+[ext_resource type="Texture2D" uid="uid://c52l6gecnvtr8" path="res://assets/tiles/towerDefense_tile249.png" id="2_6jipb"]
+
+[node name="TowerCannon" instance=ExtResource("1_b6sl7")]
+script = ExtResource("2_2ksbk")
+stats = null
+
+[node name="TowerSprite" parent="." index="0"]
+position = Vector2(11, 0)
+texture = ExtResource("2_6jipb")
+
+[node name="Muzzle" parent="." index="1"]
+position = Vector2(44, 0)

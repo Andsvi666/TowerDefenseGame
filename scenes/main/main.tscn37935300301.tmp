@@ -1,0 +1,42 @@
+[gd_scene load_steps=12 format=3 uid="uid://clo2c7k35rt4y"]
+
+[ext_resource type="Script" uid="uid://b6xh8j5cts5ei" path="res://scenes/main/main.gd" id="1_k2fmo"]
+[ext_resource type="PackedScene" uid="uid://ct2n61fd6c35b" path="res://scenes/main/hightlightTile/highlight_tile.tscn" id="2_iuonh"]
+[ext_resource type="PackedScene" uid="uid://bl1lb3lkoreol" path="res://scenes/main/tower/tower.tscn" id="2_l3cfh"]
+[ext_resource type="PackedScene" uid="uid://m3brq8u7uk53" path="res://scenes/main/managers/turrets/building_manager.tscn" id="3_6q06x"]
+[ext_resource type="PackedScene" uid="uid://erm4uid46xhb" path="res://scenes/main/managers/pathfinding/pathfinding_manager.tscn" id="4_hujxm"]
+[ext_resource type="PackedScene" uid="uid://bad26qi1cke4i" path="res://scenes/main/enemy/enemy_entity.tscn" id="5_yyfjg"]
+[ext_resource type="PackedScene" uid="uid://bq5ap2jwyqpdf" path="res://scenes/main/tileLayers/mapLayer/tile_map_layer.tscn" id="6_a8run"]
+[ext_resource type="PackedScene" uid="uid://dd28ngj54h6dy" path="res://scenes/main/managers/coins/coins_manager.tscn" id="6_ouso4"]
+[ext_resource type="PackedScene" uid="uid://dhft7bb1spaea" path="res://scenes/main/managers/spawner/enemy_spawner.tscn" id="6_ow5a4"]
+[ext_resource type="PackedScene" uid="uid://8wc8q4tjwfr7" path="res://scenes/main/UI/ui_root.tscn" id="9_b1x3f"]
+[ext_resource type="PackedScene" uid="uid://cejq2i0c5j78s" path="res://scenes/main/tileLayers/overlayLayer/tile_map_overlay.tscn" id="9_ouso4"]
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("building_manager")]
+script = ExtResource("1_k2fmo")
+tower_packed_scene = ExtResource("2_l3cfh")
+building_manager = NodePath("BuildingManager")
+
+[node name="BuildingManager" parent="." node_paths=PackedStringArray("tile_map_layer", "tile_map_overlay") instance=ExtResource("3_6q06x")]
+tile_map_layer = NodePath("../TileMapLayer")
+tile_map_overlay = NodePath("../TileMapOverlay")
+
+[node name="PathfindingManager" parent="." node_paths=PackedStringArray("tile_map_grid", "target_pos") instance=ExtResource("4_hujxm")]
+tile_map_grid = NodePath("../TileMapLayer")
+target_pos = NodePath("../TileMapLayer/EndPosition")
+p = ExtResource("5_yyfjg")
+
+[node name="CoinsManager" parent="." instance=ExtResource("6_ouso4")]
+
+[node name="TileMapLayer" parent="." instance=ExtResource("6_a8run")]
+
+[node name="HighlightTile" parent="." instance=ExtResource("2_iuonh")]
+
+[node name="EnemySpawner" parent="." node_paths=PackedStringArray("spawn_point") instance=ExtResource("6_ow5a4")]
+spawn_point = NodePath("../TileMapLayer/SpawnPosition")
+
+[node name="TileMapOverlay" parent="." instance=ExtResource("9_ouso4")]
+
+[node name="UIRoot" parent="." instance=ExtResource("9_b1x3f")]
+
+[editable path="TileMapLayer"]

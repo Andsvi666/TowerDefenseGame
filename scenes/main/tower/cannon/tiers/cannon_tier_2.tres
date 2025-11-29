@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="TowerStats" load_steps=3 format=3 uid="uid://c456g8gwl8t6t"]
+
+[ext_resource type="Script" uid="uid://biket7frvhfd4" path="res://scenes/main/tower/tower_stats.gd" id="1_7qjpw"]
+[ext_resource type="PackedScene" uid="uid://r4yj4st8d2k4" path="res://scenes/main/tower/cannon/shell.tscn" id="1_jrypc"]
+
+[resource]
+script = ExtResource("1_7qjpw")
+tower_name = "cannon"
+attack_range = 300.0
+attack_cooldown = 1.5
+attack_damage = 150.0
+build_cost = 1000
+projectile_speed = 200.0
+target_group = "tank"
+tower_sprite = "cannon/cannon_2"
+firing_sprite = ""
+projectile_sprite = "cannon/shell_2"
+projectile_scene = ExtResource("1_jrypc")
+metadata/_custom_type_script = "uid://biket7frvhfd4"

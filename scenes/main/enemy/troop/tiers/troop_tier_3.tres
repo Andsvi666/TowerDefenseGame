@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=2 format=3 uid="uid://dly53r3j4vj5e"]
+
+[ext_resource type="Script" uid="uid://jv4co8imrtom" path="res://scenes/main/enemy/enemy_stats.gd" id="1_n6w47"]
+
+[resource]
+script = ExtResource("1_n6w47")
+movement_speed = 200.0
+max_health = 100
+damage_cost = 50
+coin_reward = 75
+group = "troop"
+sprite_name = "troop_3"
+metadata/_custom_type_script = "uid://jv4co8imrtom"

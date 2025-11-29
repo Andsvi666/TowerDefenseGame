@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=2 format=3 uid="uid://cjpmbod0al0om"]
+
+[ext_resource type="Script" uid="uid://jv4co8imrtom" path="res://scenes/main/enemy/enemy_stats.gd" id="1_mcr8e"]
+
+[resource]
+script = ExtResource("1_mcr8e")
+movement_speed = 300.0
+max_health = 1000
+damage_cost = 150
+coin_reward = 400
+group = "plane"
+sprite_name = "plane_2"
+metadata/_custom_type_script = "uid://jv4co8imrtom"

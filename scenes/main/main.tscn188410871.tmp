@@ -1,0 +1,147 @@
+[gd_scene load_steps=23 format=3 uid="uid://clo2c7k35rt4y"]
+
+[ext_resource type="Script" uid="uid://b6xh8j5cts5ei" path="res://scenes/main/main.gd" id="1_k2fmo"]
+[ext_resource type="PackedScene" uid="uid://ct2n61fd6c35b" path="res://scenes/main/hightlightTile/highlight_tile.tscn" id="2_iuonh"]
+[ext_resource type="PackedScene" uid="uid://m3brq8u7uk53" path="res://scenes/main/managers/turrets/building_manager.tscn" id="3_6q06x"]
+[ext_resource type="PackedScene" uid="uid://b4pwfpo1punnh" path="res://scenes/main/tower/turret/tower_turret.tscn" id="3_blune"]
+[ext_resource type="PackedScene" uid="uid://2okrvhpsxuqg" path="res://scenes/main/tower/cannon/tower_cannon.tscn" id="4_7smn1"]
+[ext_resource type="PackedScene" uid="uid://erm4uid46xhb" path="res://scenes/main/managers/pathfinding/pathfinding_manager.tscn" id="4_hujxm"]
+[ext_resource type="Resource" uid="uid://nou6tgdtapj" path="res://scenes/main/tower/turret/tiers/turret_tier_1.tres" id="4_th5th"]
+[ext_resource type="PackedScene" uid="uid://crhjpbylxkdr6" path="res://scenes/main/tower/missile/tower_missile.tscn" id="5_hxu8e"]
+[ext_resource type="Texture2D" uid="uid://lr3bngo1ue06" path="res://assets/tiles/enemy/troop_1.png" id="5_ouso4"]
+[ext_resource type="PackedScene" uid="uid://bq5ap2jwyqpdf" path="res://scenes/main/tileLayers/mapLayer/tile_map_layer.tscn" id="6_a8run"]
+[ext_resource type="PackedScene" uid="uid://bjqch8oos3qv1" path="res://scenes/main/tower/repair/tower_repair.tscn" id="6_ou6is"]
+[ext_resource type="PackedScene" uid="uid://dd28ngj54h6dy" path="res://scenes/main/managers/coins/coins_manager.tscn" id="6_ouso4"]
+[ext_resource type="PackedScene" uid="uid://dhft7bb1spaea" path="res://scenes/main/managers/spawner/enemy_spawner.tscn" id="6_ow5a4"]
+[ext_resource type="Resource" uid="uid://cl7j2im4d4vl5" path="res://scenes/main/tower/cannon/tiers/cannon_tier_1.tres" id="6_raeie"]
+[ext_resource type="Resource" uid="uid://dsmsfmle133at" path="res://scenes/main/tower/missile/tiers/missile_tier_1.tres" id="8_nvumn"]
+[ext_resource type="PackedScene" uid="uid://8wc8q4tjwfr7" path="res://scenes/main/UI/ui_root.tscn" id="9_b1x3f"]
+[ext_resource type="PackedScene" uid="uid://cejq2i0c5j78s" path="res://scenes/main/tileLayers/overlayLayer/tile_map_overlay.tscn" id="9_ouso4"]
+[ext_resource type="Resource" uid="uid://cjh8ng5pmf0dm" path="res://scenes/main/tower/repair/tiers/repair_tier_1.tres" id="10_necax"]
+
+[sub_resource type="GDScript" id="GDScript_blune"]
+script/source = "class_name EnemyEntity
+extends CharacterBody2D
+
+@export var movement_speed : float = 200
+@export var damage_cost : int = 50
+@export var max_health: int = 100
+var current_health: int = max_health
+
+var path_array : Array[Vector2i] = []
+
+func _ready() -> void:
+	add_to_group(\"ENEMY_GROUP\")
+	if PathfindingManager.instance != null:
+		path_array = PathfindingManager.instance.get_valid_path(global_position / 64)
+	else:
+		push_warning(\"No PathfindingManager found in scene!\")
+
+func _process(delta: float) -> void:
+	get_path_to_position()
+	move_and_slide()
+	rotate_sprite_toward_velocity()
+
+func rotate_sprite_toward_velocity() -> void:
+	if velocity.length() > 0:
+		$Sprite2D.rotation = velocity.angle()
+
+func get_path_to_position() -> void:
+	if len(path_array) > 0:
+		var direction : Vector2 = global_position.direction_to(path_array[0])
+		velocity = direction * movement_speed
+		if global_position.distance_to(path_array[0]) <= 10:
+			path_array.remove_at(0)
+	else:
+		HealthMNG.take_damage(damage_cost)
+		queue_free() 
+
+func take_damage(amount: int) -> void:
+	current_health -= amount
+	current_health = clamp(current_health, 0, max_health)
+	$HealthRing.set_health_ratio(float(current_health) / float(max_health))
+	
+	if current_health <= 0:
+		die()
+
+func die() -> void:
+	CoinsMNG.add_coins(50)
+	queue_free()  
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pn256"]
+radius = 14.035668
+
+[sub_resource type="GDScript" id="GDScript_th5th"]
+script/source = "class_name HealthRing
+extends Node2D
+
+@export var radius: float = 24.0
+@export var thickness: float = 4.0
+var health_ratio: float = 1.0  # 1.0 = full, 0.0 = dead
+
+func _draw() -> void:
+	# Draw red background (lost health)
+	draw_arc(Vector2.ZERO, radius, 0, TAU, 32, Color.DARK_RED, thickness)
+	
+	# Draw green portion for current health
+	draw_arc(Vector2.ZERO, radius, 0, TAU * health_ratio, 32, Color.GREEN, thickness)
+
+func set_health_ratio(ratio: float) -> void:
+	health_ratio = clamp(ratio, 0.0, 1.0)
+	queue_redraw()  # redraw circle whenever health changes
+"
+
+[sub_resource type="PackedScene" id="PackedScene_7smn1"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"names": PackedStringArray("EnemyEntity", "script", "CharacterBody2D", "Sprite2D", "texture", "CollisionShape2D", "shape", "HealthRing", "Node2D"),
+"node_count": 4,
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 2, 0, -1, 1, 1, 0, 0, 0, 0, 3, 3, -1, 1, 4, 1, 0, 0, 0, 5, 5, -1, 1, 6, 2, 0, 0, 0, 8, 7, -1, 1, 1, 3, 0),
+"variants": [SubResource("GDScript_blune"), ExtResource("5_ouso4"), SubResource("CircleShape2D_pn256"), SubResource("GDScript_th5th")],
+"version": 3
+}
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_k2fmo")
+
+[node name="BuildingManager" parent="." node_paths=PackedStringArray("tile_map_layer", "tile_map_overlay") instance=ExtResource("3_6q06x")]
+tile_map_layer = NodePath("../TileMapLayer")
+tile_map_overlay = NodePath("../TileMapOverlay")
+turret_tower_scene = ExtResource("3_blune")
+cannon_tower_scene = ExtResource("4_7smn1")
+missile_tower_scene = ExtResource("5_hxu8e")
+repair_tower_scene = ExtResource("6_ou6is")
+turret_tier = ExtResource("4_th5th")
+cannon_tier = ExtResource("6_raeie")
+missile_tier = ExtResource("8_nvumn")
+repair_tier = ExtResource("10_necax")
+
+[node name="PathfindingManager" parent="." node_paths=PackedStringArray("tile_map_grid", "target_pos") instance=ExtResource("4_hujxm")]
+tile_map_grid = NodePath("../TileMapLayer")
+target_pos = NodePath("../TileMapLayer/EndPosition")
+p = SubResource("PackedScene_7smn1")
+
+[node name="CoinsManager" parent="." instance=ExtResource("6_ouso4")]
+
+[node name="EnemySpawner" parent="." node_paths=PackedStringArray("spawn_point") instance=ExtResource("6_ow5a4")]
+spawn_point = NodePath("../TileMapLayer/SpawnPosition")
+
+[node name="HighlightTile" parent="." instance=ExtResource("2_iuonh")]
+
+[node name="TileMapLayer" parent="." instance=ExtResource("6_a8run")]
+
+[node name="EndPosition" parent="TileMapLayer" index="0"]
+position = Vector2(1993, 414)
+
+[node name="SpawnPosition" parent="TileMapLayer" index="1"]
+position = Vector2(13, 416)
+
+[node name="TileMapOverlay" parent="." instance=ExtResource("9_ouso4")]
+
+[node name="UIRoot" parent="." instance=ExtResource("9_b1x3f")]
+
+[editable path="TileMapLayer"]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bptcfdb7qhlcf"]
+
+[ext_resource type="Script" uid="uid://bei0ag33t4iix" path="res://scenes/main/managers/waves/manager_waves.gd" id="1_dw86x"]
+
+[node name="ManagerWaves" type="Node"]
+script = ExtResource("1_dw86x")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6nyu1tldwesn"]
+
+[ext_resource type="Script" uid="uid://icudxubr5qle" path="res://scenes/main/managers/spawner/manager_spawner.gd" id="1_w1txr"]
+
+[node name="ManagerSpawner" type="Node"]
+script = ExtResource("1_w1txr")

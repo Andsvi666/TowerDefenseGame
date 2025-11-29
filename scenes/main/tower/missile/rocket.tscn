@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://py22q54uihae"]
+
+[ext_resource type="Script" uid="uid://c22em7hixx6t8" path="res://scenes/main/tower/missile/rocket.gd" id="1_62rlw"]
+[ext_resource type="Texture2D" uid="uid://buke2xlr0yv0i" path="res://assets/tiles/tower/missiles/rocket.png" id="2_62rlw"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h7nxw"]
+radius = 13.0
+height = 50.0
+
+[node name="Rocket" type="Area2D"]
+script = ExtResource("1_62rlw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_h7nxw")
+
+[node name="RocketSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_62rlw")

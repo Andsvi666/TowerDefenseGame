@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="TowerStats" load_steps=3 format=3 uid="uid://dsmsfmle133at"]
+
+[ext_resource type="PackedScene" uid="uid://py22q54uihae" path="res://scenes/main/tower/missile/rocket.tscn" id="1_o31qa"]
+[ext_resource type="Script" uid="uid://biket7frvhfd4" path="res://scenes/main/tower/tower_stats.gd" id="2_hvhle"]
+
+[resource]
+script = ExtResource("2_hvhle")
+tower_name = "missile"
+attack_range = 1200.0
+attack_cooldown = 2.0
+attack_damage = 50.0
+build_cost = 500
+projectile_speed = 500.0
+target_group = "plane"
+tower_sprite = "missiles/missile_1"
+firing_sprite = ""
+projectile_sprite = "missiles/rocket"
+projectile_scene = ExtResource("1_o31qa")
+metadata/_custom_type_script = "uid://biket7frvhfd4"

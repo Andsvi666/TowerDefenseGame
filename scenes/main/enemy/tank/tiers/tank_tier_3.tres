@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=2 format=3 uid="uid://b4wcfll42oxkg"]
+
+[ext_resource type="Script" uid="uid://jv4co8imrtom" path="res://scenes/main/enemy/enemy_stats.gd" id="1_xsv5w"]
+
+[resource]
+script = ExtResource("1_xsv5w")
+movement_speed = 60.0
+max_health = 2000
+damage_cost = 300
+coin_reward = 500
+group = "tank"
+sprite_name = "tank_2"
+metadata/_custom_type_script = "uid://jv4co8imrtom"

@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://nsdlepounpef"]
+
+[node name="EndPosition" type="Marker2D"]

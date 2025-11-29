@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://ipt7a8kpsu7v"]
+
+[ext_resource type="PackedScene" uid="uid://ccqblom4kx2tw" path="res://scenes/main/enemy/base/enemy_base.tscn" id="1_71bjp"]
+[ext_resource type="Script" uid="uid://bhhlse6yx5xtk" path="res://scenes/main/enemy/plane/enemy_plane.gd" id="2_lmaia"]
+[ext_resource type="Script" uid="uid://di4c8xqkmtxwk" path="res://scenes/main/enemy/health_ring.gd" id="3_wmln4"]
+[ext_resource type="Texture2D" uid="uid://dborkolfytfrg" path="res://assets/tiles/enemy/plane_1.png" id="4_2oq1i"]
+
+[node name="EnemyPlane" instance=ExtResource("1_71bjp")]
+script = ExtResource("2_lmaia")
+stats = null
+
+[node name="HealthRing" type="Node2D" parent="." index="0"]
+script = ExtResource("3_wmln4")
+radius = 40.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
+texture = ExtResource("4_2oq1i")

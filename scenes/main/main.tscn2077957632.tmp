@@ -1,0 +1,63 @@
+[gd_scene load_steps=19 format=3 uid="uid://clo2c7k35rt4y"]
+
+[ext_resource type="Script" uid="uid://b6xh8j5cts5ei" path="res://scenes/main/main.gd" id="1_k2fmo"]
+[ext_resource type="PackedScene" uid="uid://ct2n61fd6c35b" path="res://scenes/main/hightlightTile/highlight_tile.tscn" id="2_iuonh"]
+[ext_resource type="PackedScene" uid="uid://b4pwfpo1punnh" path="res://scenes/main/tower/turret/tower_turret.tscn" id="3_blune"]
+[ext_resource type="PackedScene" uid="uid://2okrvhpsxuqg" path="res://scenes/main/tower/cannon/tower_cannon.tscn" id="4_7smn1"]
+[ext_resource type="Script" uid="uid://bkbkhwlmon57c" path="res://scenes/main/managers/building/manager_building.gd" id="4_a8run"]
+[ext_resource type="PackedScene" uid="uid://erm4uid46xhb" path="res://scenes/main/managers/pathfinding/manager_pathfinding.tscn" id="4_hujxm"]
+[ext_resource type="Resource" uid="uid://nou6tgdtapj" path="res://scenes/main/tower/turret/tiers/turret_tier_1.tres" id="4_th5th"]
+[ext_resource type="PackedScene" uid="uid://crhjpbylxkdr6" path="res://scenes/main/tower/missile/tower_missile.tscn" id="5_hxu8e"]
+[ext_resource type="PackedScene" uid="uid://ck615snjmgs0o" path="res://scenes/main/managers/health/manager_health.tscn" id="5_ouso4"]
+[ext_resource type="PackedScene" uid="uid://bq5ap2jwyqpdf" path="res://scenes/main/tileLayers/mapLayer/tile_map_layer.tscn" id="6_a8run"]
+[ext_resource type="PackedScene" uid="uid://bjqch8oos3qv1" path="res://scenes/main/tower/repair/tower_repair.tscn" id="6_ou6is"]
+[ext_resource type="PackedScene" uid="uid://dd28ngj54h6dy" path="res://scenes/main/managers/coins/manager_coins.tscn" id="6_ouso4"]
+[ext_resource type="PackedScene" uid="uid://dhft7bb1spaea" path="res://scenes/main/managers/spawner/manager_spawner.tscn" id="6_ow5a4"]
+[ext_resource type="Resource" uid="uid://cl7j2im4d4vl5" path="res://scenes/main/tower/cannon/tiers/cannon_tier_1.tres" id="6_raeie"]
+[ext_resource type="Resource" uid="uid://dsmsfmle133at" path="res://scenes/main/tower/missile/tiers/missile_tier_1.tres" id="8_nvumn"]
+[ext_resource type="PackedScene" uid="uid://8wc8q4tjwfr7" path="res://scenes/main/UI/ui_root.tscn" id="9_b1x3f"]
+[ext_resource type="PackedScene" uid="uid://cejq2i0c5j78s" path="res://scenes/main/tileLayers/overlayLayer/tile_map_overlay.tscn" id="9_ouso4"]
+[ext_resource type="Resource" uid="uid://cjh8ng5pmf0dm" path="res://scenes/main/tower/repair/tiers/repair_tier_1.tres" id="10_necax"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_k2fmo")
+
+[node name="ManagerCoins" parent="." instance=ExtResource("6_ouso4")]
+
+[node name="ManagerSpawner" parent="." instance=ExtResource("6_ow5a4")]
+
+[node name="ManagerBuilding" type="Node" parent="." node_paths=PackedStringArray("tile_map_layer", "tile_map_overlay")]
+script = ExtResource("4_a8run")
+tile_map_layer = NodePath("../TileMapLayer")
+tile_map_overlay = NodePath("../TileMapOverlay")
+turret_tower_scene = ExtResource("3_blune")
+cannon_tower_scene = ExtResource("4_7smn1")
+missile_tower_scene = ExtResource("5_hxu8e")
+repair_tower_scene = ExtResource("6_ou6is")
+turret_tier = ExtResource("4_th5th")
+cannon_tier = ExtResource("6_raeie")
+missile_tier = ExtResource("8_nvumn")
+repair_tier = ExtResource("10_necax")
+metadata/_custom_type_script = "uid://bkbkhwlmon57c"
+
+[node name="ManagerHealth" parent="." instance=ExtResource("5_ouso4")]
+
+[node name="ManagerPathfinding" parent="." node_paths=PackedStringArray("tile_map_grid", "target_pos") instance=ExtResource("4_hujxm")]
+tile_map_grid = NodePath("../TileMapLayer")
+target_pos = NodePath("../TileMapLayer/EndPosition")
+
+[node name="HighlightTile" parent="." instance=ExtResource("2_iuonh")]
+
+[node name="TileMapLayer" parent="." instance=ExtResource("6_a8run")]
+
+[node name="EndPosition" parent="TileMapLayer" index="0"]
+position = Vector2(1993, 414)
+
+[node name="SpawnPosition" parent="TileMapLayer" index="1"]
+position = Vector2(13, 416)
+
+[node name="TileMapOverlay" parent="." instance=ExtResource("9_ouso4")]
+
+[node name="UIRoot" parent="." instance=ExtResource("9_b1x3f")]
+
+[editable path="TileMapLayer"]

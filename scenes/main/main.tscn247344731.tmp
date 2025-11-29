@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://clo2c7k35rt4y"]
+
+[ext_resource type="Script" uid="uid://b6xh8j5cts5ei" path="res://scenes/main/main.gd" id="1_k2fmo"]
+[ext_resource type="PackedScene" uid="uid://ct2n61fd6c35b" path="res://scenes/main/hightlightTile/highlight_tile.tscn" id="2_iuonh"]
+[ext_resource type="PackedScene" uid="uid://bq5ap2jwyqpdf" path="res://scenes/main/tileLayers/mapLayer/tile_map_layer.tscn" id="6_a8run"]
+[ext_resource type="PackedScene" uid="uid://8wc8q4tjwfr7" path="res://scenes/main/UI/ui_root.tscn" id="9_b1x3f"]
+[ext_resource type="PackedScene" uid="uid://cejq2i0c5j78s" path="res://scenes/main/tileLayers/overlayLayer/tile_map_overlay.tscn" id="9_ouso4"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_k2fmo")
+
+[node name="HighlightTile" parent="." instance=ExtResource("2_iuonh")]
+
+[node name="TileMapLayer" parent="." instance=ExtResource("6_a8run")]
+
+[node name="EndPosition" parent="TileMapLayer" index="0"]
+position = Vector2(1993, 414)
+
+[node name="SpawnPosition" parent="TileMapLayer" index="1"]
+position = Vector2(13, 416)
+
+[node name="TileMapOverlay" parent="." instance=ExtResource("9_ouso4")]
+
+[node name="UIRoot" parent="." instance=ExtResource("9_b1x3f")]
+
+[editable path="TileMapLayer"]
