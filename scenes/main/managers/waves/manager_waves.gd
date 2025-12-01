@@ -76,17 +76,27 @@ func _generate_waves() -> void:
 
 func return_next_wave_info() -> String:
 	if waves.size() <= current_wave_index:
-		return "There is no next wave"
+		return "No next wave"
 	
 	var next_wave: Array = waves[current_wave_index]
-	var output := "Next wave will spawn " + str(next_wave.size()) + " enemies:\n"
+	var counts := {}  # Dictionary to count enemies by type and tier
 	
-	for i in range(next_wave.size()):
-		var e: Dictionary = next_wave[i]
+	for e in next_wave:
 		var enemy_type: String = e["type"]
-		var tier: int = e["tier_index"]
-		var delay: float = e["spawn_delay"]
+		var tier: int = e["tier_index"] + 1  # make tier 1-based
+		var key = "%s tier %d" % [enemy_type.capitalize(), tier]
 		
-		output += "type: %s | tier: %d | spawning delay: %.2f\n" % [enemy_type, tier + 1, delay]
+		if not counts.has(key):
+			counts[key] = 0
+		counts[key] += 1
+	
+	# Build concise string
+	var output := ""
+	for key in counts.keys():
+		output += "%s: %d, " % [key, counts[key]]
+	
+	# Remove trailing comma and space
+	if output.length() > 2:
+		output = output.substr(0, output.length() - 2)
 	
 	return output

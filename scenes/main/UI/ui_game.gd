@@ -84,4 +84,4 @@ func _on_start_wave_button_pressed() -> void:
 	advice_button.disabled = true
 
 func _on_advice_button_pressed() -> void:
-	GameMan.collect_current_state_info()
+	GameMan.collect_ai_prompt()

@@ -176,6 +176,20 @@ func place_tower(cell_position: Vector2i, tower_scene: PackedScene, tower_stats:
 	used_tiles.append(cell_position)
 	towers_by_cell[cell_position] = tower
 
+	# Update Game Manager counts
+	if tower_stats.tower_name == "turret":
+		GameMan.built_towers["turret_tier_1"] += 1
+		GameMan.available_tiles_for_towers["turret_tiles"] -= 1
+	elif tower_stats.tower_name == "cannon":
+		GameMan.built_towers["cannon_tier_1"] += 1
+		GameMan.available_tiles_for_towers["cannon_tiles"] -= 1
+	elif tower_stats.tower_name == "missile":
+		GameMan.built_towers["missile_tier_1"] += 1
+		GameMan.available_tiles_for_towers["missile_tiles"] -= 1
+	elif tower_stats.tower_name == "support":
+		GameMan.built_towers["support_tier_1"] += 1
+		GameMan.available_tiles_for_towers["support_tiles"] -= 1
+
 	replace_tile_with_base(cell_position)
 
 # ==================================================================
@@ -202,6 +216,21 @@ func upgrade_tower(tower: TowerBase) -> void:
 		GameMan.show_floating_message("Not enough coins to upgrade " + tower_name + " tower!")
 		#print_debug("Not enough coins to upgrade " + tower_name)
 		return
+
+	# Update GameMan counts BEFORE applying new stats
+	match tower_name:
+		"turret":
+			GameMan.built_towers["turret_tier_1"] -= 1
+			GameMan.built_towers["turret_tier_2"] += 1
+		"cannon":
+			GameMan.built_towers["cannon_tier_1"] -= 1
+			GameMan.built_towers["cannon_tier_2"] += 1
+		"missile":
+			GameMan.built_towers["missile_tier_1"] -= 1
+			GameMan.built_towers["missile_tier_2"] += 1
+		"support":
+			GameMan.built_towers["support_tier_1"] -= 1
+			GameMan.built_towers["support_tier_2"] += 1
 
 	tower.stats = new_stats
 	tower.upgraded = true
