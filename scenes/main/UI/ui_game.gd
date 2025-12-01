@@ -42,6 +42,7 @@ func _on_wave_complete() -> void:
 	GameMan.stop_support_towers()
 	can_start_wave = true
 	start_wave_button.disabled = false
+	advice_button.disabled = false
 	show_wave_complete_message()
 
 func show_wave_complete_message() -> void:
@@ -80,6 +81,7 @@ func _on_start_wave_button_pressed() -> void:
 	WavesMan.start_next_wave()
 	can_start_wave = false
 	start_wave_button.disabled = true
+	advice_button.disabled = true
 
 func _on_advice_button_pressed() -> void:
-	pass
+	GameMan.collect_current_state_info()

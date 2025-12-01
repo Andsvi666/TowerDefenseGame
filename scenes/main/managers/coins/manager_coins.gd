@@ -1,7 +1,7 @@
 class_name ManagerCoins
 extends Node
 
-@export var starting_coins: int = 1000
+@export var starting_coins: int = 5000
 @onready var name_label: Label = get_node("/root/Main/UIRoot/TopBar/CoinLabel")
 
 signal update_label(sum: int, name_label: Label)

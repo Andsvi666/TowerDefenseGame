@@ -24,7 +24,7 @@ func show_floating_message(text: String) -> void:
 	msg.add_theme_font_size_override("font_size", 28)
 	msg.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	msg.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-
+	
 	# Add label under your UI root instead of the autoload
 	var ui_root = get_node_or_null("/root/Main/UIRoot")
 	if ui_root:
@@ -32,13 +32,23 @@ func show_floating_message(text: String) -> void:
 	else:
 		print_debug("Could not find UIRoot, adding to self")
 		add_child(msg)
-
+	
 	# Center the message on the screen
 	var screen_size = get_viewport().get_visible_rect().size
 	msg.global_position = screen_size / 2.0 + Vector2(-400, -100)
-
+	
 	# Animate upward + fade out
 	var tween = get_tree().create_tween()
 	tween.tween_property(msg, "position:y", msg.position.y - 150, 2)
 	tween.parallel().tween_property(msg, "modulate:a", 0.0, 1).set_delay(1)
 	tween.tween_callback(Callable(msg, "queue_free"))
+
+func collect_current_state_info() -> String:
+	var coins = CoinsMan.coins
+	var health = HealthMan.current_health
+	var next_wave = WavesMan.return_next_wave_info()
+	print("\n--- GAME STATE ---")
+	print("Coins:", coins)
+	print("Health:", health)
+	print("Next Wave:", next_wave)
+	return ""

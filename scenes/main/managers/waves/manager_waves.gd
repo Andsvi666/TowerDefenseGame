@@ -6,7 +6,6 @@ extends Node
 # --- Wave datasets ---
 var wave_1 := []
 var wave_2 := []
-var wave_3 := []
 
 var waves := []
 var current_wave_index := 0
@@ -73,4 +72,21 @@ func _generate_waves() -> void:
 		var tier = clamp(i / 5, 0, 3)
 		wave_2.append({"type": "TankEnemy", "tier_index": int(tier), "spawn_delay": 1.0})
 		
-	waves = [wave_1, wave_2, wave_3]
+	waves = [wave_1, wave_2]
+
+func return_next_wave_info() -> String:
+	if waves.size() <= current_wave_index:
+		return "There is no next wave"
+	
+	var next_wave: Array = waves[current_wave_index]
+	var output := "Next wave will spawn " + str(next_wave.size()) + " enemies:\n"
+	
+	for i in range(next_wave.size()):
+		var e: Dictionary = next_wave[i]
+		var enemy_type: String = e["type"]
+		var tier: int = e["tier_index"]
+		var delay: float = e["spawn_delay"]
+		
+		output += "type: %s | tier: %d | spawning delay: %.2f\n" % [enemy_type, tier + 1, delay]
+	
+	return output
