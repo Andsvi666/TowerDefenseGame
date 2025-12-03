@@ -129,11 +129,12 @@ func collect_ai_prompt() -> String:
 		]
 	
 	# Build AI prompt
-	var ai_prompt := "IMPORTANT: ONLY respond with ONE SHORT SENTENCE (max 200 characters). NO explanations or reasoning. JUST tell which tower(s) to build, dont use underscore in names just use spaces instead.\n"
+	var ai_prompt := "IMPORTANT: Respond must be up to 300 characters. NO explanations or reasoning. JUST tell which tower(s) to build, dont use underscore in names just use spaces instead.\n"
 	ai_prompt += "If coins >= 2000, include at least one support tower. You can suggest multiple tower types in the same sentence. \n" 
 	ai_prompt += "If user has enough towers for the next wave, respond with 'Save coins for upcoming waves.'\n"
-	ai_prompt += "format - Build [number of towers] [type] towers (tier [tier number]).'\n\n"
-
+	#ai_prompt += "format not explicit - Build/Upgrade to {dpending if tier 1 or tier 2} [number of towers] [type] towers (tier [tier number]) for [total coin price] coins,{if is need to build other type of towers repeat this as much needed} [number of towers] [type] towers (tier [tier number]) for [total coin price] coins.'\n"
+	ai_prompt += "random example - Build 3 cannon (tier 1) towers for 900 coins and upgrade them to tier 2 for 3000 coins, also build 2 missile (tier 1) towers for 3000 coins and upgrade them to tier 2 for 6000 coins\n\n"
+ 
 	ai_prompt += "RULES FOR RESPONSE:\n"
 	ai_prompt += "1. Towers only attack their target enemy type; support towers heal base = attack damage and generate coins = 10x attack damage.\n"
 	ai_prompt += "2. Killing enemies grants coins equal to their reward.\n"
