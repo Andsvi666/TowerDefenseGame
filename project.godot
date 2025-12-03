@@ -21,6 +21,7 @@ CoinsMan="*res://scenes/main/managers/coins/manager_coins.gd"
 HealthMan="*res://scenes/main/managers/health/manager_health.gd"
 GameMan="*res://scenes/main/managers/game/manager_game.gd"
 WavesMan="*res://scenes/main/managers/waves/manager_waves.gd"
+AiMan="*res://scenes/main/managers/AI/manager_ai.tscn"
 
 [display]
 

@@ -129,23 +129,26 @@ func collect_ai_prompt() -> String:
 		]
 	
 	# Build AI prompt
-	var ai_prompt := "Game status:\n"
-	ai_prompt += "Current coins: %d\nCurrent health: %d\nAlready built towers: %s\nAvailable tiles: %s\nNext wave: %s\n" % [coins, health, built_towers_info,available_tiles_info, next_wave]
-	ai_prompt += "Each tower stats: %s\n" % tower_stats_info
-	ai_prompt += "Each enemy stats: %s\n" % enemy_stats_info
-	ai_prompt += "RULES:\n"
+	var ai_prompt := "IMPORTANT: ONLY respond with ONE SHORT SENTENCE (max 200 characters). NO explanations or reasoning. JUST tell which tower(s) to build, dont use underscore in names just use spaces instead.\n"
+	ai_prompt += "If coins >= 2000, include at least one support tower. You can suggest multiple tower types in the same sentence. \n" 
+	ai_prompt += "If user has enough towers for the next wave, respond with 'Save coins for upcoming waves.'\n"
+	ai_prompt += "format - Build [number of towers] [type] towers (tier [tier number]).'\n\n"
+
+	ai_prompt += "RULES FOR RESPONSE:\n"
 	ai_prompt += "1. Towers only attack their target enemy type; support towers heal base = attack damage and generate coins = 10x attack damage.\n"
 	ai_prompt += "2. Killing enemies grants coins equal to their reward.\n"
 	ai_prompt += "3. Enemies spawn on intervals between 0.5 to 2 seconds.\n"
 	ai_prompt += "4. Turrets stay built through many waves; plan long-term.\n"
-	ai_prompt += "5. If coins >= 2000, prioritize building support towers.\n"
-	ai_prompt += "6. Prioritize survival first, then damage, then coin generation.\n"
-	ai_prompt += "7. Do not suggest building towers on types with 0 available tiles.\n"
-	ai_prompt += "8. Tier 1 towers can only be built on empty tiles; higher tiers can only be obtained by upgrading an already built lower tier.\n"
-	ai_prompt += "9. Step-by-step reasoning: first identify threats, then choose tower(s) to build.\n"
-	ai_prompt += "10. Give short advice for what to build to be ready for upcoming wave (max 200 characters)."
+	ai_prompt += "5. Prioritize survival first, then damage, then coin generation.\n"
+	ai_prompt += "6. Do not suggest building towers on types with 0 available tiles.\n"
+	ai_prompt += "7. Tier 1 towers can only be built on empty tiles; higher tiers can only be obtained by upgrading an already built lower tier.\n\n"
+
+	ai_prompt += "Game status:\n"
+	ai_prompt += "Current coins: %d\nCurrent health: %d\nAlready built towers: %s\nAvailable tiles: %s\nNext wave: %s\n" % [coins, health, built_towers_info, available_tiles_info, next_wave]
+	ai_prompt += "Each tower stats: %s\n" % tower_stats_info
+	ai_prompt += "Each enemy stats: %s\n" % enemy_stats_info
+
 	
-	print("\n--- AI PROMPT ---\n" + ai_prompt)
 	return ai_prompt
 
 

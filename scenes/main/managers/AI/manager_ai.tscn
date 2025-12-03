@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqi0akjhy2fk1"]
+
+[ext_resource type="Script" uid="uid://74rcirji55p" path="res://scenes/main/managers/AI/manager_ai.gd" id="1_leqbo"]
+
+[node name="ManagerAi" type="Node"]
+script = ExtResource("1_leqbo")

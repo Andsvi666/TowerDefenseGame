@@ -5,6 +5,7 @@ extends CanvasLayer
 @onready var start_wave_button: Button = $BottomBar/Flexor/StartWaveButton
 @onready var restart_button: Button = $BottomBar/Flexor/RestartButton
 @onready var advice_button: Button = $BottomBar/Flexor/AdviceButton
+@onready var advice_label: RichTextLabel = $SideBar/AdvicePanel/AdviceLabel
 @onready var game_over_popup: AcceptDialog = $GameOverPopup
 @onready var spawner_man: ManagerSpawner = get_node("/root/Main/ManagerSpawner")
 
@@ -84,4 +85,13 @@ func _on_start_wave_button_pressed() -> void:
 	advice_button.disabled = true
 
 func _on_advice_button_pressed() -> void:
-	GameMan.collect_ai_prompt()
+	advice_button.disabled = true
+	advice_label.text = "Thinking..."
+	
+	# Await AIManager.ask_ai (synchronous-looking)
+	var prompt = GameMan.collect_ai_prompt()
+	var advice = await AiMan.ask_ai(prompt)
+	
+	# Update UI
+	advice_label.text = advice
+	advice_button.disabled = false
