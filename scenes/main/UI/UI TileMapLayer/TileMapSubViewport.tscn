@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dwg485u0btxsu"]
+[gd_scene load_steps=5 format=3 uid="uid://dwg485u0btxsu"]
 
 [ext_resource type="PackedScene" uid="uid://bq5ap2jwyqpdf" path="res://scenes/main/UI/UI TileMapLayer/tileLayers/mapLayer/tile_map_layer.tscn" id="1_u1k8l"]
 [ext_resource type="PackedScene" uid="uid://cejq2i0c5j78s" path="res://scenes/main/UI/UI TileMapLayer/tileLayers/overlayLayer/tile_map_overlay.tscn" id="2_vgneg"]
+[ext_resource type="PackedScene" uid="uid://b6nyu1tldwesn" path="res://scenes/main/managers/spawner/manager_spawner.tscn" id="3_8idk5"]
+[ext_resource type="PackedScene" uid="uid://m3brq8u7uk53" path="res://scenes/main/managers/building/manager_building.tscn" id="4_gyh2h"]
 
 [node name="TileMapSubViewport" type="SubViewportContainer"]
 anchors_preset = 8
@@ -24,5 +26,9 @@ render_target_update_mode = 4
 [node name="TileMapLayer" parent="SubViewport" instance=ExtResource("1_u1k8l")]
 
 [node name="TileMapOverlay" parent="SubViewport" instance=ExtResource("2_vgneg")]
+
+[node name="ManagerSpawner" parent="SubViewport" instance=ExtResource("3_8idk5")]
+
+[node name="ManagerBuilder" parent="SubViewport" instance=ExtResource("4_gyh2h")]
 
 [editable path="SubViewport/TileMapLayer"]

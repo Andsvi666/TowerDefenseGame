@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://clo2c7k35rt4y"]
+[gd_scene load_steps=14 format=3 uid="uid://clo2c7k35rt4y"]
 
 [ext_resource type="Script" uid="uid://b6xh8j5cts5ei" path="res://scenes/main/main.gd" id="1_hujxm"]
 [ext_resource type="Resource" uid="uid://dkk2eihdav2b0" path="res://scenes/main/tower/turret/tiers/turret_tier_2.tres" id="4_a8run"]
@@ -11,17 +11,18 @@
 [ext_resource type="PackedScene" uid="uid://b6nyu1tldwesn" path="res://scenes/main/managers/spawner/manager_spawner.tscn" id="6_ow5a4"]
 [ext_resource type="Resource" uid="uid://uf6hkh31tqug" path="res://scenes/main/tower/support/tiers/support_tier_2.tres" id="7_ouso4"]
 [ext_resource type="PackedScene" uid="uid://8wc8q4tjwfr7" path="res://scenes/main/UI/UI Game/ui_game.tscn" id="9_b1x3f"]
-[ext_resource type="PackedScene" uid="uid://dwg485u0btxsu" path="res://scenes/main/UI/UI TileMapLayer/TileMapSubViewport.tscn" id="12_blune"]
+[ext_resource type="PackedScene" uid="uid://cejq2i0c5j78s" path="res://scenes/main/UI/UI TileMapLayer/tileLayers/overlayLayer/tile_map_overlay.tscn" id="12_th5th"]
+[ext_resource type="PackedScene" uid="uid://bq5ap2jwyqpdf" path="res://scenes/main/UI/UI TileMapLayer/tileLayers/mapLayer/tile_map_layer.tscn" id="13_7smn1"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_hujxm")
 
 [node name="ManagerSpawner" parent="." node_paths=PackedStringArray("spawn_point") instance=ExtResource("6_ow5a4")]
-spawn_point = NodePath("../TileMapSubViewport/SubViewport/TileMapLayer/SpawnPosition")
+spawn_point = NodePath("../TileMapLayer/SpawnPosition")
 
 [node name="ManagerBuilder" parent="." node_paths=PackedStringArray("tile_map_layer", "tile_map_overlay") instance=ExtResource("6_b1x3f")]
-tile_map_layer = NodePath("../TileMapSubViewport/SubViewport/TileMapLayer")
-tile_map_overlay = NodePath("../TileMapSubViewport/SubViewport/TileMapOverlay")
+tile_map_layer = NodePath("../TileMapLayer")
+tile_map_overlay = NodePath("../TileMapOverlay")
 support_tower_scene = ExtResource("4_th5th")
 support_tier = ExtResource("5_7smn1")
 turret_upgrade_tier = ExtResource("4_a8run")
@@ -30,13 +31,15 @@ missile_upgrade_tier = ExtResource("6_blune")
 support_upgrade_tier = ExtResource("7_ouso4")
 
 [node name="ManagerPathfinding" parent="." node_paths=PackedStringArray("tile_map_grid", "end_point") instance=ExtResource("4_hujxm")]
-tile_map_grid = NodePath("../TileMapSubViewport/SubViewport/TileMapLayer")
-end_point = NodePath("../TileMapSubViewport/SubViewport/TileMapLayer/EndPosition")
+tile_map_grid = NodePath("../TileMapLayer")
+end_point = NodePath("../TileMapLayer/EndPosition")
 
 [node name="UIGame" parent="." instance=ExtResource("9_b1x3f")]
 
-[node name="TileMapSubViewport" parent="." instance=ExtResource("12_blune")]
+[node name="TileMapOverlay" parent="." instance=ExtResource("12_th5th")]
+
+[node name="TileMapLayer" parent="." instance=ExtResource("13_7smn1")]
+z_index = -1
 
 [editable path="UIGame"]
-[editable path="TileMapSubViewport"]
-[editable path="TileMapSubViewport/SubViewport/TileMapLayer"]
+[editable path="TileMapLayer"]

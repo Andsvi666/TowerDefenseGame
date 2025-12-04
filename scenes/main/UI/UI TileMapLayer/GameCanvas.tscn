@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://35djcrhfwdla"]
+
+[ext_resource type="PackedScene" uid="uid://dwg485u0btxsu" path="res://scenes/main/UI/UI TileMapLayer/TileMapSubViewport.tscn" id="1_56klk"]
+
+[node name="GameCanvas" type="CanvasLayer"]
+layer = -1
+
+[node name="TileMapSubViewport" parent="." instance=ExtResource("1_56klk")]
+
+[editable path="TileMapSubViewport"]
+[editable path="TileMapSubViewport/SubViewport/TileMapLayer"]
