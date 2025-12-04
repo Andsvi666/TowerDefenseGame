@@ -7,7 +7,7 @@ extends CanvasLayer
 @onready var advice_button: Button = $BarsControl/BottomBar/Flexor/AdviceButton
 @onready var advice_label: RichTextLabel = $BarsControl/SideBar/AdvicePanel/AdviceLabel
 @onready var game_over_popup: AcceptDialog = $GameOverPopup
-@onready var spawner_man: ManagerSpawner = get_node("/root/Main/ManagerSpawner")
+@onready var spawner_man: ManagerSpawner = get_node("/root/Main/GameCanvas/TileMapSubViewport/SubViewport/ManagerSpawner")
 
 var can_start_wave := true
 var is_paused := false

@@ -31,7 +31,7 @@ func start_next_wave() -> void:
 	
 	var wave_data = waves[current_wave_index]
 	current_wave_index += 1
-	#print_debug(current_wave_index)
+	print_debug(current_wave_index)
 	GameMan.wave_active = true
 	emit_signal("update_label", current_wave_index, name_label)
 	emit_signal("wave_ready", wave_data)

@@ -63,7 +63,7 @@ func _process(_delta: float) -> void:
 			return
 		hover_label.text = "Upgrade " + tower.stats.tower_name + " tower\n       Cost: " + tower_upgrade_price + " coins"
 		hover_label.visible = true
-		hover_label.global_position = get_viewport().get_mouse_position() + Vector2(-60, -50)
+		hover_label.global_position = get_mouse_ui_pos() + Vector2(-60, -50)
 		return
 
 	# --- 2. Hover over buildable tile: show "Build" ---
@@ -93,7 +93,7 @@ func _process(_delta: float) -> void:
 	if tower_name != "":
 		hover_label.text = "Build " + tower_name + " tower\n    Cost: " + tower_price + " coins"
 		hover_label.visible = true
-		hover_label.global_position = get_viewport().get_mouse_position() + Vector2(-50, -50)
+		hover_label.global_position = get_mouse_ui_pos() + Vector2(-50, -50)
 	else:
 		hover_label.visible = false
 
@@ -262,3 +262,6 @@ func check_valid_tower_placement(cell_position: Vector2i) -> bool:
 	if cell_data == null:
 		return false
 	return cell_data.get_custom_data(IS_BUILDABLE)
+
+func get_mouse_ui_pos() -> Vector2:
+	return get_tree().root.get_mouse_position()
