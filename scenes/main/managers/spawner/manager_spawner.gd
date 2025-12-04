@@ -104,7 +104,8 @@ func spawn_next_wave_enemy() -> void:
 	
 	# spawn next enemy after its delay
 	var delay = wave_data["spawn_delay"] if wave_data.has("spawn_delay") else base_spawn_delay
-	await get_tree().create_timer(delay).timeout
+	await get_tree().create_timer(delay, false).timeout
+	#print_debug("wait ended")
 	spawn_next_wave_enemy()
 
 func _on_enemy_died(enemy_node: Node) -> void:

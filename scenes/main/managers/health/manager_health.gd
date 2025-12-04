@@ -3,7 +3,7 @@ extends Node
 
 @export var base_health: int = 100
 @export var max_health: int = 500
-@onready var name_label: Label = get_node("/root/Main/UIRoot/TopBar/HealthLabel")
+@onready var name_label: Label = get_node("/root/Main/UIGame/BarsControl/TopBar/HealthPanel/HealthLabel")
 
 var current_health: int
 
@@ -16,7 +16,7 @@ func _ready() -> void:
 
 func setup_health() -> void:
 	#print_debug("health set")
-	name_label = get_node_or_null("/root/Main/UIRoot/TopBar/HealthLabel")
+	name_label = get_node_or_null("/root/Main/UIGame/BarsControl/TopBar/HealthPanel/HealthLabel")
 	current_health = base_health
 	emit_signal("update_label", current_health, name_label)
 

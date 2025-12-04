@@ -27,7 +27,8 @@ AiMan="*res://scenes/main/managers/AI/manager_ai.tscn"
 
 window/size/viewport_width=1440
 window/size/viewport_height=640
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [input]
 

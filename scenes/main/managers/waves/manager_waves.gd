@@ -1,7 +1,7 @@
 class_name ManagerWaves
 extends Node
 
-@onready var name_label: Label = get_node("/root/Main/UIRoot/TopBar/WaveLabel")
+@onready var name_label: Label = get_node("/root/Main/UIGame/BarsControl/TopBar/WavePanel/WaveLabel")
 
 # --- Wave datasets ---
 var wave_1 := []
@@ -19,7 +19,7 @@ func _ready() -> void:
 	_generate_waves()
 
 func setup_waves() -> void:
-	name_label = get_node_or_null("/root/Main/UIRoot/TopBar/WaveLabel")
+	name_label = get_node_or_null("/root/Main/UIGame/BarsControl/TopBar/WavePanel/WaveLabel")
 	current_wave_index = 0
 	is_spawning = false
 	emit_signal("update_label", current_wave_index, name_label)

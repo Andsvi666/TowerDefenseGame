@@ -1,9 +1,9 @@
 [gd_scene load_steps=13 format=4 uid="uid://bq5ap2jwyqpdf"]
 
 [ext_resource type="Texture2D" uid="uid://v4ofj01sjh8o" path="res://assets/tiles/towerDefense_tilesheet.png" id="1_1i55x"]
-[ext_resource type="PackedScene" uid="uid://da1yuc52sw5kx" path="res://scenes/main/tileLayers/camera/fixedCamera.tscn" id="2_0n8fy"]
-[ext_resource type="PackedScene" uid="uid://nsdlepounpef" path="res://scenes/main/tileLayers/markers/end_position.tscn" id="3_itk0s"]
-[ext_resource type="PackedScene" uid="uid://2hpyu5mmcemw" path="res://scenes/main/tileLayers/markers/spawn_position.tscn" id="4_q252o"]
+[ext_resource type="PackedScene" uid="uid://da1yuc52sw5kx" path="res://scenes/main/UI/UI TileMapLayer/tileLayers/camera/fixedCamera.tscn" id="2_0n8fy"]
+[ext_resource type="PackedScene" uid="uid://nsdlepounpef" path="res://scenes/main/UI/UI TileMapLayer/tileLayers/markers/end_position.tscn" id="3_itk0s"]
+[ext_resource type="PackedScene" uid="uid://2hpyu5mmcemw" path="res://scenes/main/UI/UI TileMapLayer/tileLayers/markers/spawn_position.tscn" id="4_q252o"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_0wfyh"]
 vertices = PackedVector2Array(32, 32, -32, 32, -32, -32, 32, -32)

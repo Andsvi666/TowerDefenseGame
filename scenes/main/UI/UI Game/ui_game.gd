@@ -1,11 +1,11 @@
 class_name UIGame
 extends CanvasLayer
 
-@onready var pause_button: Button = $BottomBar/Flexor/PauseButton
-@onready var start_wave_button: Button = $BottomBar/Flexor/StartWaveButton
-@onready var restart_button: Button = $BottomBar/Flexor/RestartButton
-@onready var advice_button: Button = $BottomBar/Flexor/AdviceButton
-@onready var advice_label: RichTextLabel = $SideBar/AdvicePanel/AdviceLabel
+@onready var pause_button: Button = $BarsControl/BottomBar/Flexor/PauseButton
+@onready var start_wave_button: Button = $BarsControl/BottomBar/Flexor/StartWaveButton
+@onready var restart_button: Button = $BarsControl/BottomBar/Flexor/RestartButton
+@onready var advice_button: Button = $BarsControl/BottomBar/Flexor/AdviceButton
+@onready var advice_label: RichTextLabel = $BarsControl/SideBar/AdvicePanel/AdviceLabel
 @onready var game_over_popup: AcceptDialog = $GameOverPopup
 @onready var spawner_man: ManagerSpawner = get_node("/root/Main/ManagerSpawner")
 

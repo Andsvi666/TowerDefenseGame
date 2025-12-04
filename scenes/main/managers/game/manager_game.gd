@@ -128,21 +128,29 @@ func collect_ai_prompt() -> String:
 			key.capitalize(), e.type, e.speed, e.damage, e.reward, e.health
 		]
 	
-	# Build AI prompt
-	var ai_prompt := "IMPORTANT: Respond must be up to 300 characters. NO explanations or reasoning. JUST tell which tower(s) to build, dont use underscore in names just use spaces instead.\n"
-	ai_prompt += "If coins >= 2000, include at least one support tower. You can suggest multiple tower types in the same sentence. \n" 
-	ai_prompt += "If user has enough towers for the next wave, respond with 'Save coins for upcoming waves.'\n"
-	#ai_prompt += "format not explicit - Build/Upgrade to {dpending if tier 1 or tier 2} [number of towers] [type] towers (tier [tier number]) for [total coin price] coins,{if is need to build other type of towers repeat this as much needed} [number of towers] [type] towers (tier [tier number]) for [total coin price] coins.'\n"
-	ai_prompt += "random example - Build 3 cannon (tier 1) towers for 900 coins and upgrade them to tier 2 for 3000 coins, also build 2 missile (tier 1) towers for 3000 coins and upgrade them to tier 2 for 6000 coins\n\n"
- 
-	ai_prompt += "RULES FOR RESPONSE:\n"
-	ai_prompt += "1. Towers only attack their target enemy type; support towers heal base = attack damage and generate coins = 10x attack damage.\n"
+	var ai_prompt := ""
+	ai_prompt += "=== INSTRUCTIONS ===\n"
+	ai_prompt += "Think step-by-step internally, but DO NOT reveal your reasoning. "
+	ai_prompt += "Output ONLY the final answer in one short sentence (max 300 characters). "
+	ai_prompt += "Do not use underscores in tower names; use spaces.\n\n"
+
+	ai_prompt += "=== CONDITIONAL LOGIC ===\n"
+	ai_prompt += "- If coins >= 2000, include at least one support tower.\n"
+	ai_prompt += "- You may suggest multiple tower types in one sentence.\n"
+	ai_prompt += "- If the player already has enough towers for the next wave, respond exactly with: 'Save coins for upcoming waves.'\n\n"
+
+	ai_prompt += "=== EXAMPLE FORMAT ===\n"
+	ai_prompt += "Example: Build 3 cannon (tier 1) towers for 900 coins and upgrade them to tier 2 for 3000 coins, also build 2 missile (tier 1) towers for 3000 coins and upgrade them to tier 2 for 6000 coins.\n\n"
+
+	ai_prompt += "=== RULES FOR RESPONSE ===\n"
+	ai_prompt += "1. Towers only attack their target enemy type; support towers heal base = attack damage and generate coins = 10× attack damage.\n"
 	ai_prompt += "2. Killing enemies grants coins equal to their reward.\n"
-	ai_prompt += "3. Enemies spawn on intervals between 0.5 to 2 seconds.\n"
-	ai_prompt += "4. Turrets stay built through many waves; plan long-term.\n"
-	ai_prompt += "5. Prioritize survival first, then damage, then coin generation.\n"
+	ai_prompt += "3. Enemies spawn every 0.5–2 seconds.\n"
+	ai_prompt += "4. Turrets persist across waves; plan long-term.\n"
+	ai_prompt += "5. Prioritize: survival → damage → coin generation.\n"
 	ai_prompt += "6. Do not suggest building towers on types with 0 available tiles.\n"
-	ai_prompt += "7. Tier 1 towers can only be built on empty tiles; higher tiers can only be obtained by upgrading an already built lower tier.\n\n"
+	ai_prompt += "7. Tier 1 towers must be built on empty tiles; higher tiers only through upgrading.\n\n"
+
 
 	ai_prompt += "Game status:\n"
 	ai_prompt += "Current coins: %d\nCurrent health: %d\nAlready built towers: %s\nAvailable tiles: %s\nNext wave: %s\n" % [coins, health, built_towers_info, available_tiles_info, next_wave]

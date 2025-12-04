@@ -1,7 +1,7 @@
 class_name ManagerBuilding
 extends Node
 
-@onready var hover_label: Label = get_node("/root/Main/UIRoot/HoverLabel")
+@onready var hover_label: Label = get_node("/root/Main/UIGame/HoverLabel")
 @export var tile_map_layer: TileMapLayer = null
 @export var tile_map_overlay: TileMapLayer = null  
 
@@ -102,6 +102,7 @@ func _process(_delta: float) -> void:
 # ==================================================================
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("left_mouse"):
+		#print_debug("clicked")
 		if tile_map_layer == null:
 			return
 	
@@ -110,6 +111,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		handle_tile_click(cell)
 
 func handle_tile_click(cell_position: Vector2i) -> void:
+	#print_debug(cell_position)
 	# --- 1. Upgrade case ---
 	if towers_by_cell.has(cell_position):
 		var tower: TowerBase = towers_by_cell[cell_position]
