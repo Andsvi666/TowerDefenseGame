@@ -40,6 +40,7 @@ func get_path_to_position() -> void:
 		# Reached the end (or no path found)
 		if HealthMan:
 			HealthMan.take_damage(damage_cost)
+		emit_signal("enemy_died", self)
 		queue_free()
 
 func take_damage(amount: int) -> void:

@@ -40,10 +40,38 @@ func is_logged_in() -> bool:
 # ==================================================================
 
 func write_to_db() -> void:
-	var wave = _generate_wave(40)
+	#clone_doc("wave_standart_1", "wave_standart_2")
+	var wave = _generate_wave(70)
+	var waveDic = {}
 	#print_debug(wave_1)
-	var collection: FirestoreCollection = Firebase.Firestore.collection('waves')
-	var document = await collection.add("wave_standart_2", wave)
+	var col: FirestoreCollection = Firebase.Firestore.collection('waves')
+	var document = await col.add("wave_standart_6", wave)
+
+func clone_doc(origin: String, new: String) -> void:
+	var wave_doc := {}
+	var i = 0
+	var col: FirestoreCollection = Firebase.Firestore.collection('waves')
+	var doc = await col.get_doc(origin)
+	var units = doc.keys()
+	#print_debug(units)
+	# sort numerically based on the number after "enemy_"
+	units.sort_custom(func(a, b) -> bool:
+		var a_index = int(a.replace("enemy_", ""))
+		var b_index = int(b.replace("enemy_", ""))
+		return a_index < b_index  # return true if a comes before b
+	)
+	print_debug(units)
+	for unit in units:
+		var key = "enemy_%04d" % (i + 1)
+		print_debug(key)
+		var unit_data = doc.get_value(unit)
+		wave_doc[key] = [
+			unit_data[0],
+			unit_data[1],
+			unit_data[2]
+		]
+		i = i + 1
+	var document = await col.add(new, wave_doc)
 
 func _generate_wave(count: int) -> Dictionary:
 	var wave_doc := {}
