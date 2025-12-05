@@ -16,7 +16,7 @@ func _ready():
 # === PUBLIC FUNCTION ===
 # Async function you can await in your UI
 func ask_ai(prompt: String) -> String:
-	print_debug(prompt)
+	#print_debug(prompt)
 	var headers = [
 		"Content-Type: application/json",
 		"Authorization: Bearer %s" % API_KEY
@@ -71,5 +71,5 @@ func ask_ai(prompt: String) -> String:
 		return "Malformed AI response"
 
 	var advice = str(choice["message"]["content"]).strip_edges()  # remove extra whitespace
-	print_debug(advice)
+	#print_debug(advice)
 	return advice

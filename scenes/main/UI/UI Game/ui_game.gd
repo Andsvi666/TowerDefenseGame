@@ -5,6 +5,7 @@ extends CanvasLayer
 @onready var start_wave_button: Button = $BarsControl/BottomBar/Flexor/StartWaveButton
 @onready var restart_button: Button = $BarsControl/BottomBar/Flexor/RestartButton
 @onready var advice_button: Button = $BarsControl/BottomBar/Flexor/AdviceButton
+@onready var firebase_button: Button = $BarsControl/BottomBar/Flexor/FirebaseButton
 @onready var advice_label: RichTextLabel = $BarsControl/SideBar/AdvicePanel/AdviceLabel
 @onready var game_over_popup: AcceptDialog = $GameOverPopup
 @onready var spawner_man: ManagerSpawner = get_node("/root/Main/GameCanvas/TileMapSubViewport/SubViewport/ManagerSpawner")
@@ -22,12 +23,16 @@ func _ready() -> void:
 	start_wave_button.pressed.connect(_on_start_wave_button_pressed)
 	restart_button.pressed.connect(_on_game_over_restart)
 	advice_button.pressed.connect(_on_advice_button_pressed)
+	firebase_button.pressed.connect(_on_firebase_button_pressed)
 	
 	HealthMan.connect("update_label", Callable(self, "_on_update_label"))
 	HealthMan.connect("game_over", Callable(self, "_on_game_over"))
 	CoinsMan.connect("update_label", Callable(self, "_on_update_label"))
 	WavesMan.connect("update_label", Callable(self, "_on_update_label"))
 	spawner_man.connect("wave_complete", Callable(self, "_on_wave_complete"))
+
+func _on_firebase_button_pressed() -> void:
+	FirebaseMan.write_to_db()
 
 func _on_update_label(sum: int, name: Label) -> void:
 	name.text = str(sum)

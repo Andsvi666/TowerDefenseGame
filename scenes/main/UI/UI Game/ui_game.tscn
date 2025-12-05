@@ -520,3 +520,15 @@ theme_override_colors/font_hover_color = Color(0.21176471, 0.6745098, 0.7019608,
 theme_override_colors/font_hover_pressed_color = Color(0.654902, 0.9490196, 0.9647059, 1)
 theme_override_colors/font_disabled_color = Color(0.9019608, 0.050980393, 0.34509805, 1)
 text = "Receive advice"
+
+[node name="FirebaseButton" type="Button" parent="BarsControl/BottomBar/Flexor"]
+layout_mode = 2
+theme = SubResource("Theme_7c77l")
+theme_override_colors/font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+theme_override_colors/font_focus_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
+theme_override_colors/font_pressed_color = Color(0.11372549, 0.30980393, 0.2784314, 1)
+theme_override_colors/font_hover_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.654902, 0.9490196, 0.9647059, 1)
+theme_override_colors/font_disabled_color = Color(0.9019608, 0.050980393, 0.34509805, 1)
+text = "Write to Firebase
+"

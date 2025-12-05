@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b241uv26a316k"]
+
+[ext_resource type="Script" uid="uid://dsskkqxhufxrh" path="res://scenes/main/managers/firebase/manager_firebase.gd" id="1_m7kf2"]
+
+[node name="ManagerFirebase" type="Node"]
+script = ExtResource("1_m7kf2")
