@@ -1,6 +1,5 @@
 class_name Main
 extends Node2D
-@onready var spawner_man: ManagerSpawner = $GameCanvas/TileMapSubViewport/SubViewport/ManagerSpawner
 
 func _ready() -> void:
 	if FirebaseMan.is_logged_in():
@@ -9,6 +8,17 @@ func _ready() -> void:
 		FirebaseMan.connect("login_success", Callable(self, "_on_login_success"))
 
 func _on_login_success(auth):
-	#print_debug("game starts")
-	WavesMan.connect("wave_ready", Callable(spawner_man, "_on_wave_ready"))
-	GameMan.setup_fresh_game()
+	setup_new_game()
+
+func setup_new_game() -> void:
+	print_debug("fresh game starting")
+	var tilemap = get_node("CanvasGameMain/TileMapSubViewport/SubViewport/TileMapLayer")
+	var overlay = get_node("CanvasGameMain/TileMapSubViewport/SubViewport/TileMapOverlay")
+	var endPoint = tilemap.get_node("EndPosition")
+	var spawnPoint = tilemap.get_node("SpawnPosition")
+	var wave_label = get_node_or_null("/root/Main/CanvasGameUI/BarsControl/TopBar/WavePanel/WaveLabel")
+	var health_label = get_node_or_null("/root/Main/CanvasGameUI/BarsControl/TopBar/HealthPanel/HealthLabel")
+	var coin_label = get_node_or_null("/root/Main/CanvasGameUI/BarsControl/TopBar/CoinPanel/CoinLabel")
+	var hover_label = get_node_or_null("/root/Main/CanvasGameUI/HoverLabel")
+	
+	GameMan.setup_fresh_game(tilemap, overlay, spawnPoint, endPoint, wave_label, health_label, coin_label, hover_label)

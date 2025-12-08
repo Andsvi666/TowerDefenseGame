@@ -1,8 +1,8 @@
 [gd_scene load_steps=18 format=3 uid="uid://8wc8q4tjwfr7"]
 
-[ext_resource type="Script" uid="uid://mmya3sepy6r4" path="res://scenes/main/UI/UI Game/ui_game.gd" id="1_7c77l"]
+[ext_resource type="Script" uid="uid://mmya3sepy6r4" path="res://scenes/main/screen/gameUI/canvas_game_ui.gd" id="1_7c77l"]
 [ext_resource type="Texture2D" uid="uid://bumun64uciiwc" path="res://assets/textures/Heart.png" id="1_c1rh2"]
-[ext_resource type="StyleBox" uid="uid://b4cpebxh2b2rr" path="res://scenes/main/UI/UI Game/panel_style.tres" id="1_u1cvo"]
+[ext_resource type="StyleBox" uid="uid://b4cpebxh2b2rr" path="res://scenes/main/screen/gameUI/panel_style.tres" id="1_u1cvo"]
 [ext_resource type="Texture2D" uid="uid://c7f0ithabga8e" path="res://assets/tiles/placement/turret.png" id="4_t5yut"]
 [ext_resource type="Texture2D" uid="uid://gl4wa8cp2d2p" path="res://assets/tiles/placement/cannon.png" id="5_byvj6"]
 [ext_resource type="Texture2D" uid="uid://04iak6jv43kl" path="res://assets/tiles/placement/missile.png" id="6_l1bvi"]
@@ -45,7 +45,7 @@ default_font_size = 25
 [sub_resource type="Theme" id="Theme_7c77l"]
 default_font_size = 25
 
-[node name="UIGame" type="CanvasLayer"]
+[node name="CanvasGameUI" type="CanvasLayer"]
 layer = 0
 follow_viewport_scale = 0.5
 script = ExtResource("1_7c77l")

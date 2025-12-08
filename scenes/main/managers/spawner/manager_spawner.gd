@@ -28,10 +28,10 @@ extends Node
 	}
 }
 
-@export var endless_mode_enabled: bool = false 
-@export var wave_mode_enabled: bool = false 
-@export var base_spawn_delay: float = 1.0 
-@export var spawn_point: Marker2D = null 
+var endless_mode_enabled: bool = false 
+var wave_mode_enabled: bool = false 
+var base_spawn_delay: float = 1.0 
+var spawn_point: Marker2D = null
 
 var elapsed_time: float = 0.0 
 var timer_count: float = 2.0
@@ -41,6 +41,17 @@ var is_spawning_wave: bool = false
 
 signal wave_complete
 var active_enemies: Array = []
+
+# Setup function to inject the TileMap and Endpoint
+func setup_map(spawnPoint: Marker2D) -> void:
+	# Inject spawn point
+	spawn_point = spawnPoint
+
+	# --- Reset spawner state for a fresh game ---
+	is_spawning_wave = false
+	wave_data_array.clear()
+	current_data_index = 0
+	active_enemies.clear()
 
 func _process(delta: float) -> void:
 	if endless_mode_enabled:
@@ -94,7 +105,7 @@ func spawn_next_wave_enemy() -> void:
 	
 	if spawn_point:
 		enemy.global_position = spawn_point.global_position
-	get_parent().add_child(enemy)
+		spawn_point.get_parent().add_child(enemy)  # ensures enemy is in the same canvas/layer as towers
 	
 	# 	track enemy
 	active_enemies.append(enemy)

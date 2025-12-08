@@ -14,11 +14,7 @@ signal enemy_died
 func _ready() -> void:
 	add_to_group("ENEMY_GROUP")
 	current_health = max_health
-	
-	if ManagerPathfinding.instance != null:
-		path_array = ManagerPathfinding.instance.get_valid_path(global_position / 64)
-	else:
-		push_warning("No PathfindingManager found in scene!")
+	path_array = PathMan.get_valid_path(global_position / 64)
 
 func _process(delta: float) -> void:
 	get_path_to_position()

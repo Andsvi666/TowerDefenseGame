@@ -24,6 +24,10 @@ WavesMan="*res://scenes/main/managers/waves/manager_waves.gd"
 AiMan="*res://scenes/main/managers/AI/manager_ai.tscn"
 FirebaseMan="*res://scenes/main/managers/firebase/manager_firebase.tscn"
 Firebase="*res://addons/godot-firebase/firebase/firebase.tscn"
+PathMan="*res://scenes/main/managers/pathfinding/manager_pathfinding.tscn"
+SpawnerMan="*res://scenes/main/managers/spawner/manager_spawner.tscn"
+BuildingMan="*res://scenes/main/managers/building/manager_building.tscn"
+ScreenMan="*res://scenes/main/managers/screen/manager_screen.tscn"
 
 [display]
 

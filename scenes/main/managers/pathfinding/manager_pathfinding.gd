@@ -1,17 +1,20 @@
 class_name ManagerPathfinding
 extends Node
 
-@export var tile_map_grid : TileMapLayer 
-@export var end_point : Marker2D
-
-# Static singleton reference for convenience static 
-static var instance: ManagerPathfinding = null
+# These will be assigned at runtime
+var tile_map_grid: TileMapLayer = null
+var end_point: Marker2D = null
 
 var astar_grid : AStarGrid2D = AStarGrid2D.new()
 
 func _ready() -> void: 
-	instance = self
-	setup_astar_grid() 
+	pass
+
+# Setup function to inject the TileMap and Endpoint
+func setup_map(tilemap: TileMapLayer, endpoint: Marker2D) -> void:
+	tile_map_grid = tilemap
+	end_point = endpoint
+	setup_astar_grid()
 
 func setup_astar_grid() -> void:
 	astar_grid.region = tile_map_grid.get_used_rect()

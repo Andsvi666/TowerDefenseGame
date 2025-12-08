@@ -54,10 +54,20 @@ var enemy_files := {
 	"plane_tier_3": "res://scenes/main/enemy/plane/tiers/plane_tier_3.tres"
 }
 
-func setup_fresh_game() -> void:
-	HealthMan.setup_health()
-	CoinsMan.setup_coins()
-	WavesMan.setup_waves()
+func setup_fresh_game(tilemap: TileMapLayer, overlay: TileMapLayer, spawnPoint: Marker2D, endPoint: Marker2D, wave_label: Label, health_label: Label, coin_label: Label, hover_label: Label) -> void:
+	WavesMan.connect("wave_ready", Callable(SpawnerMan, "_on_wave_ready"))
+	# Reset player stats
+	HealthMan.setup_health(health_label)
+	CoinsMan.setup_coins(coin_label)
+
+	# Reset waves
+	WavesMan.setup_waves(wave_label)
+
+	# Setup map-dependent managers
+	PathMan.setup_map(tilemap, endPoint)
+	BuildingMan.setup_map(tilemap, overlay, hover_label)
+	SpawnerMan.setup_map(spawnPoint)
+
 	wave_active = false
 
 func stop_support_towers() -> void:

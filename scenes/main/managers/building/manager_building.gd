@@ -1,9 +1,9 @@
 class_name ManagerBuilding
 extends Node
 
-@onready var hover_label: Label = get_node("/root/Main/UIGame/HoverLabel")
-@export var tile_map_layer: TileMapLayer = null
-@export var tile_map_overlay: TileMapLayer = null  
+var hover_label: Label = null
+var tile_map_layer: TileMapLayer = null
+var tile_map_overlay: TileMapLayer = null
 
 const IS_BUILDABLE: String = "buildable"
 const TOWER_GROUP: String = "TOWER_GROUP"
@@ -13,28 +13,34 @@ var used_tiles: Array[Vector2i] = []                  # where towers are built
 var towers_by_cell: Dictionary = {}                   # cell_position → tower_node
 
 # --- Tower scenes ---
-@export var turret_tower_scene: PackedScene 
-@export var cannon_tower_scene: PackedScene
-@export var missile_tower_scene: PackedScene
-@export var support_tower_scene: PackedScene
+var turret_tower_scene: PackedScene = preload("res://scenes/main/tower/turret/tower_turret.tscn")
+var cannon_tower_scene: PackedScene = preload("res://scenes/main/tower/cannon/tower_cannon.tscn")
+var missile_tower_scene: PackedScene = preload("res://scenes/main/tower/missile/tower_missile.tscn")
+var support_tower_scene: PackedScene = preload("res://scenes/main/tower/support/tower_support.tscn")
 
 # --- Base tiers ---
-@export var turret_tier: TowerStats
-@export var cannon_tier: TowerStats
-@export var missile_tier: TowerStats
-@export var support_tier: TowerStats
+var turret_tier: TowerStats = preload("res://scenes/main/tower/turret/tiers/turret_tier_1.tres")
+var cannon_tier: TowerStats = preload("res://scenes/main/tower/cannon/tiers/cannon_tier_1.tres")
+var missile_tier: TowerStats = preload("res://scenes/main/tower/missile/tiers/missile_tier_1.tres")
+var support_tier: TowerStats = preload("res://scenes/main/tower/support/tiers/support_tier_1.tres")
 
 # --- Upgrade tiers ---
-@export var turret_upgrade_tier: TowerStats
-@export var cannon_upgrade_tier: TowerStats
-@export var missile_upgrade_tier: TowerStats
-@export var support_upgrade_tier: TowerStats
+var turret_upgrade_tier: TowerStats = preload("res://scenes/main/tower/turret/tiers/turret_tier_2.tres")
+var cannon_upgrade_tier: TowerStats = preload("res://scenes/main/tower/cannon/tiers/cannon_tier_2.tres")
+var missile_upgrade_tier: TowerStats = preload("res://scenes/main/tower/missile/tiers/missile_tier_2.tres")
+var support_upgrade_tier: TowerStats = preload("res://scenes/main/tower/support/tiers/support_tier_2.tres")
 
 # --- Atlas references (for tilemap lookup) ---
 const TURRET_ATLAS = Vector2i(15, 1)
 const CANNON_ATLAS = Vector2i(17, 1)
 const MISSILE_ATLAS = Vector2i(18, 1)
 const SUPPORT_ATLAS = Vector2i(16, 1)
+
+# Setup function to inject the TileMap and Overlay
+func setup_map(tilemap: TileMapLayer, overlay: TileMapLayer, given_label: Label) -> void:
+	tile_map_layer = tilemap
+	tile_map_overlay = overlay
+	hover_label = given_label
 
 # ==================================================================
 # ---------------------------- PROCESS ------------------------------
@@ -159,19 +165,17 @@ func place_tower(cell_position: Vector2i, tower_scene: PackedScene, tower_stats:
 
 	# Check if player can afford to build
 	if not CoinsMan.spend_coins(tower_stats.build_cost):
-		#print_debug("Not enough coins to build.")
 		GameMan.show_floating_message("Not enough coins to build " + tower_stats.tower_name + " tower!")
 		return
 
-	var tower: TowerBase = tower_scene.instantiate()
-	add_child(tower)
+	replace_tile_with_base(cell_position)
 
-	# Assign tower stats and apply
+	var tower: TowerBase = tower_scene.instantiate()
+	tower.z_index = 10
+	tile_map_layer.add_child(tower)  # place under TileMap/SubViewport
+	tower.position = (cell_position * tile_map_layer.tile_set.tile_size) + (tile_map_layer.tile_set.tile_size / 2)
 	tower.stats = tower_stats
 	tower.apply_stats()
-
-	var tile_size = tile_map_layer.tile_set.tile_size
-	tower.position = (cell_position * tile_size) + (tile_size / 2)
 	tower.add_to_group(TOWER_GROUP)
 
 	# Track which cell has a tower
@@ -192,7 +196,6 @@ func place_tower(cell_position: Vector2i, tower_scene: PackedScene, tower_stats:
 		GameMan.built_towers["support_tier_1"] += 1
 		GameMan.available_tiles_for_towers["support_tiles"] -= 1
 
-	replace_tile_with_base(cell_position)
 
 # ==================================================================
 # --------------------------- UPGRADING -----------------------------
@@ -246,11 +249,15 @@ func upgrade_tower(tower: TowerBase) -> void:
 func replace_tile_with_base(cell_position: Vector2i) -> void:
 	if tile_map_layer == null or tile_map_overlay == null:
 		return
-
+	
 	var grass_atlas = Vector2i(1, 10)
-	tile_map_layer.set_cell(cell_position, 0, grass_atlas, 0)
-
 	var base_atlas = Vector2i(20, 7)
+	
+	# Clear existing tiles first
+	tile_map_layer.set_cell(cell_position, -1)
+	tile_map_overlay.set_cell(cell_position, -1)
+	
+	tile_map_layer.set_cell(cell_position, 0, grass_atlas, 0)
 	tile_map_overlay.set_cell(cell_position, 0, base_atlas, 0)
 
 func check_valid_tower_placement(cell_position: Vector2i) -> bool:

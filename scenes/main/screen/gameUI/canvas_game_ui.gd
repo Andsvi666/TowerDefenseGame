@@ -1,4 +1,4 @@
-class_name UIGame
+class_name CanvasGameUI
 extends CanvasLayer
 
 @onready var pause_button: Button = $BarsControl/BottomBar/Flexor/PauseButton
@@ -8,7 +8,6 @@ extends CanvasLayer
 @onready var firebase_button: Button = $BarsControl/BottomBar/Flexor/FirebaseButton
 @onready var advice_label: RichTextLabel = $BarsControl/SideBar/AdvicePanel/AdviceLabel
 @onready var game_over_popup: AcceptDialog = $GameOverPopup
-@onready var spawner_man: ManagerSpawner = get_node("/root/Main/GameCanvas/TileMapSubViewport/SubViewport/ManagerSpawner")
 
 var can_start_wave := true
 var is_paused := false
@@ -29,7 +28,7 @@ func _ready() -> void:
 	HealthMan.connect("game_over", Callable(self, "_on_game_over"))
 	CoinsMan.connect("update_label", Callable(self, "_on_update_label"))
 	WavesMan.connect("update_label", Callable(self, "_on_update_label"))
-	spawner_man.connect("wave_complete", Callable(self, "_on_wave_complete"))
+	SpawnerMan.connect("wave_complete", Callable(self, "_on_wave_complete"))
 
 func _on_firebase_button_pressed() -> void:
 	FirebaseMan.write_to_db()
