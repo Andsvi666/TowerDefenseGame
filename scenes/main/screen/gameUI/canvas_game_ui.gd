@@ -6,6 +6,7 @@ extends CanvasLayer
 @onready var restart_button: Button = $BarsControl/BottomBar/Flexor/RestartButton
 @onready var advice_button: Button = $BarsControl/BottomBar/Flexor/AdviceButton
 @onready var firebase_button: Button = $BarsControl/BottomBar/Flexor/FirebaseButton
+@onready var menu_button: Button = $BarsControl/BottomBar/Flexor/MenuButton
 @onready var advice_label: RichTextLabel = $BarsControl/SideBar/AdvicePanel/AdviceLabel
 @onready var game_over_popup: AcceptDialog = $GameOverPopup
 
@@ -23,6 +24,7 @@ func _ready() -> void:
 	restart_button.pressed.connect(_on_game_over_restart)
 	advice_button.pressed.connect(_on_advice_button_pressed)
 	firebase_button.pressed.connect(_on_firebase_button_pressed)
+	menu_button.pressed.connect(_on_menu_button_pressed)
 	
 	HealthMan.connect("update_label", Callable(self, "_on_update_label"))
 	HealthMan.connect("game_over", Callable(self, "_on_game_over"))
@@ -66,7 +68,7 @@ func _on_game_over() -> void:
 
 func _on_game_over_restart() -> void:
 	get_tree().paused = false
-	get_tree().reload_current_scene()
+	ScreenMan.change_screen("game")
 
 func _on_pause_button_pressed() -> void:
 	is_paused = !is_paused
@@ -99,3 +101,9 @@ func _on_advice_button_pressed() -> void:
 	# Update UI
 	advice_label.text = advice
 	advice_button.disabled = false
+
+func _on_menu_button_pressed() -> void:
+	print_debug("to menu")
+	ScreenMan.change_screen("menu")
+	#switch to menu
+ 

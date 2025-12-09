@@ -41,6 +41,32 @@ func setup_map(tilemap: TileMapLayer, overlay: TileMapLayer, given_label: Label)
 	tile_map_layer = tilemap
 	tile_map_overlay = overlay
 	hover_label = given_label
+	reset_towers()
+
+func reset_towers():
+	for tower in towers_by_cell.values():
+		if is_instance_valid(tower):
+			tower.queue_free()
+
+	# Clear tracking arrays
+	towers_by_cell.clear()
+	used_tiles.clear()
+
+	# Optional: reset available tiles in GameMan
+	GameMan.available_tiles_for_towers = {
+		"turret_tiles": 18,
+		"cannon_tiles": 17,
+		"missile_tiles": 9,
+		"support_tiles": 7,
+	}
+
+	# Optional: reset built towers counts
+	GameMan.built_towers = {
+		"turret_tier_1": 0, "turret_tier_2": 0,
+		"cannon_tier_1": 0, "cannon_tier_2": 0,
+		"missile_tier_1": 0, "missile_tier_2": 0,
+		"support_tier_1": 0, "support_tier_2": 0
+	}
 
 # ==================================================================
 # ---------------------------- PROCESS ------------------------------

@@ -1,10 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bgxhe6hq01s35"]
+[gd_scene load_steps=2 format=3 uid="uid://bgxhe6hq01s35"]
 
 [ext_resource type="Script" uid="uid://bccrco1ipenu1" path="res://scenes/main/managers/screen/manager_screen.gd" id="1_b1jrf"]
-[ext_resource type="PackedScene" uid="uid://35djcrhfwdla" path="res://scenes/main/screen/gameMain/canvas_game_main.tscn" id="2_4cu65"]
-[ext_resource type="PackedScene" uid="uid://8wc8q4tjwfr7" path="res://scenes/main/screen/gameUI/canvas_game_ui.tscn" id="3_kwd45"]
 
 [node name="ManagerScreen" type="Node"]
 script = ExtResource("1_b1jrf")
-canvas_game_main_scene = ExtResource("2_4cu65")
-canvas_game_ui_scene = ExtResource("3_kwd45")

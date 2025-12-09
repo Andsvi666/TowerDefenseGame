@@ -176,6 +176,6 @@ func read_api_key() -> String:
 	var col: FirestoreCollection = Firebase.Firestore.collection('AI')
 	var doc = await col.get_doc("api key")
 	key = doc.get_value("key")
-	print_debug(key)
+	#print_debug(key)
 	return key
 	

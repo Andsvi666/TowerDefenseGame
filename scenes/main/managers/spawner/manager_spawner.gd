@@ -47,11 +47,17 @@ func setup_map(spawnPoint: Marker2D) -> void:
 	# Inject spawn point
 	spawn_point = spawnPoint
 
-	# --- Reset spawner state for a fresh game ---
+	# --- Remove existing enemies from the scene ---
+	for enemy in active_enemies:
+		if is_instance_valid(enemy):
+			enemy.queue_free()
+
+	# --- Reset spawner state ---
 	is_spawning_wave = false
 	wave_data_array.clear()
 	current_data_index = 0
 	active_enemies.clear()
+
 
 func _process(delta: float) -> void:
 	if endless_mode_enabled:

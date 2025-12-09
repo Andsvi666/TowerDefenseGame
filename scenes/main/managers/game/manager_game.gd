@@ -165,7 +165,8 @@ func collect_ai_prompt() -> String:
 	ai_prompt += "5. Turrets persist across waves; plan long-term.\n"
 	ai_prompt += "6. Prioritize: survival → damage → coin generation.\n"
 	ai_prompt += "7. Do not build towers on types with 0 available tiles.\n"
-	ai_prompt += "8. Tier 1 towers must be built on empty tiles; higher tiers only through upgrading.\n\n"
+	ai_prompt += "8. Always check if suggestion total coins sum is not grater than current coins.\n"
+	ai_prompt += "9. Tier 1 towers must be built on empty tiles; higher tiers only through upgrading.\n\n"
 
 
 	ai_prompt += "Game status:\n"

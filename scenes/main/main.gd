@@ -3,12 +3,12 @@ extends Node2D
 
 func _ready() -> void:
 	if FirebaseMan.is_logged_in():
-		_on_login_success(FirebaseMan.current_user)
+		setup_new_game()
 	else:
 		FirebaseMan.connect("login_success", Callable(self, "_on_login_success"))
 
 func _on_login_success(auth):
-	setup_new_game()
+	ScreenMan.change_screen("login")
 
 func setup_new_game() -> void:
 	#print_debug("fresh game starting")
