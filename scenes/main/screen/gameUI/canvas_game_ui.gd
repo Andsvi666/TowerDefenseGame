@@ -93,7 +93,7 @@ func _on_advice_button_pressed() -> void:
 	advice_label.text = "Thinking..."
 	
 	# Await AIManager.ask_ai (synchronous-looking)
-	var prompt = GameMan.collect_ai_prompt()
+	var prompt = await GameMan.collect_ai_prompt()
 	var advice = await AiMan.ask_ai(prompt)
 	
 	# Update UI

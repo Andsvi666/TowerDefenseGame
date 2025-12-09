@@ -67,7 +67,9 @@ func setup_fresh_game(tilemap: TileMapLayer, overlay: TileMapLayer, spawnPoint: 
 	PathMan.setup_map(tilemap, endPoint)
 	BuildingMan.setup_map(tilemap, overlay, hover_label)
 	SpawnerMan.setup_map(spawnPoint)
-
+	
+	AiMan.setup()
+	
 	wave_active = false
 
 func stop_support_towers() -> void:
@@ -104,19 +106,19 @@ func show_floating_message(text: String) -> void:
 func collect_ai_prompt() -> String:
 	var coins = CoinsMan.coins
 	var health = HealthMan.current_health
-	var next_wave = WavesMan.return_next_wave_info()  # should be aggregated already
+	var next_wave = await WavesMan.read_next_wave()  # should be aggregated already
 	
 	# Built towers info compact
 	var built_towers_info := ""
 	for t_name in built_towers.keys():
-		built_towers_info += "%s: %d, " % [t_name, built_towers[t_name]]
+		built_towers_info += "%s: %d, \n" % [t_name, built_towers[t_name]]
 	if built_towers_info.length() > 2:
 		built_towers_info = built_towers_info.substr(0, built_towers_info.length() - 2)
 	
 	# Available tiles info
 	var available_tiles_info := ""
 	for t_type in available_tiles_for_towers.keys():
-		available_tiles_info += "%s: %d, " % [t_type, available_tiles_for_towers[t_type]]
+		available_tiles_info += "%s: %d," % [t_type, available_tiles_for_towers[t_type]]
 	if available_tiles_info.length() > 2:
 		available_tiles_info = available_tiles_info.substr(0, available_tiles_info.length() - 2)
 	
@@ -140,34 +142,38 @@ func collect_ai_prompt() -> String:
 	
 	var ai_prompt := ""
 	ai_prompt += "=== INSTRUCTIONS ===\n"
-	ai_prompt += "Think step-by-step internally, but DO NOT reveal your reasoning. "
-	ai_prompt += "Output ONLY the final answer in one short sentence (max 300 characters). "
-	ai_prompt += "Do not use underscores in tower names; use spaces.\n\n"
+	ai_prompt += "- Think internally, step by step, but DO NOT reveal reasoning.\n"
+	ai_prompt += "- First, check if current towers can survive the next wave.\n"
+	ai_prompt += "- Use leftover coins wisely: save or invest in support towers if coins >= 2000.\n"
+	ai_prompt += "- Output ONLY one concise sentence (max 300 characters).\n"
+	ai_prompt += "- Use spaces in tower names; no underscores.\n\n"
 
 	ai_prompt += "=== CONDITIONAL LOGIC ===\n"
-	ai_prompt += "- If coins >= 2000, include at least one support tower.\n"
-	ai_prompt += "- You may suggest multiple tower types in one sentence.\n"
-	ai_prompt += "- If the player already has enough towers for the next wave, respond exactly with: 'Save coins for upcoming waves.'\n\n"
+	ai_prompt += "- Include at least one support tower if coins >= 2000.\n"
+	ai_prompt += "- Suggest multiple tower types in one sentence if needed.\n"
+	ai_prompt += "- If towers are sufficient for the next wave, respond exactly with: 'Save coins for upcoming waves.'\n\n"
 
-	ai_prompt += "=== EXAMPLE FORMAT ===\n"
-	ai_prompt += "Example: Build 3 cannon (tier 1) towers for 900 coins and upgrade them to tier 2 for 3000 coins, also build 2 missile (tier 1) towers for 3000 coins and upgrade them to tier 2 for 6000 coins.\n\n"
+	ai_prompt += "=== EXAMPLE ===\n"
+	ai_prompt += "- Build 3 cannon (tier 1) towers for 900 coins and upgrade them to tier 2 for 3000 coins.\n"
+	ai_prompt += "- Build 2 missile (tier 1) towers for 3000 coins and upgrade to tier 2 for 6000 coins.\n\n"
 
-	ai_prompt += "=== RULES FOR RESPONSE ===\n"
-	ai_prompt += "1. Towers only attack their target enemy type; support towers heal base = attack damage and generate coins = 10× attack damage.\n"
-	ai_prompt += "2. Killing enemies grants coins equal to their reward.\n"
-	ai_prompt += "3. Enemies spawn every 0.5–2 seconds.\n"
-	ai_prompt += "4. Turrets persist across waves; plan long-term.\n"
-	ai_prompt += "5. Prioritize: survival → damage → coin generation.\n"
-	ai_prompt += "6. Do not suggest building towers on types with 0 available tiles.\n"
-	ai_prompt += "7. Tier 1 towers must be built on empty tiles; higher tiers only through upgrading.\n\n"
+	ai_prompt += "=== RULES ===\n"
+	ai_prompt += "1. Towers only attack their target enemy type.\n"
+	ai_prompt += "2. Support towers heal base = attack damage and generate coins = 10× attack damage.\n"
+	ai_prompt += "3. Killing enemies grants coins equal to their reward.\n"
+	ai_prompt += "4. Enemies spawn every 0.5–2 seconds.\n"
+	ai_prompt += "5. Turrets persist across waves; plan long-term.\n"
+	ai_prompt += "6. Prioritize: survival → damage → coin generation.\n"
+	ai_prompt += "7. Do not build towers on types with 0 available tiles.\n"
+	ai_prompt += "8. Tier 1 towers must be built on empty tiles; higher tiers only through upgrading.\n\n"
 
 
 	ai_prompt += "Game status:\n"
-	ai_prompt += "Current coins: %d\nCurrent health: %d\nAlready built towers: %s\nAvailable tiles: %s\nNext wave: %s\n" % [coins, health, built_towers_info, available_tiles_info, next_wave]
+	ai_prompt += "Current coins: %d\nCurrent health: %d\nAlready built towers(tower name with tier and count):\n %s\nAvailable tiles: %s\nNext wave enemies (formatted simple by 2 values in each line: Type, tier):\n %s\n" % [coins, health, built_towers_info, available_tiles_info, next_wave]
 	ai_prompt += "Each tower stats: %s\n" % tower_stats_info
 	ai_prompt += "Each enemy stats: %s\n" % enemy_stats_info
 
-	
+	print_debug(ai_prompt)
 	return ai_prompt
 
 

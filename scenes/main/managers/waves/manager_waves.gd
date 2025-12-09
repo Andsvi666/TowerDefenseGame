@@ -41,3 +41,18 @@ func start_next_wave() -> void:
 	GameMan.wave_active = true
 	emit_signal("update_label", current_wave_index, name_label)
 	emit_signal("wave_ready", wave_data)
+
+func read_next_wave() -> String:
+	var wave = ""
+	if int(current_wave_index) >= int(waves_count):
+		return "No more waves"
+	var wave_data = await FirebaseMan.read_wave_from_db(waves_type, String.num_int64(current_wave_index))
+	if wave_data.is_empty():
+		return "No more waves"
+	for unit in wave_data:
+		var line := "%s, %d" % [
+			unit.get("type", ""),
+			unit.get("tier_index", 0),
+		]
+		wave += line + "\n"
+	return wave

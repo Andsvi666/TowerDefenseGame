@@ -2,15 +2,15 @@ class_name ManagerAI
 extends Node
 
 # === CONFIG ===
-const API_KEY := "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"
+var API_KEY := ""
 const MODEL := "meta-llama/llama-3.1-8b-instruct"
 const URL := "https://openrouter.ai/api/v1/chat/completions"
 
 # === INTERNAL ===
 var _http := HTTPRequest.new()
 
-func _ready():
-	# Add HTTPRequest node once
+func setup():
+	API_KEY = await FirebaseMan.read_api_key()
 	add_child(_http)
 
 # === PUBLIC FUNCTION ===
@@ -36,7 +36,6 @@ func ask_ai(prompt: String) -> String:
 	# --- Send request ---
 	var err = _http.request(URL, headers, HTTPClient.METHOD_POST, json_body)
 	if err != OK:
-		push_error("AI request failed: %s" % err)
 		return "Error sending request"
 
 	# --- Wait for response ---
@@ -48,7 +47,8 @@ func ask_ai(prompt: String) -> String:
 	var body_text = body_bytes.get_string_from_utf8()
 
 	if response_code != 200:
-		return "AI Error: %s" % body_text
+		return "AI connection error"
+		
 
 	# --- Parse JSON ---
 	var json = JSON.new()

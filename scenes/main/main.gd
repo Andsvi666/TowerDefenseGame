@@ -11,7 +11,7 @@ func _on_login_success(auth):
 	setup_new_game()
 
 func setup_new_game() -> void:
-	print_debug("fresh game starting")
+	#print_debug("fresh game starting")
 	var tilemap = get_node("CanvasGameMain/TileMapSubViewport/SubViewport/TileMapLayer")
 	var overlay = get_node("CanvasGameMain/TileMapSubViewport/SubViewport/TileMapOverlay")
 	var endPoint = tilemap.get_node("EndPosition")

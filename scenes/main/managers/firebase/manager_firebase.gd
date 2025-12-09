@@ -170,3 +170,12 @@ func parse_wave_data(firestore_data: Dictionary) -> Array:
 		})
 	
 	return enemies
+
+func read_api_key() -> String:
+	var key = ""
+	var col: FirestoreCollection = Firebase.Firestore.collection('AI')
+	var doc = await col.get_doc("api key")
+	key = doc.get_value("key")
+	print_debug(key)
+	return key
+	
