@@ -4,7 +4,12 @@ extends Node
 var endless_mode: bool = false
 
 signal wave_complete_support
+signal game_setup_finished
+signal game_setup_started
 var wave_active: bool = false
+
+func _ready() -> void:
+	pass
 
 var built_towers := {
 	"turret_tier_1": 0,
@@ -55,7 +60,7 @@ var enemy_files := {
 }
 
 func setup_fresh_game(tilemap: TileMapLayer, overlay: TileMapLayer, spawnPoint: Marker2D, endPoint: Marker2D, wave_label: Label, health_label: Label, coin_label: Label, hover_label: Label) -> void:
-	WavesMan.connect("wave_ready", Callable(SpawnerMan, "_on_wave_ready"))
+	emit_signal("game_setup_started")
 	# Reset player stats
 	HealthMan.setup_health(health_label)
 	CoinsMan.setup_coins(coin_label)
@@ -71,6 +76,7 @@ func setup_fresh_game(tilemap: TileMapLayer, overlay: TileMapLayer, spawnPoint: 
 	AiMan.setup()
 	
 	wave_active = false
+	emit_signal("game_setup_finished")
 
 func stop_support_towers() -> void:
 	emit_signal("wave_complete_support")

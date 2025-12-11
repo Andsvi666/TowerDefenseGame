@@ -36,28 +36,24 @@ var spawn_point: Marker2D = null
 var elapsed_time: float = 0.0 
 var timer_count: float = 2.0
 var wave_data_array: Array = [] 
-var current_data_index: int = 0
 var is_spawning_wave: bool = false
 
 signal wave_complete
 var active_enemies: Array = []
 
+func _ready() -> void:
+	pass
+
 # Setup function to inject the TileMap and Endpoint
 func setup_map(spawnPoint: Marker2D) -> void:
+	stop_current_wave()
 	# Inject spawn point
 	spawn_point = spawnPoint
 
-	# --- Remove existing enemies from the scene ---
-	for enemy in active_enemies:
-		if is_instance_valid(enemy):
-			enemy.queue_free()
-
-	# --- Reset spawner state ---
+func stop_current_wave() -> void:
 	is_spawning_wave = false
 	wave_data_array.clear()
-	current_data_index = 0
 	active_enemies.clear()
-
 
 func _process(delta: float) -> void:
 	if endless_mode_enabled:
@@ -69,10 +65,6 @@ func _process(delta: float) -> void:
 		# wave mode handled separately via coroutines (see below)
 		pass
 
-func _on_wave_ready(wave_array: Array) -> void:
-	#print_debug(wave_array)
-	start_wave_coroutine(wave_array)
-
 func start_wave_coroutine(wave_array: Array) -> void:
 	if not wave_array or wave_array.is_empty():
 		print_debug("Wave is empty")
@@ -81,49 +73,39 @@ func start_wave_coroutine(wave_array: Array) -> void:
 	wave_mode_enabled = true
 	endless_mode_enabled = false
 	wave_data_array = wave_array
-	current_data_index = 0
 	is_spawning_wave = true
 	
-	spawn_next_wave_enemy()  # spawn_next_wave_enemy uses await internally
+	#print_debug(wave_data_array)
+	
+	for unit in wave_array:
+		var delay = unit["spawn_delay"]
+		spawn_next_wave_enemy(unit["type"], unit["tier_index"])
+		await get_tree().create_timer(delay, false).timeout
+	
+	is_spawning_wave = false
 
-func spawn_next_wave_enemy() -> void:
-	if current_data_index >= wave_data_array.size():
-		is_spawning_wave = false
-		#print_debug("Wave complete")
-		return
-	
-	var wave_data = wave_data_array[current_data_index]
-	current_data_index += 1
-	
-	var enemy_type_name = wave_data["type"]
+func spawn_next_wave_enemy(enemy_type_name: String, tier_index: int) -> void:
 	if not enemy_types.has(enemy_type_name):
 		push_error("Enemy type '%s' not found!" % enemy_type_name)
 		return
-	
+
 	var enemy_info = enemy_types[enemy_type_name]
 	var enemy_scene: PackedScene = enemy_info["scene"]
 	var enemy = enemy_scene.instantiate()
-	
-	if wave_data.has("tier_index"):
-		var index = wave_data["tier_index"]
-		if index >= 0 and index < enemy_info["tiers"].size():
-			enemy.stats = enemy_info["tiers"][index]
-	
+
+	if tier_index >= 0 and tier_index < enemy_info["tiers"].size():
+		enemy.stats = enemy_info["tiers"][tier_index]
+
 	if spawn_point:
 		enemy.global_position = spawn_point.global_position
-		spawn_point.get_parent().add_child(enemy)  # ensures enemy is in the same canvas/layer as towers
-	
-	# 	track enemy
+		spawn_point.get_parent().add_child(enemy)
+
+	# Track enemy
 	active_enemies.append(enemy)
-	
+
 	if not enemy.is_connected("enemy_died", Callable(self, "_on_enemy_died")):
 		enemy.connect("enemy_died", Callable(self, "_on_enemy_died"))
-	
-	# spawn next enemy after its delay
-	var delay = wave_data["spawn_delay"] if wave_data.has("spawn_delay") else base_spawn_delay
-	await get_tree().create_timer(delay, false).timeout
-	#print_debug("wait ended")
-	spawn_next_wave_enemy()
+
 
 func _on_enemy_died(enemy_node: Node) -> void:
 	active_enemies.erase(enemy_node)

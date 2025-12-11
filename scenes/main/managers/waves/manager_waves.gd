@@ -8,7 +8,7 @@ var waves_count := 0
 var waves_type := "standart"
 var is_spawning := false
 
-signal wave_ready
+#signal wave_ready
 signal update_label(sum: int, name_label: Label)
 
 # Called when the node enters the scene tree for the first time.
@@ -23,6 +23,7 @@ func setup_waves(given_label: Label) -> void:
 	waves_count = await FirebaseMan.read_waves_count(waves_type)
 	#print_debug(waves_count)
 	emit_signal("update_label", current_wave_index, name_label)
+	
 
 func start_next_wave() -> void:
 	#print_debug(current_wave_index)
@@ -40,7 +41,7 @@ func start_next_wave() -> void:
 	#print_debug(current_wave_index)
 	GameMan.wave_active = true
 	emit_signal("update_label", current_wave_index, name_label)
-	emit_signal("wave_ready", wave_data)
+	SpawnerMan.start_wave_coroutine(wave_data)
 
 func read_next_wave() -> String:
 	var wave = ""

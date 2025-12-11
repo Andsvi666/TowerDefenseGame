@@ -12,4 +12,5 @@ func _on_play_button_pressed():
 	ScreenMan.change_screen("game")
 
 func _on_logout_button_pressed():
+	FirebaseMan.logout_user()
 	ScreenMan.change_screen("login")

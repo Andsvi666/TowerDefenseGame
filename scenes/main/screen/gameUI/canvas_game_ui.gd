@@ -31,6 +31,24 @@ func _ready() -> void:
 	CoinsMan.connect("update_label", Callable(self, "_on_update_label"))
 	WavesMan.connect("update_label", Callable(self, "_on_update_label"))
 	SpawnerMan.connect("wave_complete", Callable(self, "_on_wave_complete"))
+	GameMan.connect("game_setup_finished", Callable(self, "_game_setup_finished"))
+	GameMan.connect("game_setup_started", Callable(self, "_game_setup_started"))
+
+func _game_setup_started() -> void:
+	#print_debug("Reset begins")
+	pause_button.disabled = true
+	start_wave_button.disabled = true
+	restart_button.disabled = true
+	advice_button.disabled = true
+	menu_button.disabled = true
+
+func _game_setup_finished() -> void:
+	#print_debug("Reset ends")
+	pause_button.disabled = false
+	start_wave_button.disabled = false
+	restart_button.disabled = false
+	advice_button.disabled = false
+	menu_button.disabled = false
 
 func _on_firebase_button_pressed() -> void:
 	FirebaseMan.write_to_db()
@@ -68,6 +86,7 @@ func _on_game_over() -> void:
 
 func _on_game_over_restart() -> void:
 	get_tree().paused = false
+	SpawnerMan.stop_current_wave()
 	ScreenMan.change_screen("game")
 
 func _on_pause_button_pressed() -> void:
@@ -103,7 +122,7 @@ func _on_advice_button_pressed() -> void:
 	advice_button.disabled = false
 
 func _on_menu_button_pressed() -> void:
-	print_debug("to menu")
+	#print_debug("to menu")
 	ScreenMan.change_screen("menu")
 	#switch to menu
  

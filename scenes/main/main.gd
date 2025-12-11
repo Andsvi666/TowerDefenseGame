@@ -2,13 +2,7 @@ class_name Main
 extends Node2D
 
 func _ready() -> void:
-	if FirebaseMan.is_logged_in():
-		setup_new_game()
-	else:
-		FirebaseMan.connect("login_success", Callable(self, "_on_login_success"))
-
-func _on_login_success(auth):
-	ScreenMan.change_screen("login")
+	pass
 
 func setup_new_game() -> void:
 	#print_debug("fresh game starting")

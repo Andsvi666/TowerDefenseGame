@@ -7,4 +7,4 @@ func _ready() -> void:
 	login_button.pressed.connect(_on_login_button_pressed)
 
 func _on_login_button_pressed():
-	ScreenMan.change_screen("menu")
+	FirebaseMan.login_with_google()

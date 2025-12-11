@@ -5,35 +5,38 @@ extends Node
 # ---------------------------- AUTH --------------------------------
 # ==================================================================
 
-signal login_success
 var current_user = null 
+var test_email := "test@gmail.com"
+var test_password := "password123"
 
 func _ready():
-	# connect signals
 	await get_tree().process_frame
-	Firebase.Auth.login_succeeded.connect(_on_login_ok)
-	Firebase.Auth.login_failed.connect(_on_login_fail)
-
-	# start login
-	var email = "test@gmail.com"
-	var password = "123456789"
-	Firebase.Auth.login_with_email_and_password(email, password)
-
-	print("Trying to log in...")
+	Firebase.Auth.login_succeeded.connect(_on_login_succeeded)
+	Firebase.Auth.login_failed.connect(_on_login_failed)
 	
+	# Automatic login for testing
+	login_with_email()
 
-func _on_login_ok(auth):
-	print("LOGIN SUCCESS!")
-	current_user = auth
-	emit_signal("login_success", auth)
-	#print(auth) # contains user info
-	# now Firestore works
 
-func _on_login_fail(code, msg):
-	print("LOGIN FAILED:", code, msg)
+func login_with_email() -> void:
+	Firebase.Auth.login_with_email_and_password(test_email, test_password)
 
-func is_logged_in() -> bool:
-	return current_user != null
+func login_with_google():
+	# automatic desktop OAuth login
+	var port = 8060 # any free port
+	Firebase.Auth.get_auth_localhost(Firebase.Auth.get_GoogleProvider(), port)
+
+func _on_login_succeeded(user: Dictionary):
+	print("LOGIN SUCCESS:", user)
+	current_user = user
+	ScreenMan.change_screen("menu")
+
+func _on_login_failed(error_code, message):
+	print("LOGIN FAILED:", error_code, message)
+
+func logout_user():
+	current_user = null
+	Firebase.Auth.logout()
 
 # ==================================================================
 # ---------------------------- DATABASE ----------------------------
