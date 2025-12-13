@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://gl4wa8cp2d2p" path="res://assets/tiles/placement/cannon.png" id="5_byvj6"]
 [ext_resource type="Texture2D" uid="uid://04iak6jv43kl" path="res://assets/tiles/placement/missile.png" id="6_l1bvi"]
 [ext_resource type="Texture2D" uid="uid://cmvd7nc8a6l3x" path="res://assets/tiles/placement/support.png" id="7_xhcrg"]
+[ext_resource type="Theme" uid="uid://c04p4lp6xvykg" path="res://assets/themes/button.tres" id="8_5174x"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_t5yut"]
 font_size = 12
@@ -36,8 +37,6 @@ font_color = Color(0.24921095, 0.22337419, 0.6480576, 1)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_u1cvo"]
 load_path = "res://.godot/imported/RedBag.png-c0bbffb503317d38c26dcddecbf988e2.ctex"
-
-[sub_resource type="Theme" id="Theme_v88fs"]
 
 [sub_resource type="Theme" id="Theme_t5yut"]
 default_font_size = 25
@@ -359,10 +358,9 @@ anchor_left = 0.16
 anchor_top = 0.2
 anchor_right = 0.2
 anchor_bottom = 0.8
-offset_left = -0.31999207
+offset_left = 4.0
 offset_top = 0.19999981
-offset_right = -0.4559784
-theme_override_styles/panel = ExtResource("1_u1cvo")
+offset_right = -4.0
 
 [node name="WaveLabel" type="Label" parent="BarsControl/TopBar/WavePanel"]
 z_index = 1
@@ -372,7 +370,21 @@ text = "0"
 label_settings = SubResource("LabelSettings_c1rh2")
 vertical_alignment = 1
 
-[node name="ColorRect" type="ColorRect" parent="BarsControl/TopBar"]
+[node name="WavePanelVisual" type="PanelContainer" parent="BarsControl/TopBar"]
+z_index = 1
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.16
+anchor_top = 0.2
+anchor_right = 0.2
+anchor_bottom = 0.8
+offset_left = -0.31999207
+offset_top = 0.19999981
+offset_right = -0.4559784
+theme_override_styles/panel = ExtResource("1_u1cvo")
+
+[node name="ColorRectBarBox" type="ColorRect" parent="BarsControl/TopBar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -397,17 +409,30 @@ anchor_left = 0.88
 anchor_top = 0.2
 anchor_right = 0.98
 anchor_bottom = 0.8
+offset_left = 4.0
+offset_top = 0.031999588
+offset_right = -4.0
+offset_bottom = 0.03199768
+
+[node name="CoinLabel" type="Label" parent="BarsControl/TopBar/CoinPanel"]
+z_index = 2
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_c1rh2")
+vertical_alignment = 1
+
+[node name="CoinPanelVisual" type="PanelContainer" parent="BarsControl/TopBar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.88
+anchor_top = 0.2
+anchor_right = 0.98
+anchor_bottom = 0.8
 offset_left = 0.2399292
 offset_top = 0.031999588
 offset_right = -0.48010254
 offset_bottom = 0.03199768
 theme_override_styles/panel = ExtResource("1_u1cvo")
-
-[node name="CoinLabel" type="Label" parent="BarsControl/TopBar/CoinPanel"]
-layout_mode = 2
-text = "0"
-label_settings = SubResource("LabelSettings_c1rh2")
-vertical_alignment = 1
 
 [node name="HealthTexture" type="TextureRect" parent="BarsControl/TopBar"]
 layout_mode = 0
@@ -425,17 +450,31 @@ anchor_left = 0.76
 anchor_top = 0.2
 anchor_right = 0.803
 anchor_bottom = 0.82800007
+offset_left = 4.0
+offset_top = 0.00799942
+offset_right = -4.0
+offset_bottom = 0.0079956055
+theme_override_styles/panel = ExtResource("1_u1cvo")
+
+[node name="HealthLabel" type="Label" parent="BarsControl/TopBar/HealthPanel"]
+z_index = 2
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_c1rh2")
+vertical_alignment = 1
+
+[node name="HealthPanelVisual" type="PanelContainer" parent="BarsControl/TopBar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.76
+anchor_top = 0.2
+anchor_right = 0.803
+anchor_bottom = 0.82800007
 offset_left = 0.3279419
 offset_top = 0.00799942
 offset_right = 0.27197266
 offset_bottom = 0.0079956055
 theme_override_styles/panel = ExtResource("1_u1cvo")
-
-[node name="HealthLabel" type="Label" parent="BarsControl/TopBar/HealthPanel"]
-layout_mode = 2
-text = "0"
-label_settings = SubResource("LabelSettings_c1rh2")
-vertical_alignment = 1
 
 [node name="BottomBar" type="Control" parent="BarsControl"]
 layout_mode = 1
@@ -474,51 +513,27 @@ anchor_right = 0.98
 anchor_bottom = 0.8
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_v88fs")
+theme = ExtResource("8_5174x")
 theme_override_constants/separation = 40
 
 [node name="PauseButton" type="Button" parent="BarsControl/BottomBar/Flexor"]
 layout_mode = 2
 theme = SubResource("Theme_t5yut")
-theme_override_colors/font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
-theme_override_colors/font_focus_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_pressed_color = Color(0.11350679, 0.3097099, 0.27998218, 1)
-theme_override_colors/font_hover_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.6533558, 0.9476338, 0.9661991, 1)
-theme_override_colors/font_disabled_color = Color(0.9019608, 0.050980393, 0.34509805, 1)
 text = "Pause"
 
 [node name="RestartButton" type="Button" parent="BarsControl/BottomBar/Flexor"]
 layout_mode = 2
 theme = SubResource("Theme_t5yut")
-theme_override_colors/font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
-theme_override_colors/font_focus_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_pressed_color = Color(0.11372549, 0.30980393, 0.2784314, 1)
-theme_override_colors/font_hover_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.6533558, 0.9476338, 0.9661991, 1)
-theme_override_colors/font_disabled_color = Color(0.9019608, 0.050980393, 0.34509805, 1)
 text = "Restart game"
 
 [node name="StartWaveButton" type="Button" parent="BarsControl/BottomBar/Flexor"]
 layout_mode = 2
 theme = SubResource("Theme_7c77l")
-theme_override_colors/font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
-theme_override_colors/font_focus_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_pressed_color = Color(0.11372549, 0.30980393, 0.2784314, 1)
-theme_override_colors/font_hover_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.654902, 0.9490196, 0.9647059, 1)
-theme_override_colors/font_disabled_color = Color(0.9019608, 0.050980393, 0.34509805, 1)
 text = "Start next wave"
 
 [node name="AdviceButton" type="Button" parent="BarsControl/BottomBar/Flexor"]
 layout_mode = 2
 theme = SubResource("Theme_7c77l")
-theme_override_colors/font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
-theme_override_colors/font_focus_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_pressed_color = Color(0.11372549, 0.30980393, 0.2784314, 1)
-theme_override_colors/font_hover_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.654902, 0.9490196, 0.9647059, 1)
-theme_override_colors/font_disabled_color = Color(0.9019608, 0.050980393, 0.34509805, 1)
 text = "Receive advice"
 
 [node name="FirebaseButton" type="Button" parent="BarsControl/BottomBar/Flexor"]
@@ -537,10 +552,4 @@ text = "Write to Firebase
 [node name="MenuButton" type="Button" parent="BarsControl/BottomBar/Flexor"]
 layout_mode = 2
 theme = SubResource("Theme_7c77l")
-theme_override_colors/font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
-theme_override_colors/font_focus_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_pressed_color = Color(0.11372549, 0.30980393, 0.2784314, 1)
-theme_override_colors/font_hover_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.654902, 0.9490196, 0.9647059, 1)
-theme_override_colors/font_disabled_color = Color(0.9019608, 0.050980393, 0.34509805, 1)
 text = "Return to menu"

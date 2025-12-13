@@ -28,6 +28,7 @@ PathMan="*res://scenes/main/managers/pathfinding/manager_pathfinding.tscn"
 SpawnerMan="*res://scenes/main/managers/spawner/manager_spawner.tscn"
 BuildingMan="*res://scenes/main/managers/building/manager_building.tscn"
 ScreenMan="*res://scenes/main/managers/screen/manager_screen.tscn"
+URLTextureManager="*res://addons/url_texture/./manager/http_texture_manager.gd"
 
 [display]
 
@@ -38,7 +39,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot-firebase/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot-firebase/plugin.cfg", "res://addons/url_texture/plugin.cfg")
 
 [input]
 

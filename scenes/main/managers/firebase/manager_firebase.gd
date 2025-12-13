@@ -15,13 +15,13 @@ func _ready():
 	Firebase.Auth.login_failed.connect(_on_login_failed)
 	
 	# Automatic login for testing
-	login_with_email()
+	#login_with_email()
 
 
 func login_with_email() -> void:
 	Firebase.Auth.login_with_email_and_password(test_email, test_password)
 
-func login_with_google():
+func login_with_google() -> void:
 	# automatic desktop OAuth login
 	var port = 8060 # any free port
 	Firebase.Auth.get_auth_localhost(Firebase.Auth.get_GoogleProvider(), port)
@@ -29,17 +29,53 @@ func login_with_google():
 func _on_login_succeeded(user: Dictionary):
 	print("LOGIN SUCCESS:", user)
 	current_user = user
+	if current_user.has("isnewuser"):
+		setup_new_user()
 	ScreenMan.change_screen("menu")
 
-func _on_login_failed(error_code, message):
+func _on_login_failed(error_code, message) -> void:
 	print("LOGIN FAILED:", error_code, message)
 
-func logout_user():
+func logout_user() -> void:
 	current_user = null
 	Firebase.Auth.logout()
 
 # ==================================================================
-# ---------------------------- DATABASE ----------------------------
+# ---------------------------- DATABASE USER------------------------
+# ==================================================================
+
+func setup_new_user() -> void:
+	var user_stats = {
+		"total_games_played": 0,
+		"total_towers_built": 0,
+		"total_enemies_killed": 0,
+		"highest_AI_wave": 0,
+		"longest_endless_time": 0
+	}
+	
+	var uid = current_user["localid"]
+	var col: FirestoreCollection = Firebase.Firestore.collection('users')
+	var document = await col.add(uid, user_stats)
+	
+
+func read_user_stats() -> Dictionary:
+	var stats = {}
+	var uid = current_user["localid"]
+	var col: FirestoreCollection = Firebase.Firestore.collection('users')
+	var doc = await col.get_doc(uid)
+	
+	if doc == null or doc.keys() == null:
+		push_warning("User stats not found for UID: %s" % uid)
+		return stats
+	
+	var keys = doc.keys()
+	
+	for key in keys:
+		stats[key] = doc.get_value(key)
+	return stats
+
+# ==================================================================
+# ---------------------------- DATABASE WAVES-----------------------
 # ==================================================================
 
 func write_to_db() -> void:

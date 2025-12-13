@@ -1,6 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://smowvv7hp723"]
+[gd_scene load_steps=12 format=3 uid="uid://smowvv7hp723"]
 
 [ext_resource type="Script" uid="uid://si5fl0i1vjiy" path="res://scenes/main/screen/menu/canvas_menu.gd" id="1_8tsqr"]
+[ext_resource type="Theme" uid="uid://c04p4lp6xvykg" path="res://assets/themes/button.tres" id="2_4xvik"]
+[ext_resource type="Texture2D" uid="uid://c8a17c55et0cu" path="res://icon.svg" id="2_vraol"]
+[ext_resource type="FontFile" uid="uid://bofdnyj367mki" path="res://assets/fonts/Sekuya-Regular.ttf" id="3_pqxqm"]
 
 [sub_resource type="Theme" id="Theme_vraol"]
 
@@ -13,6 +16,28 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="Theme" id="Theme_8tsqr"]
 default_font_size = 25
 
+[sub_resource type="FontVariation" id="FontVariation_pqxqm"]
+base_font = ExtResource("3_pqxqm")
+spacing_glyph = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_8tsqr"]
+font_size = 80
+font_color = Color(0.30980393, 0.12156863, 0.22745098, 1)
+outline_size = 6
+outline_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_vraol"]
+font_size = 20
+font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4xvik"]
+font_size = 25
+font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
 [node name="CanvasMenu" type="CanvasLayer"]
 script = ExtResource("1_8tsqr")
 
@@ -22,95 +47,274 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -230.0
-offset_top = -250.0
-offset_right = 230.0
-offset_bottom = 250.0
+offset_left = -720.0
+offset_top = -320.0
+offset_right = 720.0
+offset_bottom = 320.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2_4xvik")
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
+size = Vector2i(1440, 640)
 render_target_update_mode = 4
 
-[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="ColorRectMain" type="ColorRect" parent="SubViewportContainer/SubViewport"]
+anchors_preset = -1
+anchor_left = 0.35
+anchor_top = 0.25
+anchor_right = 0.65
+anchor_bottom = 0.9
+offset_bottom = -0.2000122
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_vraol")
 color = Color(0.30980393, 0.12156863, 0.22745098, 1)
 
-[node name="Label" type="Label" parent="SubViewportContainer/SubViewport"]
+[node name="ColorRectMainOuter" type="ColorRect" parent="SubViewportContainer/SubViewport"]
+z_index = -1
 anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.05
-anchor_right = 0.9
-anchor_bottom = 0.15
-offset_left = 0.19199753
-offset_right = -0.1920166
-offset_bottom = 0.21599579
+anchor_left = 0.35
+anchor_top = 0.25
+anchor_right = 0.65
+anchor_bottom = 0.9
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+
+[node name="VBoxContainerMain" type="VBoxContainer" parent="SubViewportContainer/SubViewport"]
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.3
+anchor_right = 0.6
+anchor_bottom = 0.85
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_4xvik")
+theme_override_constants/separation = 25
+
+[node name="Label" type="Label" parent="SubViewportContainer/SubViewport/VBoxContainerMain"]
+layout_mode = 2
 text = "Main Menu"
 label_settings = SubResource("LabelSettings_kgckk")
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/SubViewport"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -150.0
-offset_right = 150.0
-offset_bottom = 150.0
+[node name="StartButton" type="Button" parent="SubViewportContainer/SubViewport/VBoxContainerMain"]
+layout_mode = 2
+text = "Start Game"
+
+[node name="PlaceholderButton1" type="Button" parent="SubViewportContainer/SubViewport/VBoxContainerMain"]
+layout_mode = 2
+theme = SubResource("Theme_8tsqr")
+text = "placeholder"
+
+[node name="PlaceholderButton2" type="Button" parent="SubViewportContainer/SubViewport/VBoxContainerMain"]
+layout_mode = 2
+theme = SubResource("Theme_8tsqr")
+text = "placeholder"
+
+[node name="LogoutButton" type="Button" parent="SubViewportContainer/SubViewport/VBoxContainerMain"]
+layout_mode = 2
+theme = SubResource("Theme_8tsqr")
+text = "Logout"
+
+[node name="TitleLabel" type="Label" parent="SubViewportContainer/SubViewport"]
+anchors_preset = -1
+anchor_left = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.25
+offset_left = -1.5258789e-05
+offset_top = 0.19999695
+offset_right = -0.3840332
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
+theme_override_fonts/font = SubResource("FontVariation_pqxqm")
+theme_override_font_sizes/font_size = 16
+text = "TERMINUS"
+label_settings = SubResource("LabelSettings_8tsqr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRectLeft" type="ColorRect" parent="SubViewportContainer/SubViewport"]
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.35
+anchor_right = 0.3
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.30980393, 0.12156863, 0.22745098, 1)
+
+[node name="ColorRectLeftOuter" type="ColorRect" parent="SubViewportContainer/SubViewport"]
+z_index = -1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.35
+anchor_right = 0.3
+anchor_bottom = 0.8
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+
+[node name="Label" type="Label" parent="SubViewportContainer/SubViewport"]
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.37
+anchor_right = 0.3
+anchor_bottom = 0.45600003
+offset_right = -0.2000122
+offset_bottom = -0.040039063
+text = "Your Stats"
+label_settings = SubResource("LabelSettings_kgckk")
+horizontal_alignment = 1
+
+[node name="VBoxContainerLeft" type="VBoxContainer" parent="SubViewportContainer/SubViewport"]
+anchors_preset = -1
+anchor_left = 0.06
+anchor_top = 0.47
+anchor_right = 0.29
+anchor_bottom = 0.78
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 13
+
+[node name="HBoxContainerTotalGames" type="HBoxContainer" parent="SubViewportContainer/SubViewport/VBoxContainerLeft"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SubViewportContainer/SubViewport/VBoxContainerLeft/HBoxContainerTotalGames"]
+layout_mode = 2
+text = "Total Games Played: "
+label_settings = SubResource("LabelSettings_vraol")
+
+[node name="LabelData" type="Label" parent="SubViewportContainer/SubViewport/VBoxContainerLeft/HBoxContainerTotalGames"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_vraol")
+
+[node name="HBoxContainerTotalKills" type="HBoxContainer" parent="SubViewportContainer/SubViewport/VBoxContainerLeft"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SubViewportContainer/SubViewport/VBoxContainerLeft/HBoxContainerTotalKills"]
+layout_mode = 2
+text = "Total Enemies Killed: "
+label_settings = SubResource("LabelSettings_vraol")
+
+[node name="LabelData" type="Label" parent="SubViewportContainer/SubViewport/VBoxContainerLeft/HBoxContainerTotalKills"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_vraol")
+
+[node name="HBoxContainerTotalTowers" type="HBoxContainer" parent="SubViewportContainer/SubViewport/VBoxContainerLeft"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SubViewportContainer/SubViewport/VBoxContainerLeft/HBoxContainerTotalTowers"]
+layout_mode = 2
+text = "Total Towers Built: "
+label_settings = SubResource("LabelSettings_vraol")
+
+[node name="LabelData" type="Label" parent="SubViewportContainer/SubViewport/VBoxContainerLeft/HBoxContainerTotalTowers"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_vraol")
+
+[node name="HBoxContainerAiWavesRecord" type="HBoxContainer" parent="SubViewportContainer/SubViewport/VBoxContainerLeft"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SubViewportContainer/SubViewport/VBoxContainerLeft/HBoxContainerAiWavesRecord"]
+layout_mode = 2
+text = "AI Mode Highest Wave: "
+label_settings = SubResource("LabelSettings_vraol")
+
+[node name="LabelData" type="Label" parent="SubViewportContainer/SubViewport/VBoxContainerLeft/HBoxContainerAiWavesRecord"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_vraol")
+
+[node name="HBoxContainerEndlessSeconds" type="HBoxContainer" parent="SubViewportContainer/SubViewport/VBoxContainerLeft"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SubViewportContainer/SubViewport/VBoxContainerLeft/HBoxContainerEndlessSeconds"]
+layout_mode = 2
+text = "Endless Mode Best Time:"
+label_settings = SubResource("LabelSettings_vraol")
+
+[node name="LabelData" type="Label" parent="SubViewportContainer/SubViewport/VBoxContainerLeft/HBoxContainerEndlessSeconds"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_vraol")
+
+[node name="ColorRectRight" type="ColorRect" parent="SubViewportContainer/SubViewport"]
+anchors_preset = -1
+anchor_left = 0.7
+anchor_top = 0.35
+anchor_right = 0.95
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.30980393, 0.12156863, 0.22745098, 1)
+
+[node name="ColorRectRightOuter" type="ColorRect" parent="SubViewportContainer/SubViewport"]
+z_index = -1
+anchors_preset = -1
+anchor_left = 0.7
+anchor_top = 0.35
+anchor_right = 0.95
+anchor_bottom = 0.8
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+
+[node name="VBoxContainerRight" type="VBoxContainer" parent="SubViewportContainer/SubViewport"]
+anchors_preset = -1
+anchor_left = 0.71
+anchor_top = 0.37
+anchor_right = 0.94
+anchor_bottom = 0.78
+offset_bottom = -3.0517578e-05
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 15
 
-[node name="StartButton" type="Button" parent="SubViewportContainer/SubViewport/VBoxContainer"]
+[node name="Label" type="Label" parent="SubViewportContainer/SubViewport/VBoxContainerRight"]
 layout_mode = 2
-theme = SubResource("Theme_8tsqr")
-theme_override_colors/font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
-theme_override_colors/font_focus_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_pressed_color = Color(0.11372549, 0.30980393, 0.2784314, 1)
-theme_override_colors/font_hover_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.6533558, 0.9476338, 0.9661991, 1)
-theme_override_colors/font_disabled_color = Color(0.9019608, 0.050980393, 0.34509805, 1)
-text = "Start Game"
+text = "Welcome"
+label_settings = SubResource("LabelSettings_kgckk")
+horizontal_alignment = 1
 
-[node name="PlaceholderButton1" type="Button" parent="SubViewportContainer/SubViewport/VBoxContainer"]
+[node name="Control" type="Control" parent="SubViewportContainer/SubViewport/VBoxContainerRight"]
 layout_mode = 2
-theme = SubResource("Theme_8tsqr")
-theme_override_colors/font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
-theme_override_colors/font_focus_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_pressed_color = Color(0.11372549, 0.30980393, 0.2784314, 1)
-theme_override_colors/font_hover_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.6533558, 0.9476338, 0.9661991, 1)
-theme_override_colors/font_disabled_color = Color(0.9019608, 0.050980393, 0.34509805, 1)
-text = "placeholder"
+size_flags_vertical = 3
 
-[node name="PlaceholderButton2" type="Button" parent="SubViewportContainer/SubViewport/VBoxContainer"]
-layout_mode = 2
-theme = SubResource("Theme_8tsqr")
-theme_override_colors/font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
-theme_override_colors/font_focus_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_pressed_color = Color(0.11372549, 0.30980393, 0.2784314, 1)
-theme_override_colors/font_hover_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.6533558, 0.9476338, 0.9661991, 1)
-theme_override_colors/font_disabled_color = Color(0.9019608, 0.050980393, 0.34509805, 1)
-text = "placeholder"
+[node name="ImageRect" type="TextureRect" parent="SubViewportContainer/SubViewport/VBoxContainerRight/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -10.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_vraol")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="LogoutButton" type="Button" parent="SubViewportContainer/SubViewport/VBoxContainer"]
+[node name="LabelUserName" type="Label" parent="SubViewportContainer/SubViewport/VBoxContainerRight"]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-theme = SubResource("Theme_8tsqr")
-theme_override_colors/font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
-theme_override_colors/font_focus_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_pressed_color = Color(0.11372549, 0.30980393, 0.2784314, 1)
-theme_override_colors/font_hover_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.6533558, 0.9476338, 0.9661991, 1)
-theme_override_colors/font_disabled_color = Color(0.9019608, 0.050980393, 0.34509805, 1)
-text = "Logout"
+text = "Name"
+label_settings = SubResource("LabelSettings_4xvik")
+horizontal_alignment = 1
