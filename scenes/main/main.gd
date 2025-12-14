@@ -13,6 +13,6 @@ func setup_new_game() -> void:
 	var wave_label = get_node_or_null("/root/Main/CanvasGameUI/BarsControl/TopBar/WavePanel/WaveLabel")
 	var health_label = get_node_or_null("/root/Main/CanvasGameUI/BarsControl/TopBar/HealthPanel/HealthLabel")
 	var coin_label = get_node_or_null("/root/Main/CanvasGameUI/BarsControl/TopBar/CoinPanel/CoinLabel")
-	var hover_label = get_node_or_null("/root/Main/CanvasGameUI/HoverLabel")
+	var hover_panel = get_node_or_null("/root/Main/CanvasGameUI/PanelHoverInfo")
 	
-	GameMan.setup_fresh_game(tilemap, overlay, spawnPoint, endPoint, wave_label, health_label, coin_label, hover_label)
+	GameMan.setup_fresh_game(tilemap, overlay, spawnPoint, endPoint, wave_label, health_label, coin_label, hover_panel)

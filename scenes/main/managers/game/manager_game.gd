@@ -59,7 +59,7 @@ var enemy_files := {
 	"plane_tier_3": "res://scenes/main/enemy/plane/tiers/plane_tier_3.tres"
 }
 
-func setup_fresh_game(tilemap: TileMapLayer, overlay: TileMapLayer, spawnPoint: Marker2D, endPoint: Marker2D, wave_label: Label, health_label: Label, coin_label: Label, hover_label: Label) -> void:
+func setup_fresh_game(tilemap: TileMapLayer, overlay: TileMapLayer, spawnPoint: Marker2D, endPoint: Marker2D, wave_label: Label, health_label: Label, coin_label: Label, hover_panel: Panel) -> void:
 	emit_signal("game_setup_started")
 	# Reset player stats
 	HealthMan.setup_health(health_label)
@@ -70,7 +70,7 @@ func setup_fresh_game(tilemap: TileMapLayer, overlay: TileMapLayer, spawnPoint: 
 
 	# Setup map-dependent managers
 	PathMan.setup_map(tilemap, endPoint)
-	BuildingMan.setup_map(tilemap, overlay, hover_label)
+	BuildingMan.setup_map(tilemap, overlay, hover_panel)
 	SpawnerMan.setup_map(spawnPoint)
 	
 	AiMan.setup()

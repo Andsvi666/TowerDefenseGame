@@ -1,17 +1,18 @@
 class_name CanvasGameUI
 extends CanvasLayer
 
-@onready var pause_button: Button = $BarsControl/BottomBar/Flexor/PauseButton
-@onready var start_wave_button: Button = $BarsControl/BottomBar/Flexor/StartWaveButton
-@onready var restart_button: Button = $BarsControl/BottomBar/Flexor/RestartButton
-@onready var advice_button: Button = $BarsControl/BottomBar/Flexor/AdviceButton
-@onready var firebase_button: Button = $BarsControl/BottomBar/Flexor/FirebaseButton
-@onready var menu_button: Button = $BarsControl/BottomBar/Flexor/MenuButton
+@onready var pause_button: Button = $BarsControl/TopBar/ButtonPause
+@onready var resume_button: Button = $PanelPauseMenu/VBoxContainer/ResumeButton
+@onready var start_wave_button: Button = $BarsControl/TopBar/StartWaveButton
+@onready var restart_button: Button = $PanelPauseMenu/VBoxContainer/RestartButton
+@onready var advice_button: Button = $BarsControl/SideBar/AdviceButton
+@onready var firebase_button: Button = $PanelPauseMenu/VBoxContainer/FirebaseButton
+@onready var menu_button: Button = $PanelPauseMenu/VBoxContainer/MenuButton
 @onready var advice_label: RichTextLabel = $BarsControl/SideBar/AdvicePanel/AdviceLabel
 @onready var game_over_popup: AcceptDialog = $GameOverPopup
+@onready var pause_panel: Panel = $PanelPauseMenu
 
 var can_start_wave := true
-var is_paused := false
 
 func _ready() -> void:
 	# Make sure the whole UI (including child buttons) keeps working while paused
@@ -25,6 +26,7 @@ func _ready() -> void:
 	advice_button.pressed.connect(_on_advice_button_pressed)
 	firebase_button.pressed.connect(_on_firebase_button_pressed)
 	menu_button.pressed.connect(_on_menu_button_pressed)
+	resume_button.pressed.connect(_on_resume_button_pressed)
 	
 	HealthMan.connect("update_label", Callable(self, "_on_update_label"))
 	HealthMan.connect("game_over", Callable(self, "_on_game_over"))
@@ -85,20 +87,28 @@ func _on_game_over() -> void:
 		game_over_popup.connect("confirmed", Callable(self, "_on_game_over_restart"))
 
 func _on_game_over_restart() -> void:
+	pause_panel.visible = false
 	get_tree().paused = false
 	SpawnerMan.stop_current_wave()
 	ScreenMan.change_screen("game")
 
 func _on_pause_button_pressed() -> void:
-	is_paused = !is_paused
-	get_tree().paused = is_paused
-	pause_button.text = "Resume" if is_paused else "Pause"
-
+	get_tree().paused = true
+	pause_panel.visible = true
 	# Keep button disabled if a wave is running, even after unpause
 	if !can_start_wave:
 		start_wave_button.disabled = true
 	else:
-		start_wave_button.disabled = is_paused
+		start_wave_button.disabled = true
+
+func _on_resume_button_pressed() -> void:
+	pause_panel.visible = false
+	get_tree().paused = false
+	# Keep button disabled if a wave is running, even after unpause
+	if !can_start_wave:
+		start_wave_button.disabled = true
+	else:
+		start_wave_button.disabled = false
 
 func _on_start_wave_button_pressed() -> void:
 	if not can_start_wave:
@@ -123,6 +133,8 @@ func _on_advice_button_pressed() -> void:
 
 func _on_menu_button_pressed() -> void:
 	#print_debug("to menu")
+	pause_panel.visible = false
+	get_tree().paused = false
 	ScreenMan.change_screen("menu")
 	#switch to menu
  

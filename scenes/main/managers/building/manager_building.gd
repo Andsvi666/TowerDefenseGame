@@ -1,7 +1,7 @@
 class_name ManagerBuilding
 extends Node
 
-var hover_label: Label = null
+var hover_panel: Panel = null
 var tile_map_layer: TileMapLayer = null
 var tile_map_overlay: TileMapLayer = null
 
@@ -37,10 +37,10 @@ const MISSILE_ATLAS = Vector2i(18, 1)
 const SUPPORT_ATLAS = Vector2i(16, 1)
 
 # Setup function to inject the TileMap and Overlay
-func setup_map(tilemap: TileMapLayer, overlay: TileMapLayer, given_label: Label) -> void:
+func setup_map(tilemap: TileMapLayer, overlay: TileMapLayer, given_panel: Panel) -> void:
 	tile_map_layer = tilemap
 	tile_map_overlay = overlay
-	hover_label = given_label
+	hover_panel = given_panel
 	reset_towers()
 
 func reset_towers():
@@ -81,53 +81,74 @@ func _process(_delta: float) -> void:
 	# --- 1. Hover over existing tower: show "Upgrade" ---
 	if towers_by_cell.has(cell):
 		var tower: TowerBase = towers_by_cell[cell]
-		var tower_upgrade_price := ""
-		if(tower.stats.tower_name == "turret"):
-			tower_upgrade_price = String.num_int64(turret_upgrade_tier.build_cost)
-		if(tower.stats.tower_name == "cannon"):
-			tower_upgrade_price = String.num_int64(cannon_upgrade_tier.build_cost)
-		if(tower.stats.tower_name == "missile"):
-			tower_upgrade_price = String.num_int64(missile_upgrade_tier.build_cost)
-		if(tower.stats.tower_name == "support"):
-			tower_upgrade_price = String.num_int64(support_upgrade_tier.build_cost)
-		if tower.upgraded:
-			hover_label.visible = false
-			return
-		hover_label.text = "Upgrade " + tower.stats.tower_name + " tower\n       Cost: " + tower_upgrade_price + " coins"
-		hover_label.visible = true
-		hover_label.global_position = get_mouse_ui_pos() + Vector2(-60, -50)
+		display_panel_info(tower, "Upgrade", "")
 		return
 
 	# --- 2. Hover over buildable tile: show "Build" ---
 	var tile_data = tile_map_layer.get_cell_tile_data(cell)
 	if tile_data == null or not tile_data.get_custom_data(IS_BUILDABLE):
-		hover_label.visible = false
+		hover_panel.visible = false
 		return
 
 	var atlas_coords = tile_map_layer.get_cell_atlas_coords(cell)
-	var tower_name := ""
-	var tower_price := ""
 
 	match atlas_coords:
 		TURRET_ATLAS:
-			tower_name = "turret"
-			tower_price = String.num_int64(turret_tier.build_cost)
+			display_panel_info(null, "Build", "turret")
 		CANNON_ATLAS:
-			tower_name = "cannon"
-			tower_price = String.num_int64(cannon_tier.build_cost)
+			display_panel_info(null, "Build", "cannon")
 		MISSILE_ATLAS:
-			tower_name = "missile"
-			tower_price = String.num_int64(missile_tier.build_cost)
+			display_panel_info(null, "Build", "missile")
 		SUPPORT_ATLAS:
-			tower_name = "support"
-			tower_price = String.num_int64(support_tier.build_cost)
+			display_panel_info(null, "Build", "support")
+		_:
+			#if mouse is pointing to non building tile
+			hover_panel.visible = false
 
-	if tower_name != "":
-		hover_label.text = "Build " + tower_name + " tower\n    Cost: " + tower_price + " coins"
-		hover_label.visible = true
-		hover_label.global_position = get_mouse_ui_pos() + Vector2(-50, -50)
+func display_panel_info(tower: TowerBase, type: String, tower_name: String) -> void:
+	#print_debug(type)
+	var tower_name_set = ""
+	var title = hover_panel.get_node_or_null("LabelTitle")
+	var info = hover_panel.get_node_or_null("LabelInfo")
+	var price = hover_panel.get_node_or_null("LabelPrice")
+	if tower == null:
+		tower_name_set = tower_name
 	else:
-		hover_label.visible = false
+		tower_name_set = tower.stats.tower_name
+		if tower.upgraded:
+			type = ""
+			price.text = "Tower is fully upgraded"
+	hover_panel.visible = true
+	hover_panel.global_position = get_mouse_ui_pos()  + Vector2(-90, -70)
+	if tower_name_set == "turret":
+		title.text = type + " Turret Tower"
+		info.text = "Tower only attacks troop units"
+		if type == "Upgrade":
+			price.text = "Upgrade price: " + String.num_int64(turret_upgrade_tier.build_cost) + " coins"
+		if type == "Build":
+			price.text = "Build price: 	" + String.num_int64(turret_tier.build_cost) + " coins"
+	if tower_name_set == "cannon":
+		title.text = type + " Cannon Tower"
+		info.text = "Tower only attacks tank units"
+		if type == "Upgrade":
+			price.text = "Upgrade price: " +String.num_int64(cannon_upgrade_tier.build_cost) + " coins"
+		if type == "Build":
+			price.text =  "Build price: 	" + String.num_int64(cannon_tier.build_cost) + " coins"
+	if tower_name_set == "missile":
+		title.text = type + " Missile Tower"
+		info.text = "Tower only attacks plane units"
+		if type == "Upgrade":
+			price.text = "Upgrade price: " + String.num_int64(missile_upgrade_tier.build_cost) + " coins"
+		if type == "Build":
+			price.text =  "Build price: " + String.num_int64(missile_tier.build_cost) + " coins"
+	if tower_name_set == "support":
+		title.text = type + " Support Tower"
+		info.text = "Tower heals base and generates coins"
+		if type == "Upgrade":
+			price.text = "Upgrade price: " + String.num_int64(support_upgrade_tier.build_cost) + " coins"
+		if type == "Build":
+			price.text =  "Build price: 	"+ String.num_int64(support_tier.build_cost) + " coins"
+
 
 # ==================================================================
 # ------------------------- INPUT HANDLING --------------------------
