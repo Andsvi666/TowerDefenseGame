@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://8wc8q4tjwfr7"]
+[gd_scene load_steps=20 format=3 uid="uid://8wc8q4tjwfr7"]
 
 [ext_resource type="Script" uid="uid://mmya3sepy6r4" path="res://scenes/main/screen/gameUI/canvas_game_ui.gd" id="1_7c77l"]
 [ext_resource type="Texture2D" uid="uid://bumun64uciiwc" path="res://assets/textures/Heart.png" id="1_c1rh2"]
@@ -8,16 +8,13 @@
 [ext_resource type="Texture2D" uid="uid://04iak6jv43kl" path="res://assets/tiles/placement/missile.png" id="6_l1bvi"]
 [ext_resource type="Texture2D" uid="uid://cmvd7nc8a6l3x" path="res://assets/tiles/placement/support.png" id="7_xhcrg"]
 [ext_resource type="Theme" uid="uid://c04p4lp6xvykg" path="res://assets/themes/button.tres" id="8_5174x"]
-[ext_resource type="Texture2D" uid="uid://bqy1jviyi7iii" path="res://assets/icons/pause.png" id="8_ib47w"]
+[ext_resource type="Texture2D" uid="uid://dwfu81vrw8bsg" path="res://assets/icons/pause(32).png" id="8_ib47w"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_7c77l"]
 font_size = 25
 font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
 outline_size = 10
 outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="Theme" id="Theme_7c77l"]
-default_font_size = 25
 
 [sub_resource type="Theme" id="Theme_jx63h"]
 
@@ -35,160 +32,31 @@ font_color = Color(0.24921095, 0.22337419, 0.6480576, 1)
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_u1cvo"]
 load_path = "res://.godot/imported/RedBag.png-c0bbffb503317d38c26dcddecbf988e2.ctex"
 
+[sub_resource type="LabelSettings" id="LabelSettings_ib47w"]
+font_size = 30
+font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_7c77l"]
+default_font_size = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_ibuc6"]
+font_size = 30
+font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3tgfj"]
+font_size = 18
+font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
 [node name="CanvasGameUI" type="CanvasLayer"]
 layer = 0
 follow_viewport_scale = 0.5
 script = ExtResource("1_7c77l")
-
-[node name="GameOverPopup" type="AcceptDialog" parent="."]
-oversampling_override = 1.0
-title = "Game Over"
-initial_position = 1
-size = Vector2i(336, 80)
-ok_button_text = "Restart"
-dialog_text = "Your base has been destroyed! Try again?"
-
-[node name="PanelPauseMenu" type="Panel" parent="."]
-visible = false
-z_index = 10
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="ColorRect" type="ColorRect" parent="PanelPauseMenu"]
-z_index = 11
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.39600003
-anchor_top = 0.266
-anchor_right = 0.60400003
-anchor_bottom = 0.64100003
-offset_left = -0.24005127
-offset_top = -0.2400055
-offset_right = 0.2399292
-offset_bottom = -0.24002075
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.30980393, 0.12156863, 0.22745098, 1)
-
-[node name="ColorRectOuter" type="ColorRect" parent="PanelPauseMenu"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.395
-anchor_top = 0.266
-anchor_right = 0.605
-anchor_bottom = 0.643
-offset_left = -0.5599365
-offset_top = -2.0
-offset_right = 0.5600586
-offset_bottom = 0.47998047
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.9137255, 0.69411767, 0.20784314, 1)
-
-[node name="LabelTitle" type="Label" parent="PanelPauseMenu"]
-z_index = 11
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.39400002
-anchor_top = 0.27
-anchor_right = 0.60400003
-anchor_bottom = 0.35000002
-grow_horizontal = 2
-grow_vertical = 2
-text = "Game Paused"
-label_settings = SubResource("LabelSettings_7c77l")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelPauseMenu"]
-z_index = 11
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.41
-anchor_top = 0.38
-anchor_right = 0.59
-anchor_bottom = 0.6
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 10
-
-[node name="ResumeButton" type="Button" parent="PanelPauseMenu/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("8_5174x")
-text = "Resume"
-
-[node name="RestartButton" type="Button" parent="PanelPauseMenu/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("8_5174x")
-text = "Restart game"
-
-[node name="FirebaseButton" type="Button" parent="PanelPauseMenu/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme = SubResource("Theme_7c77l")
-theme_override_colors/font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
-theme_override_colors/font_focus_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_pressed_color = Color(0.11372549, 0.30980393, 0.2784314, 1)
-theme_override_colors/font_hover_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.654902, 0.9490196, 0.9647059, 1)
-theme_override_colors/font_disabled_color = Color(0.9019608, 0.050980393, 0.34509805, 1)
-text = "Write to Firebase
-"
-
-[node name="MenuButton" type="Button" parent="PanelPauseMenu/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("8_5174x")
-text = "Return to menu"
-
-[node name="PanelHoverInfo" type="Panel" parent="."]
-visible = false
-z_index = 10
-offset_left = 63.0
-offset_top = 117.0
-offset_right = 254.0
-offset_bottom = 176.0
-
-[node name="LabelTitle" type="Label" parent="PanelHoverInfo"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.05
-anchor_right = 1.0
-anchor_bottom = 0.4
-theme_override_font_sizes/font_size = 15
-text = "Build Turret Tower"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="LabelInfo" type="Label" parent="PanelHoverInfo"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.45
-anchor_right = 0.95
-anchor_bottom = 0.65
-offset_bottom = -3.1500034
-theme_override_font_sizes/font_size = 9
-text = "Tower heals base and generates coins"
-vertical_alignment = 1
-autowrap_mode = 2
-
-[node name="LabelPrice" type="Label" parent="PanelHoverInfo"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.75
-anchor_right = 0.95
-anchor_bottom = 1.0
-offset_top = -6.25
-offset_bottom = -0.8999977
-theme_override_font_sizes/font_size = 9
-text = "Price: 200 coins"
-vertical_alignment = 1
-autowrap_mode = 2
 
 [node name="BarsControl" type="Control" parent="."]
 layout_mode = 3
@@ -502,12 +370,11 @@ anchor_right = 0.05
 anchor_bottom = 0.84800005
 offset_left = 3.2400002
 offset_top = 2.008
-offset_right = -3.6000023
-offset_bottom = -2.2720032
+offset_right = -2.6000023
+offset_bottom = -1.2720032
 theme = ExtResource("8_5174x")
 icon = ExtResource("8_ib47w")
 icon_alignment = 1
-expand_icon = true
 
 [node name="SepLineCollumn0" type="ColorRect" parent="BarsControl/TopBar"]
 z_index = 2
@@ -553,7 +420,7 @@ offset_right = -4.0
 z_index = 1
 layout_mode = 2
 size_flags_vertical = 1
-text = "555"
+text = "0"
 label_settings = SubResource("LabelSettings_c1rh2")
 vertical_alignment = 1
 
@@ -710,3 +577,236 @@ offset_top = 0.031999588
 offset_right = -0.48010254
 offset_bottom = 0.03199768
 theme_override_styles/panel = ExtResource("1_u1cvo")
+
+[node name="PanelPauseMenu" type="Panel" parent="."]
+visible = false
+z_index = 10
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="PanelPauseMenu"]
+z_index = 11
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.39600003
+anchor_top = 0.266
+anchor_right = 0.60400003
+anchor_bottom = 0.64100003
+offset_left = -0.24005127
+offset_top = -0.2400055
+offset_right = 0.2399292
+offset_bottom = -0.24002075
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.30980393, 0.12156863, 0.22745098, 1)
+
+[node name="ColorRectOuter" type="ColorRect" parent="PanelPauseMenu"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.395
+anchor_top = 0.266
+anchor_right = 0.605
+anchor_bottom = 0.643
+offset_left = -0.5599365
+offset_top = -2.0
+offset_right = 0.5600586
+offset_bottom = 0.47998047
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+
+[node name="LabelTitle" type="Label" parent="PanelPauseMenu"]
+z_index = 11
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.39400002
+anchor_top = 0.27
+anchor_right = 0.60400003
+anchor_bottom = 0.35000002
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game Paused"
+label_settings = SubResource("LabelSettings_ib47w")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelPauseMenu"]
+z_index = 11
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.41
+anchor_top = 0.38
+anchor_right = 0.59
+anchor_bottom = 0.6
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="ResumeButton" type="Button" parent="PanelPauseMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_5174x")
+text = "Resume"
+
+[node name="RestartButton" type="Button" parent="PanelPauseMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_5174x")
+text = "Restart Game"
+
+[node name="FirebaseButton" type="Button" parent="PanelPauseMenu/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme = SubResource("Theme_7c77l")
+theme_override_colors/font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+theme_override_colors/font_focus_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
+theme_override_colors/font_pressed_color = Color(0.11372549, 0.30980393, 0.2784314, 1)
+theme_override_colors/font_hover_color = Color(0.21176471, 0.6745098, 0.7019608, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.654902, 0.9490196, 0.9647059, 1)
+theme_override_colors/font_disabled_color = Color(0.9019608, 0.050980393, 0.34509805, 1)
+text = "Write to Firebase
+"
+
+[node name="MenuButton" type="Button" parent="PanelPauseMenu/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_5174x")
+text = "Return to Menu"
+
+[node name="PanelGameOver" type="Panel" parent="."]
+visible = false
+z_index = 10
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="PanelGameOver"]
+z_index = 11
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.39600003
+anchor_top = 0.266
+anchor_right = 0.60400003
+anchor_bottom = 0.64100003
+offset_left = -0.24005127
+offset_top = -0.2400055
+offset_right = 0.2399292
+offset_bottom = -0.24002075
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.30980393, 0.12156863, 0.22745098, 1)
+
+[node name="ColorRectOuter" type="ColorRect" parent="PanelGameOver"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.395
+anchor_top = 0.266
+anchor_right = 0.605
+anchor_bottom = 0.643
+offset_left = -0.5599365
+offset_top = -2.0
+offset_right = 0.5600586
+offset_bottom = 0.47998047
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+
+[node name="LabelTitle" type="Label" parent="PanelGameOver"]
+z_index = 11
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.39400002
+anchor_top = 0.27
+anchor_right = 0.60400003
+anchor_bottom = 0.35000002
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game Over"
+label_settings = SubResource("LabelSettings_ibuc6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelDescription" type="Label" parent="PanelGameOver"]
+z_index = 11
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.405
+anchor_top = 0.35
+anchor_right = 0.595
+anchor_bottom = 0.45
+grow_horizontal = 2
+grow_vertical = 2
+text = "Terminus has fallen! Will you give up the fight or try again?"
+label_settings = SubResource("LabelSettings_3tgfj")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelGameOver"]
+z_index = 11
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.41
+anchor_top = 0.48
+anchor_right = 0.59
+anchor_bottom = 0.6
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="RestartButton" type="Button" parent="PanelGameOver/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_5174x")
+text = "Restart Game"
+
+[node name="MenuButton" type="Button" parent="PanelGameOver/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("8_5174x")
+text = "Return to Menu"
+
+[node name="PanelHoverInfo" type="Panel" parent="."]
+visible = false
+z_index = 10
+offset_left = 63.0
+offset_top = 117.0
+offset_right = 254.0
+offset_bottom = 176.0
+
+[node name="LabelTitle" type="Label" parent="PanelHoverInfo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.05
+anchor_right = 1.0
+anchor_bottom = 0.4
+theme_override_font_sizes/font_size = 15
+text = "Build Turret Tower"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelInfo" type="Label" parent="PanelHoverInfo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.45
+anchor_right = 0.95
+anchor_bottom = 0.65
+offset_bottom = -3.1500034
+theme_override_font_sizes/font_size = 9
+text = "Tower heals base and generates coins"
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="LabelPrice" type="Label" parent="PanelHoverInfo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.75
+anchor_right = 0.95
+anchor_bottom = 1.0
+offset_top = -6.25
+offset_bottom = -0.8999977
+theme_override_font_sizes/font_size = 9
+text = "Price: 200 coins"
+vertical_alignment = 1
+autowrap_mode = 2

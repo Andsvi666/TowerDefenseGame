@@ -79,12 +79,12 @@ func start_wave_coroutine(wave_array: Array) -> void:
 	
 	for unit in wave_array:
 		var delay = unit["spawn_delay"]
-		spawn_next_wave_enemy(unit["type"], unit["tier_index"])
+		spawn_next_enemy(unit["type"], unit["tier_index"])
 		await get_tree().create_timer(delay, false).timeout
 	
 	is_spawning_wave = false
 
-func spawn_next_wave_enemy(enemy_type_name: String, tier_index: int) -> void:
+func spawn_next_enemy(enemy_type_name: String, tier_index: int) -> void:
 	if not enemy_types.has(enemy_type_name):
 		push_error("Enemy type '%s' not found!" % enemy_type_name)
 		return

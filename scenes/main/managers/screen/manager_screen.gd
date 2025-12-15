@@ -3,6 +3,7 @@ extends Node
 
 var login_scene: PackedScene = preload("res://scenes/main/screen/login/canvas_login.tscn")
 var menu_scene: PackedScene = preload("res://scenes/main/screen/menu/canvas_menu.tscn")
+var game_select: PackedScene = preload("res://scenes/main/screen/select/canvas_select.tscn")
 var game_scene: PackedScene = preload("res://scenes/main/screen/gameMain/canvas_game_main.tscn")
 var game_ui_scene: PackedScene = preload("res://scenes/main/screen/gameUI/canvas_game_ui.tscn")
 
@@ -25,7 +26,8 @@ func change_screen(screen_name: String) -> void:
 			main.add_child(login_scene.instantiate())
 		"menu":
 			main.add_child(menu_scene.instantiate())
-
+		"select":
+			main.add_child(game_select.instantiate())
 		"game":
 			# Create instances
 			var game := game_scene.instantiate()

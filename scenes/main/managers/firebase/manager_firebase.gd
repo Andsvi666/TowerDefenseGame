@@ -6,6 +6,9 @@ extends Node
 # ==================================================================
 
 var current_user = null 
+var current_user_doc = null
+var users_collection = null
+
 var test_email := "test@gmail.com"
 var test_password := "password123"
 
@@ -27,10 +30,14 @@ func login_with_google() -> void:
 	Firebase.Auth.get_auth_localhost(Firebase.Auth.get_GoogleProvider(), port)
 
 func _on_login_succeeded(user: Dictionary):
-	print("LOGIN SUCCESS:", user)
+	#print("LOGIN SUCCESS:", user)
 	current_user = user
+	users_collection = Firebase.Firestore.collection('users')
 	if current_user.has("isnewuser"):
 		setup_new_user()
+	else:
+		var uid = current_user["localid"]
+		current_user_doc = await users_collection.get_doc(uid)
 	ScreenMan.change_screen("menu")
 
 func _on_login_failed(error_code, message) -> void:
@@ -46,6 +53,7 @@ func logout_user() -> void:
 
 func setup_new_user() -> void:
 	var user_stats = {
+		"beat_campaign": false,
 		"total_games_played": 0,
 		"total_towers_built": 0,
 		"total_enemies_killed": 0,
@@ -54,25 +62,55 @@ func setup_new_user() -> void:
 	}
 	
 	var uid = current_user["localid"]
-	var col: FirestoreCollection = Firebase.Firestore.collection('users')
-	var document = await col.add(uid, user_stats)
+	await users_collection.add(uid, user_stats)
+	current_user_doc = await users_collection.get_doc(uid)
 	
 
 func read_user_stats() -> Dictionary:
 	var stats = {}
-	var uid = current_user["localid"]
-	var col: FirestoreCollection = Firebase.Firestore.collection('users')
-	var doc = await col.get_doc(uid)
-	
-	if doc == null or doc.keys() == null:
-		push_warning("User stats not found for UID: %s" % uid)
+	if current_user_doc == null or current_user_doc.keys() == null:
+		push_warning("User stats not found")
 		return stats
 	
-	var keys = doc.keys()
+	var keys = current_user_doc.keys()
 	
 	for key in keys:
-		stats[key] = doc.get_value(key)
+		stats[key] = current_user_doc.get_value(key)
 	return stats
+
+func user_add_tower() -> void:
+	var count = current_user_doc.get_value("total_towers_built")
+	count = count + 1
+	current_user_doc["total_towers_built"] = count
+	await users_collection.update(current_user_doc)
+
+func user_add_enemy() -> void:
+	var count = current_user_doc.get_value("total_enemies_killed")
+	count = count + 1
+	current_user_doc["total_enemies_killed"] = count
+	await users_collection.update(current_user_doc)
+
+func user_add_game() -> void:
+	var count = current_user_doc.get_value("total_games_played")
+	count = count + 1
+	current_user_doc["total_games_played"] = count
+	await users_collection.update(current_user_doc)
+
+func user_beat_campaign() -> void:
+	current_user_doc["beat_campaign"] = true
+	await users_collection.update(current_user_doc)
+
+func user_update_endless(new: float) -> void:
+	var current = current_user_doc.get_value("longest_endless_time")
+	if new > current:
+		current_user_doc["longest_endless_time"] = new
+		await users_collection.update(current_user_doc)
+
+func user_update_AI(new: int) -> void:
+	var current = current_user_doc.get_value("highest_AI_wave")
+	if new > current:
+		current_user_doc["highest_AI_wave"] = new
+		await users_collection.update(current_user_doc)
 
 # ==================================================================
 # ---------------------------- DATABASE WAVES-----------------------
@@ -84,7 +122,7 @@ func write_to_db() -> void:
 	var waveDic = {}
 	#print_debug(wave_1)
 	var col: FirestoreCollection = Firebase.Firestore.collection('waves')
-	var document = await col.add("wave_standart_6", wave)
+	await col.add("wave_standart_6", wave)
 
 func clone_doc(origin: String, new: String) -> void:
 	var wave_doc := {}
@@ -110,7 +148,7 @@ func clone_doc(origin: String, new: String) -> void:
 			unit_data[2]
 		]
 		i = i + 1
-	var document = await col.add(new, wave_doc)
+	await col.add(new, wave_doc)
 
 func _generate_wave(count: int) -> Dictionary:
 	var wave_doc := {}

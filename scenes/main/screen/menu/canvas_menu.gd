@@ -19,7 +19,7 @@ func _ready() -> void:
 	setup_user_profile()
 
 func _on_play_button_pressed() -> void:
-	ScreenMan.change_screen("game")
+	ScreenMan.change_screen("select")
 
 func _on_logout_button_pressed() -> void:
 	FirebaseMan.logout_user()

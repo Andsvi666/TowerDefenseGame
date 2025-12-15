@@ -3,13 +3,13 @@
 [ext_resource type="Script" uid="uid://rfb45seah5vp" path="res://scenes/main/screen/select/canvas_select.gd" id="1_xwx5g"]
 [ext_resource type="Theme" uid="uid://c04p4lp6xvykg" path="res://assets/themes/button.tres" id="2_w4y4s"]
 
+[sub_resource type="Theme" id="Theme_vraol"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_cm85a"]
 font_size = 60
 font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
 outline_size = 10
 outline_color = Color(0, 0, 0, 1)
-
-[sub_resource type="Theme" id="Theme_vraol"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_kgckk"]
 font_size = 40
@@ -44,6 +44,43 @@ handle_input_locally = false
 size = Vector2i(1440, 640)
 render_target_update_mode = 4
 
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport"]
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.86
+anchor_right = 0.29
+anchor_bottom = 0.95
+offset_right = -0.20007324
+grow_vertical = 0
+theme = SubResource("Theme_vraol")
+color = Color(0.30980393, 0.12156863, 0.22745098, 1)
+
+[node name="ButtonReturn" type="Button" parent="SubViewportContainer/SubViewport/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_w4y4s")
+text = "Return to menu"
+
+[node name="ColorRectOuter" type="ColorRect" parent="SubViewportContainer/SubViewport"]
+visible = false
+z_index = -1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.84
+anchor_right = 0.29
+anchor_bottom = 0.9710001
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.0
+offset_bottom = 2.0
+grow_vertical = 0
+theme = SubResource("Theme_vraol")
+color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+
 [node name="LabelSelect" type="Label" parent="SubViewportContainer/SubViewport"]
 anchors_preset = -1
 anchor_top = 0.8
@@ -58,6 +95,76 @@ text = "Select Gamemode"
 label_settings = SubResource("LabelSettings_cm85a")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ControlStandart" type="Control" parent="SubViewportContainer/SubViewport"]
+layout_mode = 3
+anchor_left = 0.02
+anchor_top = 0.1
+anchor_right = 0.32
+anchor_bottom = 0.8
+
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlStandart"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.30980393, 0.12156863, 0.22745098, 1)
+
+[node name="ColorRectOuter" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlStandart"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.000061
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+
+[node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlStandart"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.05
+anchor_right = 1.0
+anchor_bottom = 0.15
+grow_horizontal = 2
+grow_vertical = 2
+text = "Standart Mode"
+label_settings = SubResource("LabelSettings_kgckk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelDescription" type="Label" parent="SubViewportContainer/SubViewport/ControlStandart"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.2
+anchor_right = 0.95
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+text = "Endless Mode is about surviving as long as possible against an unending stream of enemies. As time progresses, enemies spawn more frequently and stronger enemy types begin to appear, steadily increasing the difficulty and pushing your defenses to their limits. Time is the main measure of success in this mode—the longer you survive, the higher your score."
+label_settings = SubResource("LabelSettings_npejt")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ButtonPlay" type="Button" parent="SubViewportContainer/SubViewport/ControlStandart"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.38
+anchor_top = 0.85
+anchor_right = 0.62
+anchor_bottom = 0.95
+theme = ExtResource("2_w4y4s")
+text = "Play"
 
 [node name="ControlEndless" type="Control" parent="SubViewportContainer/SubViewport"]
 layout_mode = 3
@@ -120,6 +227,76 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="ButtonPlay" type="Button" parent="SubViewportContainer/SubViewport/ControlEndless"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.38
+anchor_top = 0.85
+anchor_right = 0.62
+anchor_bottom = 0.95
+theme = ExtResource("2_w4y4s")
+text = "Play"
+
+[node name="ControlAI" type="Control" parent="SubViewportContainer/SubViewport"]
+layout_mode = 3
+anchor_left = 0.68
+anchor_top = 0.1
+anchor_right = 0.98
+anchor_bottom = 0.8
+
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlAI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.30980393, 0.12156863, 0.22745098, 1)
+
+[node name="ColorRectOuter" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlAI"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.000061
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+
+[node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlAI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.05
+anchor_right = 1.0
+anchor_bottom = 0.15
+grow_horizontal = 2
+grow_vertical = 2
+text = "AI Mode"
+label_settings = SubResource("LabelSettings_kgckk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelDescription" type="Label" parent="SubViewportContainer/SubViewport/ControlAI"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.2
+anchor_right = 0.95
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+text = "Endless Mode is about surviving as long as possible against an unending stream of enemies. As time progresses, enemies spawn more frequently and stronger enemy types begin to appear, steadily increasing the difficulty and pushing your defenses to their limits. Time is the main measure of success in this mode—the longer you survive, the higher your score."
+label_settings = SubResource("LabelSettings_npejt")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="ButtonPlay" type="Button" parent="SubViewportContainer/SubViewport/ControlAI"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.38

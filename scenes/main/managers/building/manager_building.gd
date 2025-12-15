@@ -228,7 +228,9 @@ func place_tower(cell_position: Vector2i, tower_scene: PackedScene, tower_stats:
 	# Track which cell has a tower
 	used_tiles.append(cell_position)
 	towers_by_cell[cell_position] = tower
-
+	
+	FirebaseMan.user_add_tower()
+	
 	# Update Game Manager counts
 	if tower_stats.tower_name == "turret":
 		GameMan.built_towers["turret_tier_1"] += 1

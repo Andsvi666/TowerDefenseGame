@@ -55,5 +55,5 @@ func die() -> void:
 		CoinsMan.add_coins(coin_reward)
 	# emit signal before freeing
 	emit_signal("enemy_died", self)
-	
+	FirebaseMan.user_add_enemy()
 	queue_free()

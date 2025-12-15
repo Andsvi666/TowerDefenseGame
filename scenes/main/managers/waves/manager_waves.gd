@@ -28,14 +28,14 @@ func setup_waves(given_label: Label) -> void:
 func start_next_wave() -> void:
 	#print_debug(current_wave_index)
 	if int(current_wave_index) >= int(waves_count):
-		print_debug("No more waves")
-		#----------END GAME----------
+		#Force gamer over
+		HealthMan.take_damage(1000)
 		return
 	var wave_data = await FirebaseMan.read_wave_from_db(waves_type, String.num_int64(current_wave_index))
 	#print_debug(wave_data)
 	if wave_data.is_empty():
-		print_debug("no wave read from database")
-		#----------END GAME----------
+		#Force gamer over
+		HealthMan.take_damage(1000)
 		return
 	current_wave_index += 1
 	#print_debug(current_wave_index)
