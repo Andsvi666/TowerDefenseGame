@@ -51,9 +51,10 @@ func read_next_wave() -> String:
 	if wave_data.is_empty():
 		return "No more waves"
 	for unit in wave_data:
+		var tier := int(unit.get("tier_index", 0)) + 1
 		var line := "%s, %d" % [
 			unit.get("type", ""),
-			unit.get("tier_index", 0),
+			tier,
 		]
-		wave += line + "\n"
+		wave += line + ", "
 	return wave

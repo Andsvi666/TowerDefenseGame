@@ -134,7 +134,7 @@ anchor_right = 1.0
 anchor_bottom = 0.15
 grow_horizontal = 2
 grow_vertical = 2
-text = "Standard Mode"
+text = "Standart Mode"
 label_settings = SubResource("LabelSettings_kgckk")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -161,7 +161,7 @@ anchor_top = 0.85
 anchor_right = 0.8
 anchor_bottom = 0.95
 theme = ExtResource("2_w4y4s")
-text = "Play Standard Mode"
+text = "Play Standart Mode"
 
 [node name="ControlEndless" type="Control" parent="SubViewportContainer/SubViewport"]
 layout_mode = 3
@@ -169,6 +169,33 @@ anchor_left = 0.35
 anchor_top = 0.2
 anchor_right = 0.65
 anchor_bottom = 0.85
+
+[node name="ColorRectHide" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlEndless"]
+z_index = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.30980393, 0.12156863, 0.22745098, 0.8627451)
+
+[node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlEndless/ColorRectHide"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -56.5
+offset_bottom = 56.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Complete Standart Mode to Unlock"
+label_settings = SubResource("LabelSettings_kgckk")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlEndless"]
 layout_mode = 1
@@ -232,7 +259,14 @@ anchor_bottom = 0.95
 theme = ExtResource("2_w4y4s")
 text = "Play Endless Mode"
 
-[node name="ColorRectHide" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlEndless"]
+[node name="ControlAI" type="Control" parent="SubViewportContainer/SubViewport"]
+layout_mode = 3
+anchor_left = 0.68
+anchor_top = 0.2
+anchor_right = 0.98
+anchor_bottom = 0.85
+
+[node name="ColorRectHide" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlAI"]
 z_index = 2
 layout_mode = 1
 anchors_preset = 15
@@ -243,7 +277,7 @@ grow_vertical = 2
 theme = SubResource("Theme_vraol")
 color = Color(0.30980393, 0.12156863, 0.22745098, 0.8627451)
 
-[node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlEndless/ColorRectHide"]
+[node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlAI/ColorRectHide"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -253,18 +287,11 @@ offset_top = -56.5
 offset_bottom = 56.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Complete Standard Mode to Unlock"
+text = "Complete Standart Mode to Unlock"
 label_settings = SubResource("LabelSettings_kgckk")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
-
-[node name="ControlAI" type="Control" parent="SubViewportContainer/SubViewport"]
-layout_mode = 3
-anchor_left = 0.68
-anchor_top = 0.2
-anchor_right = 0.98
-anchor_bottom = 0.85
 
 [node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlAI"]
 layout_mode = 1
@@ -327,30 +354,3 @@ anchor_right = 0.8
 anchor_bottom = 0.95
 theme = ExtResource("2_w4y4s")
 text = "Play AI mode"
-
-[node name="ColorRectHide" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlAI"]
-z_index = 2
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = SubResource("Theme_vraol")
-color = Color(0.30980393, 0.12156863, 0.22745098, 0.8627451)
-
-[node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlAI/ColorRectHide"]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -56.5
-offset_bottom = 56.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Complete Standard Mode to Unlock"
-label_settings = SubResource("LabelSettings_kgckk")
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2

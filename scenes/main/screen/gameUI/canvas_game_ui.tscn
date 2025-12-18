@@ -117,22 +117,6 @@ label_settings = SubResource("LabelSettings_7c77l")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="InfoTitle" type="Label" parent="BarsControl/SideBar"]
-z_index = 3
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.6
-anchor_right = 0.99300003
-anchor_bottom = 0.684
-offset_left = 1.0
-offset_top = 0.039978027
-offset_right = 0.015991211
-offset_bottom = 0.23999023
-text = "Placement tiles info"
-label_settings = SubResource("LabelSettings_7c77l")
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="AdvicePanel" type="Panel" parent="BarsControl/SideBar"]
 z_index = 3
 layout_mode = 1
@@ -140,7 +124,7 @@ anchors_preset = -1
 anchor_left = 0.07
 anchor_top = 0.1
 anchor_right = 0.95
-anchor_bottom = 0.5
+anchor_bottom = 0.87
 offset_left = 0.024000168
 offset_right = -0.008026123
 theme_override_styles/panel = ExtResource("1_u1cvo")
@@ -157,7 +141,7 @@ offset_right = 0.12539673
 offset_bottom = 0.022369385
 theme = SubResource("Theme_jx63h")
 theme_override_colors/default_color = Color(0.2509804, 0.22352941, 0.64705884, 1)
-text = "The curious fox leapt over the fallen log, pausing briefly to sniff the fragrant air before disappearing swiftly into the dense, shadowy forest beyond the hill."
+text = "Build 4 Turret Tier 1 towers to handle the large number of fast Troop enemies in the next wave, as their high fire rate and low cost provide reliable crowd control, then save remaining coins for upgrading to Turret Tier 2 once tougher enemies appear to maintain long-term damage efficiency and base safety. Build 4 Turret Tier 1 towers to handle the large number of fast Troop enemies in the next wave, as their high fire rate and low cost provide reliable crowd control, then save remaining coins for upgrading to Turret Tier 2 once tougher enemies "
 horizontal_alignment = 1
 
 [node name="AdviceButton" type="Button" parent="BarsControl/SideBar"]
@@ -165,13 +149,31 @@ z_index = 3
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.12
-anchor_top = 0.52
+anchor_top = 0.9
 anchor_right = 0.9
-anchor_bottom = 0.55
+anchor_bottom = 0.95
 theme = ExtResource("8_5174x")
 text = "Generate Advice"
 
+[node name="InfoTitle" type="Label" parent="BarsControl/SideBar"]
+visible = false
+z_index = 3
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.6
+anchor_right = 0.99300003
+anchor_bottom = 0.684
+offset_left = 1.0
+offset_top = 0.039978027
+offset_right = 0.015991211
+offset_bottom = 0.23999023
+text = "Placement tiles info"
+label_settings = SubResource("LabelSettings_7c77l")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="SepLineVert" type="ColorRect" parent="BarsControl/SideBar"]
+visible = false
 z_index = 2
 layout_mode = 1
 anchors_preset = -1
@@ -182,6 +184,7 @@ grow_vertical = 2
 color = Color(0.101960786, 0.21568628, 0.23921569, 1)
 
 [node name="TurretTile" type="TextureRect" parent="BarsControl/SideBar"]
+visible = false
 z_index = 4
 layout_mode = 1
 anchors_preset = -1
@@ -202,6 +205,7 @@ offset_bottom = 35.399994
 color = Color(0.101960786, 0.21568628, 0.23921569, 1)
 
 [node name="Info" type="Label" parent="BarsControl/SideBar"]
+visible = false
 z_index = 3
 layout_mode = 1
 anchors_preset = -1
@@ -216,6 +220,7 @@ label_settings = SubResource("LabelSettings_qj7ko")
 vertical_alignment = 1
 
 [node name="CannonTile" type="TextureRect" parent="BarsControl/SideBar"]
+visible = false
 z_index = 3
 layout_mode = 1
 anchors_preset = -1
@@ -238,6 +243,7 @@ offset_bottom = 35.200012
 color = Color(0.101960786, 0.21568628, 0.23921569, 1)
 
 [node name="Info2" type="Label" parent="BarsControl/SideBar"]
+visible = false
 z_index = 3
 layout_mode = 1
 anchors_preset = -1
@@ -254,6 +260,7 @@ label_settings = SubResource("LabelSettings_qj7ko")
 vertical_alignment = 1
 
 [node name="MissileTile" type="TextureRect" parent="BarsControl/SideBar"]
+visible = false
 z_index = 3
 layout_mode = 1
 anchors_preset = -1
@@ -276,6 +283,7 @@ offset_bottom = 35.0
 color = Color(0.101960786, 0.21568628, 0.23921569, 1)
 
 [node name="Info3" type="Label" parent="BarsControl/SideBar"]
+visible = false
 z_index = 3
 layout_mode = 1
 anchors_preset = -1
@@ -292,6 +300,7 @@ label_settings = SubResource("LabelSettings_qj7ko")
 vertical_alignment = 1
 
 [node name="SupportTile" type="TextureRect" parent="BarsControl/SideBar"]
+visible = false
 z_index = 3
 layout_mode = 1
 anchors_preset = -1
@@ -314,6 +323,7 @@ offset_bottom = 34.799988
 color = Color(0.101960786, 0.21568628, 0.23921569, 1)
 
 [node name="Info4" type="Label" parent="BarsControl/SideBar"]
+visible = false
 z_index = 3
 layout_mode = 1
 anchors_preset = -1

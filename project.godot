@@ -34,6 +34,7 @@ URLTextureManager="*res://addons/url_texture/./manager/http_texture_manager.gd"
 
 window/size/viewport_width=1440
 window/size/viewport_height=640
+window/size/mode=2
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 

@@ -41,7 +41,10 @@ func _ready() -> void:
 
 func _change_game_panel() -> void:
 	get_tree().paused = true
-
+	
+	FirebaseMan.user_add_game()
+	FirebaseMan.user_beat_campaign()
+	
 	var title_label: Label = game_panel.get_node_or_null("LabelTitle")
 	var desc_label: Label = game_panel.get_node_or_null("LabelDescription")
 
@@ -104,6 +107,7 @@ func show_wave_complete_message() -> void:
 	popup.popup_centered()
 
 func _on_game_over() -> void:
+	FirebaseMan.user_add_game()
 	get_tree().paused = true
 	game_panel.visible = true
 
@@ -131,8 +135,7 @@ func _on_advice_button_pressed() -> void:
 	advice_label.text = "Thinking..."
 	
 	# Await AIManager.ask_ai (synchronous-looking)
-	var prompt = await GameMan.collect_ai_prompt()
-	var advice = await AiMan.ask_ai(prompt)
+	var advice = await AiMan.ask_AI_advice()
 	
 	# Update UI
 	advice_label.text = advice

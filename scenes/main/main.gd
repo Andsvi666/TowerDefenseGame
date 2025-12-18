@@ -2,7 +2,7 @@ class_name Main
 extends Node2D
 
 func _ready() -> void:
-	pass
+	DisplayServer.window_set_min_size(Vector2i(1440, 640))
 
 func setup_new_game() -> void:
 	#print_debug("fresh game starting")

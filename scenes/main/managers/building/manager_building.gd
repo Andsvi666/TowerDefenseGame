@@ -36,6 +36,25 @@ const CANNON_ATLAS = Vector2i(17, 1)
 const MISSILE_ATLAS = Vector2i(18, 1)
 const SUPPORT_ATLAS = Vector2i(16, 1)
 
+# --- tracking built towers and available tiles---
+var built_towers := {
+	"turret_tier_1": 0,
+	"turret_tier_2": 0,
+	"cannon_tier_1": 0,
+	"cannon_tier_2": 0,
+	"missile_tier_1": 0,
+	"missile_tier_2": 0,
+	"support_tier_1": 0,
+	"support_tier_2": 0,
+}
+
+var available_tiles_for_towers := {
+	"turret_tiles": 43,
+	"cannon_tiles": 43,
+	"missile_tiles": 31,
+	"support_tiles": 7,
+}
+
 # Setup function to inject the TileMap and Overlay
 func setup_map(tilemap: TileMapLayer, overlay: TileMapLayer, given_panel: Panel) -> void:
 	tile_map_layer = tilemap
@@ -53,15 +72,15 @@ func reset_towers():
 	used_tiles.clear()
 
 	# Optional: reset available tiles in GameMan
-	GameMan.available_tiles_for_towers = {
-		"turret_tiles": 18,
-		"cannon_tiles": 17,
-		"missile_tiles": 9,
+	available_tiles_for_towers = {
+		"turret_tiles": 43,
+		"cannon_tiles": 43,
+		"missile_tiles": 31,
 		"support_tiles": 7,
 	}
 
 	# Optional: reset built towers counts
-	GameMan.built_towers = {
+	built_towers = {
 		"turret_tier_1": 0, "turret_tier_2": 0,
 		"cannon_tier_1": 0, "cannon_tier_2": 0,
 		"missile_tier_1": 0, "missile_tier_2": 0,
@@ -231,19 +250,19 @@ func place_tower(cell_position: Vector2i, tower_scene: PackedScene, tower_stats:
 	
 	FirebaseMan.user_add_tower()
 	
-	# Update Game Manager counts
+	# Update counts
 	if tower_stats.tower_name == "turret":
-		GameMan.built_towers["turret_tier_1"] += 1
-		GameMan.available_tiles_for_towers["turret_tiles"] -= 1
+		built_towers["turret_tier_1"] += 1
+		available_tiles_for_towers["turret_tiles"] -= 1
 	elif tower_stats.tower_name == "cannon":
-		GameMan.built_towers["cannon_tier_1"] += 1
-		GameMan.available_tiles_for_towers["cannon_tiles"] -= 1
+		built_towers["cannon_tier_1"] += 1
+		available_tiles_for_towers["cannon_tiles"] -= 1
 	elif tower_stats.tower_name == "missile":
-		GameMan.built_towers["missile_tier_1"] += 1
-		GameMan.available_tiles_for_towers["missile_tiles"] -= 1
+		built_towers["missile_tier_1"] += 1
+		available_tiles_for_towers["missile_tiles"] -= 1
 	elif tower_stats.tower_name == "support":
-		GameMan.built_towers["support_tier_1"] += 1
-		GameMan.available_tiles_for_towers["support_tiles"] -= 1
+		built_towers["support_tier_1"] += 1
+		available_tiles_for_towers["support_tiles"] -= 1
 
 
 # ==================================================================
@@ -274,17 +293,17 @@ func upgrade_tower(tower: TowerBase) -> void:
 	# Update GameMan counts BEFORE applying new stats
 	match tower_name:
 		"turret":
-			GameMan.built_towers["turret_tier_1"] -= 1
-			GameMan.built_towers["turret_tier_2"] += 1
+			built_towers["turret_tier_1"] -= 1
+			built_towers["turret_tier_2"] += 1
 		"cannon":
-			GameMan.built_towers["cannon_tier_1"] -= 1
-			GameMan.built_towers["cannon_tier_2"] += 1
+			built_towers["cannon_tier_1"] -= 1
+			built_towers["cannon_tier_2"] += 1
 		"missile":
-			GameMan.built_towers["missile_tier_1"] -= 1
-			GameMan.built_towers["missile_tier_2"] += 1
+			built_towers["missile_tier_1"] -= 1
+			built_towers["missile_tier_2"] += 1
 		"support":
-			GameMan.built_towers["support_tier_1"] -= 1
-			GameMan.built_towers["support_tier_2"] += 1
+			built_towers["support_tier_1"] -= 1
+			built_towers["support_tier_2"] += 1
 
 	tower.stats = new_stats
 	tower.upgraded = true

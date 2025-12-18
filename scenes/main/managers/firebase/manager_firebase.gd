@@ -6,6 +6,7 @@ extends Node
 # ==================================================================
 
 var current_user = null 
+var current_user_completion = false
 var current_user_doc = null
 var users_collection = null
 
@@ -76,6 +77,11 @@ func read_user_stats() -> Dictionary:
 	
 	for key in keys:
 		stats[key] = current_user_doc.get_value(key)
+	if stats["beat_campaign"]:
+		current_user_completion = true
+		#print_debug("beaten")
+	else:
+		current_user_completion = false
 	return stats
 
 func user_add_tower() -> void:
@@ -248,10 +254,10 @@ func parse_wave_data(firestore_data: Dictionary) -> Array:
 	
 	return enemies
 
-func read_api_key() -> String:
+func read_api_key(doc_name: String) -> String:
 	var key = ""
 	var col: FirestoreCollection = Firebase.Firestore.collection('AI')
-	var doc = await col.get_doc("api key")
+	var doc = await col.get_doc(doc_name)
 	key = doc.get_value("key")
 	#print_debug(key)
 	return key
