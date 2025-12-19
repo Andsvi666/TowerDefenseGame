@@ -1,12 +1,12 @@
 class_name ManagerGame
 extends Node
 
-var endless_mode: bool = false
-
 signal wave_complete_support
-signal game_setup_finished
 signal game_setup_started
+signal update_log
+
 var wave_active: bool = false
+var gamemode = null
 
 func _ready() -> void:
 	pass
@@ -28,10 +28,12 @@ func setup_fresh_game(tilemap: TileMapLayer, overlay: TileMapLayer, spawnPoint: 
 	AiMan.setup()
 	
 	wave_active = false
-	emit_signal("game_setup_finished")
 
 func stop_support_towers() -> void:
 	emit_signal("wave_complete_support")
+
+func log_event(message: String) -> void:
+	emit_signal("update_log", message)
 
 func show_floating_message(text: String) -> void:
 	var msg = Label.new()

@@ -4,6 +4,7 @@ extends CanvasLayer
 @onready var pause_button: Button = $BarsControl/TopBar/ButtonPause
 @onready var resume_button: Button = $PanelPauseMenu/VBoxContainer/ResumeButton
 @onready var start_wave_button: Button = $BarsControl/TopBar/StartWaveButton
+@onready var start_endless_wave_button: Button = $BarsControl/TopBar/StartEndlessButton
 @onready var restart_button: Button = $PanelPauseMenu/VBoxContainer/RestartButton
 @onready var restart_button_1: Button = $PanelGameOver/VBoxContainer/RestartButton
 @onready var advice_button: Button = $BarsControl/SideBar/AdviceButton
@@ -14,6 +15,18 @@ extends CanvasLayer
 @onready var game_over_popup: AcceptDialog = $GameOverPopup
 @onready var pause_panel: Panel = $PanelPauseMenu
 @onready var game_panel: Panel = $PanelGameOver
+# UI elements for gamemode configurations
+@onready var gamemode_label: Label = $BarsControl/TopBar/LabelGamemode
+@onready var wave_label: Label = $BarsControl/TopBar/WaveTitleLabel
+@onready var wave_panel: PanelContainer = $BarsControl/TopBar/WavePanel
+@onready var wave_panel_visual: PanelContainer = $BarsControl/TopBar/WavePanelVisual
+@onready var endless_wave_label: Label = $BarsControl/TopBar/EndlessWaveTitleLabel
+@onready var endless_wave_panel: PanelContainer = $BarsControl/TopBar/EndlessWavePanel
+@onready var endless_wave_counter: Label = $BarsControl/TopBar/EndlessWavePanel/WaveLabel
+@onready var endless_wave_panel_visual: PanelContainer = $BarsControl/TopBar/EndlessWavePanelVisual
+@onready var box_label: Label = $BarsControl/SideBar/AdviceTitle
+@onready var box_panel: RichTextLabel = $BarsControl/SideBar/AdvicePanel/AdviceLabel
+@onready var box_panel_overlay: Panel = $BarsControl/SideBar/AdvicePanel
 
 func _ready() -> void:
 	# Make sure the whole UI (including child buttons) keeps working while paused
@@ -23,6 +36,7 @@ func _ready() -> void:
 
 	pause_button.pressed.connect(_on_pause_button_pressed)
 	start_wave_button.pressed.connect(_on_start_wave_button_pressed)
+	start_endless_wave_button.pressed.connect(_on_start_endless_wave_button_pressed)
 	restart_button.pressed.connect(_on_game_over_restart)
 	restart_button_1.pressed.connect(_on_game_over_restart)
 	advice_button.pressed.connect(_on_advice_button_pressed)
@@ -36,8 +50,38 @@ func _ready() -> void:
 	CoinsMan.connect("update_label", Callable(self, "_on_update_label"))
 	WavesMan.connect("update_label", Callable(self, "_on_update_label"))
 	SpawnerMan.connect("wave_complete", Callable(self, "_on_wave_complete"))
-	GameMan.connect("game_setup_finished", Callable(self, "_game_setup_finished"))
 	GameMan.connect("game_setup_started", Callable(self, "_game_setup_started"))
+	SpawnerMan.connect("endless_time_updated", Callable(self, "_update_timer"))
+	GameMan.connect("update_log", Callable(self, "_update_log"))
+	
+
+func _game_setup_started() -> void:
+	if GameMan.gamemode == "standard":
+		gamemode_label.text = "Standard Mode"
+		wave_label.visible = true
+		wave_panel.visible = true
+		wave_panel_visual.visible = true
+		start_wave_button.visible = true
+		box_label.text = "AI Generated Advice"
+		box_panel.text = "Press 'Generate Advice' Button between waves to receive helpful guidance"
+		box_panel.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		advice_button.visible = true
+	if GameMan.gamemode == "endless":
+		gamemode_label.text = "Endless Mode"
+		endless_wave_label.visible = true
+		endless_wave_panel.visible = true
+		endless_wave_panel_visual.visible = true
+		start_endless_wave_button.visible = true
+		box_label.text = "Game Actions Log"
+		box_panel_overlay.anchor_bottom = 0.97
+	if GameMan.gamemode == "AI":
+		gamemode_label.text = "AI Mode"
+		wave_label.visible = true
+		wave_panel.visible = true
+		wave_panel_visual.visible = true
+		start_wave_button.visible = true
+		box_label.text = "Game Actions Log"
+		box_panel_overlay.anchor_bottom = 0.97
 
 func _change_game_panel() -> void:
 	get_tree().paused = true
@@ -62,21 +106,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			_on_pause_button_pressed()
 
-func _game_setup_started() -> void:
-	#print_debug("Reset begins")
-	pause_button.disabled = true
-	start_wave_button.disabled = true
-	restart_button.disabled = true
-	advice_button.disabled = true
-	menu_button.disabled = true
+func _update_timer(seconds: int) -> void:
+	endless_wave_counter.text = str(seconds)
 
-func _game_setup_finished() -> void:
-	#print_debug("Reset ends")
-	pause_button.disabled = false
-	start_wave_button.disabled = false
-	restart_button.disabled = false
-	advice_button.disabled = false
-	menu_button.disabled = false
+func _update_log(entry: String) -> void:
+	box_panel.text += entry + "\n"
+	box_panel.scroll_to_line(box_panel.get_line_count() - 1)
 
 func _on_firebase_button_pressed() -> void:
 	FirebaseMan.write_to_db()
@@ -124,6 +159,10 @@ func _on_pause_button_pressed() -> void:
 func _on_resume_button_pressed() -> void:
 	pause_panel.visible = false
 	get_tree().paused = false
+
+func _on_start_endless_wave_button_pressed() -> void:
+	start_endless_wave_button.disabled = true
+	SpawnerMan.start_endless_mode()
 
 func _on_start_wave_button_pressed() -> void:
 	WavesMan.start_next_wave()

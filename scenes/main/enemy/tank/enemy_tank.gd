@@ -13,6 +13,8 @@ func apply_stats() -> void:
 	max_health = stats.max_health
 	damage_cost = stats.damage_cost
 	coin_reward = stats.coin_reward
+	group = stats.group
+	tier = stats.tier
 	add_to_group(stats.group)
 
 	# set sprite texture

@@ -17,6 +17,7 @@ outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Theme" id="Theme_jx63h"]
+default_font_size = 14
 
 [sub_resource type="LabelSettings" id="LabelSettings_qj7ko"]
 font_size = 14
@@ -112,7 +113,6 @@ offset_left = -0.13600159
 offset_top = 0.3199997
 offset_right = -0.13601685
 offset_bottom = -0.040008545
-text = "AI Generated Advice"
 label_settings = SubResource("LabelSettings_7c77l")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -141,10 +141,9 @@ offset_right = 0.12539673
 offset_bottom = 0.022369385
 theme = SubResource("Theme_jx63h")
 theme_override_colors/default_color = Color(0.2509804, 0.22352941, 0.64705884, 1)
-text = "Build 4 Turret Tier 1 towers to handle the large number of fast Troop enemies in the next wave, as their high fire rate and low cost provide reliable crowd control, then save remaining coins for upgrading to Turret Tier 2 once tougher enemies appear to maintain long-term damage efficiency and base safety. Build 4 Turret Tier 1 towers to handle the large number of fast Troop enemies in the next wave, as their high fire rate and low cost provide reliable crowd control, then save remaining coins for upgrading to Turret Tier 2 once tougher enemies "
-horizontal_alignment = 1
 
 [node name="AdviceButton" type="Button" parent="BarsControl/SideBar"]
+visible = false
 z_index = 3
 layout_mode = 1
 anchors_preset = -1
@@ -398,6 +397,7 @@ grow_vertical = 2
 color = Color(0.101960786, 0.21568628, 0.23921569, 1)
 
 [node name="WaveTitleLabel" type="Label" parent="BarsControl/TopBar"]
+visible = false
 z_index = 1
 layout_mode = 1
 anchors_preset = -1
@@ -414,6 +414,7 @@ label_settings = SubResource("LabelSettings_7c77l")
 vertical_alignment = 1
 
 [node name="WavePanel" type="PanelContainer" parent="BarsControl/TopBar"]
+visible = false
 z_index = 1
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 1
@@ -435,6 +436,7 @@ label_settings = SubResource("LabelSettings_c1rh2")
 vertical_alignment = 1
 
 [node name="WavePanelVisual" type="PanelContainer" parent="BarsControl/TopBar"]
+visible = false
 z_index = 1
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 1
@@ -449,6 +451,7 @@ offset_right = -0.4559784
 theme_override_styles/panel = ExtResource("1_u1cvo")
 
 [node name="StartWaveButton" type="Button" parent="BarsControl/TopBar"]
+visible = false
 z_index = 2
 layout_mode = 1
 anchors_preset = -1
@@ -458,6 +461,74 @@ anchor_right = 0.43
 anchor_bottom = 0.8
 theme = ExtResource("8_5174x")
 text = "Next Wave"
+
+[node name="EndlessWaveTitleLabel" type="Label" parent="BarsControl/TopBar"]
+visible = false
+z_index = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08
+anchor_top = 0.2
+anchor_right = 0.2
+anchor_bottom = 0.8
+offset_left = -5.8799896
+offset_top = 0.19999981
+offset_right = 5.8799896
+offset_bottom = 0.20000076
+grow_horizontal = 2
+grow_vertical = 2
+text = "Time Passed"
+label_settings = SubResource("LabelSettings_7c77l")
+vertical_alignment = 1
+
+[node name="EndlessWavePanel" type="PanelContainer" parent="BarsControl/TopBar"]
+visible = false
+z_index = 1
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.21
+anchor_top = 0.2
+anchor_right = 0.31
+anchor_bottom = 0.8
+offset_left = 4.0
+offset_top = 0.19999981
+offset_right = -4.0
+
+[node name="WaveLabel" type="Label" parent="BarsControl/TopBar/EndlessWavePanel"]
+z_index = 1
+layout_mode = 2
+size_flags_vertical = 1
+text = "0"
+label_settings = SubResource("LabelSettings_c1rh2")
+vertical_alignment = 1
+
+[node name="StartEndlessButton" type="Button" parent="BarsControl/TopBar"]
+visible = false
+z_index = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.32
+anchor_top = 0.15
+anchor_right = 0.43
+anchor_bottom = 0.8
+theme = ExtResource("8_5174x")
+text = "Start"
+
+[node name="EndlessWavePanelVisual" type="PanelContainer" parent="BarsControl/TopBar"]
+visible = false
+z_index = 1
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.21
+anchor_top = 0.2
+anchor_right = 0.31
+anchor_bottom = 0.8
+offset_left = -0.31999207
+offset_top = 0.19999981
+offset_right = -0.45599365
+theme_override_styles/panel = ExtResource("1_u1cvo")
 
 [node name="SepLineCollumn1" type="ColorRect" parent="BarsControl/TopBar"]
 z_index = 2
@@ -479,7 +550,6 @@ anchor_right = 0.72
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Standart Gamemode"
 label_settings = SubResource("LabelSettings_7c77l")
 horizontal_alignment = 1
 vertical_alignment = 1

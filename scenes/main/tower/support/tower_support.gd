@@ -10,6 +10,7 @@ func _ready() -> void:
 	if GameMan.wave_active:
 		can_attack = true
 	WavesMan.connect("wave_ready", Callable(self, "_on_wave_started"))
+	SpawnerMan.connect("endless_started", Callable(self, "_on_wave_started"))
 	
 		# Make sure GameMan has the signal before connecting
 	if GameMan.has_signal("wave_complete_support"):
@@ -18,8 +19,7 @@ func _ready() -> void:
 	
 	if stats != null:
 		apply_stats()
-		if GameMan.endless_mode:
-			can_attack = true
+
 
 func apply_stats() -> void:
 	attack_cooldown = stats.attack_cooldown  # used as heal cooldown
@@ -28,6 +28,7 @@ func apply_stats() -> void:
 	tower_sprite = stats.tower_sprite
 	if has_node("TowerSprite") and stats.tower_sprite != "":
 		$TowerSprite.texture = load(stats.get_sprite_path(tower_sprite))
+
 
 func _process(delta: float) -> void:
 	if can_attack and can_attack_cooldown:
@@ -47,8 +48,8 @@ func _shoot_effect():
 	diamond.position = Vector2.ZERO  # relative to tower
 	add_child(diamond)
 
-func _on_wave_started(_wave_data) -> void:
-	#print_debug("wave start")
+func _on_wave_started() -> void:
+	print_debug("wave start")
 	can_attack = true
 
 func _on_wave_ended() -> void:

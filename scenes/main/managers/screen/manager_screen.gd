@@ -35,5 +35,4 @@ func change_screen(screen_name: String) -> void:
 			# Add them
 			main.add_child(game)
 			main.add_child(ui)
-			
 			main.setup_new_game()

@@ -6,6 +6,7 @@ class_name EnemyStats
 @export var damage_cost: int = 0
 @export var coin_reward: int = 0
 @export var group: String = ""
+@export var tier: int = 0
 
 # Only the file name, e.g. "tier_1.png"
 @export var sprite_name: String = ""

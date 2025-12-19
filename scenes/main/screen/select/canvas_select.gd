@@ -24,10 +24,13 @@ func _on_return_button_pressed() -> void:
 	ScreenMan.change_screen("menu")
 
 func _on_play_standart_button_pressed() -> void:
+	GameMan.gamemode = "standard"
 	ScreenMan.change_screen("game")
 
 func _on_play_endless_button_pressed() -> void:
-	pass
+	GameMan.gamemode = "endless"
+	ScreenMan.change_screen("game")
 
 func _on_play_AI_button_pressed() -> void:
-	pass
+	GameMan.gamemode = "AI"
+	ScreenMan.change_screen("game")

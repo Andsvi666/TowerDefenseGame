@@ -9,5 +9,6 @@ max_health = 600
 damage_cost = 100
 coin_reward = 150
 group = "tank"
+tier = 1
 sprite_name = "tank_1"
 metadata/_custom_type_script = "uid://jv4co8imrtom"

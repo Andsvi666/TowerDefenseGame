@@ -9,5 +9,6 @@ max_health = 400
 damage_cost = 75
 coin_reward = 200
 group = "plane"
+tier = 1
 sprite_name = "plane_1"
 metadata/_custom_type_script = "uid://jv4co8imrtom"

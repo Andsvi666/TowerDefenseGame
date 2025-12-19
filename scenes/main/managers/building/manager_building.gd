@@ -250,6 +250,10 @@ func place_tower(cell_position: Vector2i, tower_scene: PackedScene, tower_stats:
 	
 	FirebaseMan.user_add_tower()
 	
+	if not GameMan.gamemode == "standard":
+		var message = "Tower tier 1 %s built" % tower_stats.tower_name
+		GameMan.log_event(message)
+	
 	# Update counts
 	if tower_stats.tower_name == "turret":
 		built_towers["turret_tier_1"] += 1
@@ -308,6 +312,10 @@ func upgrade_tower(tower: TowerBase) -> void:
 	tower.stats = new_stats
 	tower.upgraded = true
 	tower.apply_stats()
+	
+	if not GameMan.gamemode == "standard":
+		var message = "Tower %s upgraded to tier 2 " % tower_name
+		GameMan.log_event(message)
 
 	#print_debug(tower_name + " upgraded successfully!")
 

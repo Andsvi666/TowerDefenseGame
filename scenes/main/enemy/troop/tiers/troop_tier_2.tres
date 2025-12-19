@@ -9,5 +9,6 @@ max_health = 75
 damage_cost = 20
 coin_reward = 50
 group = "troop"
+tier = 2
 sprite_name = "troop_2"
 metadata/_custom_type_script = "uid://jv4co8imrtom"

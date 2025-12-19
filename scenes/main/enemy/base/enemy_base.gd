@@ -5,6 +5,8 @@ extends CharacterBody2D
 @export var damage_cost: int = 50
 @export var max_health: int = 100
 @export var coin_reward: int = 50
+@export var group: String = "base"
+@export var tier: int = 0
 
 var current_health: int
 var path_array: Array[Vector2i] = []
@@ -34,6 +36,11 @@ func get_path_to_position() -> void:
 			path_array.remove_at(0)
 	else:
 		# Reached the end (or no path found)
+		if not GameMan.gamemode == "standard":
+			var message = "Enemy tier %s %s reached base" % [tier, group]
+			GameMan.log_event(message)
+			var message_1 = "Base took %s points of damage" % damage_cost
+			GameMan.log_event(message_1)
 		if HealthMan:
 			HealthMan.take_damage(damage_cost)
 		emit_signal("enemy_died", self)
@@ -54,6 +61,9 @@ func die() -> void:
 	if CoinsMan:
 		CoinsMan.add_coins(coin_reward)
 	# emit signal before freeing
+	if not GameMan.gamemode == "standard":
+		var message = "Enemy tier %s %s died" % [tier, group]
+		GameMan.log_event(message)
 	emit_signal("enemy_died", self)
 	FirebaseMan.user_add_enemy()
 	queue_free()
