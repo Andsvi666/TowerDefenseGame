@@ -4,10 +4,10 @@
 
 [resource]
 script = ExtResource("1_ganwn")
-movement_speed = 80.0
-max_health = 600
-damage_cost = 100
-coin_reward = 150
+movement_speed = 70.0
+max_health = 500
+damage_cost = 20
+coin_reward = 50
 group = "tank"
 tier = 1
 sprite_name = "tank_1"

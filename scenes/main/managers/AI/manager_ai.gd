@@ -76,7 +76,7 @@ func ask_AI_advice() -> String:
 	var response_code = result[1]
 	var body_bytes = result[3]
 	var body_text = body_bytes.get_string_from_utf8()
-	print_debug(body_text)
+	#print_debug(body_text)
 
 	if response_code != 200:
 		return "AI connection error"

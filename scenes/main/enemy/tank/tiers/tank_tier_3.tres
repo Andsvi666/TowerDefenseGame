@@ -4,10 +4,10 @@
 
 [resource]
 script = ExtResource("1_xsv5w")
-movement_speed = 60.0
-max_health = 2000
-damage_cost = 300
-coin_reward = 500
+movement_speed = 90.0
+max_health = 1500
+damage_cost = 60
+coin_reward = 150
 group = "tank"
 tier = 3
 sprite_name = "tank_3"

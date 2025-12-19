@@ -27,6 +27,7 @@ extends CanvasLayer
 @onready var box_label: Label = $BarsControl/SideBar/AdviceTitle
 @onready var box_panel: RichTextLabel = $BarsControl/SideBar/AdvicePanel/AdviceLabel
 @onready var box_panel_overlay: Panel = $BarsControl/SideBar/AdvicePanel
+@onready var game_over_label: Label = $PanelGameOver/LabelDescription
 
 func _ready() -> void:
 	# Make sure the whole UI (including child buttons) keeps working while paused
@@ -145,8 +146,14 @@ func _on_game_over() -> void:
 	FirebaseMan.user_add_game()
 	get_tree().paused = true
 	game_panel.visible = true
+	if GameMan.gamemode == "endless":
+		game_over_label.text = "You survived endless wave for %s seconds. Try again?" % endless_wave_counter.text
+		FirebaseMan.user_update_endless(int(endless_wave_counter.text))
 
 func _on_game_over_restart() -> void:
+	if GameMan.gamemode == "endless":
+		FirebaseMan.user_update_endless(int(endless_wave_counter.text))
+		FirebaseMan.user_add_game()
 	pause_panel.visible = false
 	get_tree().paused = false
 	SpawnerMan.stop_current_wave()
@@ -161,10 +168,12 @@ func _on_resume_button_pressed() -> void:
 	get_tree().paused = false
 
 func _on_start_endless_wave_button_pressed() -> void:
+	GameMan.start_support_towers()
 	start_endless_wave_button.disabled = true
 	SpawnerMan.start_endless_mode()
 
 func _on_start_wave_button_pressed() -> void:
+	GameMan.start_support_towers()
 	WavesMan.start_next_wave()
 	start_wave_button.disabled = true
 	advice_button.disabled = true
@@ -184,6 +193,9 @@ func _on_menu_button_pressed() -> void:
 	#print_debug("to menu")
 	pause_panel.visible = false
 	get_tree().paused = false
+	if GameMan.gamemode == "endless":
+		FirebaseMan.user_update_endless(int(endless_wave_counter.text))
+		FirebaseMan.user_add_game()
 	ScreenMan.change_screen("menu")
 	#switch to menu
  

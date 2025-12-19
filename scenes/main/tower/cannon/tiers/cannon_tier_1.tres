@@ -6,11 +6,11 @@
 [resource]
 script = ExtResource("1_ohb3s")
 tower_name = "cannon"
-attack_range = 250.0
+attack_range = 200.0
 attack_cooldown = 3.0
 attack_damage = 100.0
 build_cost = 250
-projectile_speed = 200.0
+projectile_speed = 300.0
 target_group = "tank"
 tower_sprite = "cannon/cannon_1"
 firing_sprite = ""

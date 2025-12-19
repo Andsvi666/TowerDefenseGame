@@ -106,7 +106,7 @@ func user_beat_campaign() -> void:
 	current_user_doc["beat_campaign"] = true
 	await users_collection.update(current_user_doc)
 
-func user_update_endless(new: float) -> void:
+func user_update_endless(new: int) -> void:
 	var current = current_user_doc.get_value("longest_endless_time")
 	if new > current:
 		current_user_doc["longest_endless_time"] = new

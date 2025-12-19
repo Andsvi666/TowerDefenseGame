@@ -5,9 +5,9 @@
 [resource]
 script = ExtResource("1_v7354")
 tower_name = "support"
-attack_cooldown = 15.0
+attack_cooldown = 10.0
 attack_damage = 10.0
-build_cost = 1200
+build_cost = 4000
 target_group = "base"
 tower_sprite = "repair/repair_2"
 firing_sprite = ""

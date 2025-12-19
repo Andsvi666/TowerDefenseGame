@@ -1,6 +1,7 @@
 class_name ManagerGame
 extends Node
 
+signal wave_start_support
 signal wave_complete_support
 signal game_setup_started
 signal update_log
@@ -15,7 +16,10 @@ func setup_fresh_game(tilemap: TileMapLayer, overlay: TileMapLayer, spawnPoint: 
 	emit_signal("game_setup_started")
 	# Reset player stats
 	HealthMan.setup_health(health_label)
-	CoinsMan.setup_coins(coin_label)
+	if gamemode == "endless":
+		CoinsMan.setup_coins(coin_label, 2000)
+	else:
+		CoinsMan.setup_coins(coin_label, 1000)
 
 	# Reset waves
 	WavesMan.setup_waves(wave_label)
@@ -28,6 +32,9 @@ func setup_fresh_game(tilemap: TileMapLayer, overlay: TileMapLayer, spawnPoint: 
 	AiMan.setup()
 	
 	wave_active = false
+
+func start_support_towers() -> void:
+	emit_signal("wave_start_support")
 
 func stop_support_towers() -> void:
 	emit_signal("wave_complete_support")

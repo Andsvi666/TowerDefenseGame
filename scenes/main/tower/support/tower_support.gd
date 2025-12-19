@@ -9,8 +9,7 @@ func _ready() -> void:
 	can_attack = false
 	if GameMan.wave_active:
 		can_attack = true
-	WavesMan.connect("wave_ready", Callable(self, "_on_wave_started"))
-	SpawnerMan.connect("endless_started", Callable(self, "_on_wave_started"))
+	GameMan.connect("wave_start_support", Callable(self, "_on_wave_started"))
 	
 		# Make sure GameMan has the signal before connecting
 	if GameMan.has_signal("wave_complete_support"):
@@ -49,7 +48,7 @@ func _shoot_effect():
 	add_child(diamond)
 
 func _on_wave_started() -> void:
-	print_debug("wave start")
+	#print_debug("wave start")
 	can_attack = true
 
 func _on_wave_ended() -> void:

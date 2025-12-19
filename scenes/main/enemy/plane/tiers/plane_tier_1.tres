@@ -5,9 +5,9 @@
 [resource]
 script = ExtResource("1_ktxkc")
 movement_speed = 200.0
-max_health = 400
-damage_cost = 75
-coin_reward = 200
+max_health = 250
+damage_cost = 30
+coin_reward = 100
 group = "plane"
 tier = 1
 sprite_name = "plane_1"

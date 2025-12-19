@@ -41,6 +41,16 @@ var endless_time_timer: Timer
 var endless_elapsed_time := 0
 signal endless_time_updated(seconds: int)
 signal endless_started
+var endless_spawn_delay := 5.0
+var spawn_delay_step := 0.1
+var spawn_delay_interval := 15 # seconds
+var min_spawn_delay := 1.0
+var unlocked_enemies := {
+	"TroopEnemy": 1,  # max tier unlocked (0-based index + 1)
+	"TankEnemy": 0,
+	"PlaneEnemy": 0
+}
+var last_spawned_type: String = ""  # empty at start
 
 signal wave_complete
 var active_enemies: Array = []
@@ -99,12 +109,30 @@ func reset_endless() -> void:
 func start_endless_mode() -> void:
 	if GameMan.gamemode != "endless":
 		return
+
 	GameMan.wave_active = true
 	emit_signal("endless_started")
+
 	endless_elapsed_time = 0
+	endless_spawn_delay = 5.0
+
+	endless_spawn_timer.wait_time = endless_spawn_delay
 	endless_spawn_timer.start()
 	endless_time_timer.start()
 
+func _tick_endless_time() -> void:
+	if GameMan.gamemode != "endless":
+		return
+
+	endless_elapsed_time += 1
+	emit_signal("endless_time_updated", endless_elapsed_time)
+
+	# Stage 1: Spawn delay 5 → 2 over 10 minutes (600 seconds)
+	if endless_elapsed_time <= 600:
+		var steps_passed := int(endless_elapsed_time / 10)  # every 10s
+		var new_delay := 5.0 - (steps_passed * 0.05)  # smaller step for 10 min
+		endless_spawn_delay = max(new_delay, 2.0)
+		endless_spawn_timer.wait_time = endless_spawn_delay
 
 func stop_endless_mode() -> void:
 	endless_spawn_timer.stop()
@@ -114,14 +142,71 @@ func _spawn_endless_enemy() -> void:
 	if GameMan.gamemode != "endless":
 		return
 
-	spawn_next_enemy("TroopEnemy", 0)
+	_update_unlocked_enemies()   # update current unlocked types/tiers
+	var enemy_data := pick_random_enemy()
+	spawn_next_enemy(enemy_data["type"], enemy_data["tier_index"])
 
-func _tick_endless_time() -> void:
-	if GameMan.gamemode != "endless":
-		return
 
 	endless_elapsed_time += 1
 	emit_signal("endless_time_updated", endless_elapsed_time)
+
+func _update_unlocked_enemies():
+	var interval := int(endless_elapsed_time / 67)  # 9 intervals over 10 minutes
+	match interval:
+		0:
+			unlocked_enemies = {"TroopEnemy": 1, "TankEnemy": 0, "PlaneEnemy": 0}
+		1:
+			unlocked_enemies["TankEnemy"] = 1
+		2:
+			unlocked_enemies["PlaneEnemy"] = 1
+		3:
+			unlocked_enemies["TroopEnemy"] = 2
+		4:
+			unlocked_enemies["TankEnemy"] = 2
+		5:
+			unlocked_enemies["PlaneEnemy"] = 2
+		6:
+			unlocked_enemies["TroopEnemy"] = 3
+		7:
+			unlocked_enemies["TankEnemy"] = 3
+		8:
+			unlocked_enemies["PlaneEnemy"] = 3
+
+
+func pick_random_enemy() -> Dictionary:
+	var available_types := []
+	for type_name in unlocked_enemies.keys():
+		if unlocked_enemies[type_name] > 0:
+			available_types.append(type_name)
+
+	if available_types.is_empty():
+		push_error("No available enemies to spawn!")
+		return {"type": "TroopEnemy", "tier_index": 0}  # fallback
+
+	var chosen_type: String
+	var max_tier: int
+	var tier_index: int
+	var attempt := 0
+
+	while true:
+		chosen_type = available_types[randi() % available_types.size()]
+		max_tier = unlocked_enemies[chosen_type] - 1
+		tier_index = randi() % (max_tier + 1)
+		
+		# Ensure different type than last spawn
+		if last_spawned_type == "" or chosen_type != last_spawned_type:
+			break
+		
+		attempt += 1
+		if attempt > 10:
+			# fallback to avoid infinite loop
+			break
+
+	last_spawned_type = chosen_type
+	return {"type": chosen_type, "tier_index": tier_index}
+
+
+
 
 # ==================================================================
 # ---------------------------- WAVES -----------------------
