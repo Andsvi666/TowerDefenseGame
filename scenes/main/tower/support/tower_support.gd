@@ -38,7 +38,7 @@ func shoot(target: Node2D) -> void:
 	_shoot_effect()
 	can_attack_cooldown = false
 	HealthMan.heal(attack_damage)
-	CoinsMan.add_coins(attack_damage * 10)
+	CoinsMan.add_coins(attack_damage * 20)
 	await get_tree().create_timer(attack_cooldown, false).timeout
 	can_attack_cooldown = true
 

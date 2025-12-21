@@ -38,6 +38,7 @@ var is_spawning_wave: bool = false
 #Endless mode
 var endless_spawn_timer: Timer
 var endless_time_timer: Timer
+var endless_20_min_mark_reached := false
 var endless_elapsed_time := 0
 signal endless_time_updated(seconds: int)
 signal endless_started
@@ -91,20 +92,30 @@ func reset_endless() -> void:
 	if endless_time_timer:
 		endless_time_timer.stop()
 
-	# Reset elapsed time counter
+	# Reset counters and flags
 	endless_elapsed_time = 0
+	endless_20_min_mark_reached = false
+	endless_spawn_delay = 5.0
+	last_spawned_type = ""
 
+	# Reset unlocked enemies
+	unlocked_enemies = {
+		"TroopEnemy": 1,
+		"TankEnemy": 0,
+		"PlaneEnemy": 0
+	}
+	
 	# Clear any active enemies if you want a clean slate
 	for enemy in active_enemies:
 		if is_instance_valid(enemy):
 			enemy.queue_free()
 	
 	active_enemies.clear()
+	is_spawning_wave = false
 
 # ==================================================================
 # ---------------------------- ENDLESS -----------------------
 # ==================================================================
-
 
 func start_endless_mode() -> void:
 	if GameMan.gamemode != "endless":
@@ -127,12 +138,29 @@ func _tick_endless_time() -> void:
 	endless_elapsed_time += 1
 	emit_signal("endless_time_updated", endless_elapsed_time)
 
-	# Stage 1: Spawn delay 5 → 2 over 10 minutes (600 seconds)
-	if endless_elapsed_time <= 600:
-		var steps_passed := int(endless_elapsed_time / 10)  # every 10s
-		var new_delay := 5.0 - (steps_passed * 0.05)  # smaller step for 10 min
-		endless_spawn_delay = max(new_delay, 2.0)
-		endless_spawn_timer.wait_time = endless_spawn_delay
+	var phase := get_endless_phase()
+
+# Trigger 20-minute mark only once
+	if endless_elapsed_time >= 1200 and not endless_20_min_mark_reached:
+		endless_20_min_mark_reached = true
+		FirebaseMan.user_beat_endless()
+
+	if phase == 1:
+		var progress := endless_elapsed_time / 600.0
+		endless_spawn_delay = lerp(4.0, 2.0, progress)
+
+	elif phase == 2:
+		var progress := (endless_elapsed_time - 600) / 600.0
+		endless_spawn_delay = lerp(2.0, 0.5, progress)
+
+	elif phase == 3:
+		# Death phase starts at t=1200
+		var minutes_in_phase = (endless_elapsed_time - 1200) / 60.0
+		# Each minute reduces spawn delay by 20%
+		var scale = pow(0.75, minutes_in_phase)
+		endless_spawn_delay = max(0.01, 0.5 * scale)  # never below 0.01s
+	endless_spawn_timer.wait_time = endless_spawn_delay
+
 
 func stop_endless_mode() -> void:
 	endless_spawn_timer.stop()
@@ -147,8 +175,13 @@ func _spawn_endless_enemy() -> void:
 	spawn_next_enemy(enemy_data["type"], enemy_data["tier_index"])
 
 
-	endless_elapsed_time += 1
-	emit_signal("endless_time_updated", endless_elapsed_time)
+func get_endless_phase() -> int:
+	if endless_elapsed_time < 600:
+		return 1
+	elif endless_elapsed_time < 1200:
+		return 2
+	else:
+		return 3
 
 func _update_unlocked_enemies():
 	var interval := int(endless_elapsed_time / 67)  # 9 intervals over 10 minutes
@@ -172,6 +205,45 @@ func _update_unlocked_enemies():
 		8:
 			unlocked_enemies["PlaneEnemy"] = 3
 
+func pick_weighted_index(weights: Array) -> int:
+	var total := 0.0
+	for w in weights:
+		total += w
+
+	var r := randf() * total
+	var acc := 0.0
+
+	for i in weights.size():
+		acc += weights[i]
+		if r <= acc:
+			return i
+
+	return weights.size() - 1
+
+func get_tier_weights(max_tier: int) -> Array:
+	# Phase 1 (0–10 min)
+	var w1 := 0.6
+	var w2 := 0.3
+	var w3 := 0.1
+
+	# Phase 2 (10–20 min): shift to Tier 3
+	if endless_elapsed_time >= 600:
+		var progress = clamp((endless_elapsed_time - 600) / 600.0, 0.0, 1.0)
+
+		w1 = lerp(0.6, 0.0, progress)
+		w2 = lerp(0.3, 0.0, progress)
+		w3 = lerp(0.1, 1.0, progress)
+
+	var weights := []
+
+	if max_tier >= 0:
+		weights.append(w1)
+	if max_tier >= 1:
+		weights.append(w2)
+	if max_tier >= 2:
+		weights.append(w3)
+
+	return weights
 
 func pick_random_enemy() -> Dictionary:
 	var available_types := []
@@ -191,7 +263,8 @@ func pick_random_enemy() -> Dictionary:
 	while true:
 		chosen_type = available_types[randi() % available_types.size()]
 		max_tier = unlocked_enemies[chosen_type] - 1
-		tier_index = randi() % (max_tier + 1)
+		var weights := get_tier_weights(max_tier)
+		tier_index = pick_weighted_index(weights)
 		
 		# Ensure different type than last spawn
 		if last_spawned_type == "" or chosen_type != last_spawned_type:
@@ -204,9 +277,6 @@ func pick_random_enemy() -> Dictionary:
 
 	last_spawned_type = chosen_type
 	return {"type": chosen_type, "tier_index": tier_index}
-
-
-
 
 # ==================================================================
 # ---------------------------- WAVES -----------------------

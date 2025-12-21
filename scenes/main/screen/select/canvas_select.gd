@@ -16,8 +16,9 @@ func _ready() -> void:
 	check_completion()
 
 func check_completion() -> void:
-	if FirebaseMan.current_user_completion:
+	if FirebaseMan.current_user_standard_completion:
 		hide_block_1.visible = false
+	if FirebaseMan.current_user_endless_completion:
 		hide_block_2.visible = false
  
 func _on_return_button_pressed() -> void:

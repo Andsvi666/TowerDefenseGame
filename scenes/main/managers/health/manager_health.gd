@@ -22,7 +22,7 @@ func setup_health(given_label: Label) -> void:
 
 # Called when enemy reaches base or tower is destroyed
 func take_damage(amount: int) -> void:
-	current_health = clamp(current_health - amount, 0, base_health)
+	current_health = current_health - amount
 	emit_signal("update_label", current_health, name_label)
 	#print_debug("Base took ", amount, " damage → ", current_health)
 

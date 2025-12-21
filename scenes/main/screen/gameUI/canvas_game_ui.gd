@@ -94,7 +94,7 @@ func _change_game_panel() -> void:
 	var desc_label: Label = game_panel.get_node_or_null("LabelDescription")
 
 	if title_label:
-		title_label.text = "Waves Cleared"
+		title_label.text = "Victory!"
 	if desc_label:
 		desc_label.text = "All enemies were defeated and Terminus is saved! Try again?"
 

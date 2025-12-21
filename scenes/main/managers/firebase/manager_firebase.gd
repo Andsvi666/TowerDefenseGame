@@ -6,7 +6,8 @@ extends Node
 # ==================================================================
 
 var current_user = null 
-var current_user_completion = false
+var current_user_standard_completion = false
+var current_user_endless_completion = false
 var current_user_doc = null
 var users_collection = null
 
@@ -53,8 +54,11 @@ func logout_user() -> void:
 # ==================================================================
 
 func setup_new_user() -> void:
+	print_debug(current_user)
 	var user_stats = {
-		"beat_campaign": false,
+		"name" : current_user["fullname"],
+		"beat_standard": false,
+		"beat_endless": false,
 		"total_games_played": 0,
 		"total_towers_built": 0,
 		"total_enemies_killed": 0,
@@ -65,7 +69,6 @@ func setup_new_user() -> void:
 	var uid = current_user["localid"]
 	await users_collection.add(uid, user_stats)
 	current_user_doc = await users_collection.get_doc(uid)
-	
 
 func read_user_stats() -> Dictionary:
 	var stats = {}
@@ -77,11 +80,14 @@ func read_user_stats() -> Dictionary:
 	
 	for key in keys:
 		stats[key] = current_user_doc.get_value(key)
-	if stats["beat_campaign"]:
-		current_user_completion = true
-		#print_debug("beaten")
+	if stats["beat_standard"]:
+		current_user_standard_completion = true
 	else:
-		current_user_completion = false
+		current_user_standard_completion = false
+	if stats["beat_endless"]:
+		current_user_endless_completion = true
+	else:
+		current_user_endless_completion = false
 	return stats
 
 func user_add_tower() -> void:
@@ -102,8 +108,14 @@ func user_add_game() -> void:
 	current_user_doc["total_games_played"] = count
 	await users_collection.update(current_user_doc)
 
-func user_beat_campaign() -> void:
-	current_user_doc["beat_campaign"] = true
+func user_beat_standard() -> void:
+	current_user_doc["beat_standard"] = true
+	current_user_standard_completion = true
+	await users_collection.update(current_user_doc)
+
+func user_beat_endless() -> void:
+	current_user_doc["beat_endless"] = true
+	current_user_endless_completion = true
 	await users_collection.update(current_user_doc)
 
 func user_update_endless(new: int) -> void:
