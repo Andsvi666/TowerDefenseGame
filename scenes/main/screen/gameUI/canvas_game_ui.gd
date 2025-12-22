@@ -27,7 +27,8 @@ extends CanvasLayer
 @onready var box_label: Label = $BarsControl/SideBar/AdviceTitle
 @onready var box_panel: RichTextLabel = $BarsControl/SideBar/AdvicePanel/AdviceLabel
 @onready var box_panel_overlay: Panel = $BarsControl/SideBar/AdvicePanel
-@onready var game_over_label: Label = $PanelGameOver/LabelDescription
+@onready var game_over_label_title: Label = $PanelGameOver/LabelTitle
+@onready var game_over_label_description: Label = $PanelGameOver/LabelDescription
 
 func _ready() -> void:
 	# Make sure the whole UI (including child buttons) keeps working while paused
@@ -54,6 +55,7 @@ func _ready() -> void:
 	GameMan.connect("game_setup_started", Callable(self, "_game_setup_started"))
 	SpawnerMan.connect("endless_time_updated", Callable(self, "_update_timer"))
 	GameMan.connect("update_log", Callable(self, "_update_log"))
+	GameMan.connect("game_stopped_by_error", Callable(self, "_adjust_message"))
 	
 
 func _game_setup_started() -> void:
@@ -88,17 +90,16 @@ func _change_game_panel() -> void:
 	get_tree().paused = true
 	
 	FirebaseMan.user_add_game()
-	FirebaseMan.user_beat_campaign()
+	FirebaseMan.user_beat_standard()
 	
-	var title_label: Label = game_panel.get_node_or_null("LabelTitle")
-	var desc_label: Label = game_panel.get_node_or_null("LabelDescription")
-
-	if title_label:
-		title_label.text = "Victory!"
-	if desc_label:
-		desc_label.text = "All enemies were defeated and Terminus is saved! Try again?"
+	game_over_label_title.text = "Victory!"
+	game_over_label_description.text = "All enemies were defeated and Terminus is saved! Try again?"
 
 	game_panel.visible = true
+
+func _adjust_message() -> void:
+	game_over_label_title.text = "Error Occurred"
+	game_over_label_description.text = "Wave generation failed. Please try again or choose another game mode."
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_pause"):
@@ -147,8 +148,9 @@ func _on_game_over() -> void:
 	get_tree().paused = true
 	game_panel.visible = true
 	if GameMan.gamemode == "endless":
-		game_over_label.text = "You survived endless wave for %s seconds. Try again?" % endless_wave_counter.text
+		game_over_label_description.text = "You survived endless wave for %s seconds. Try again?" % endless_wave_counter.text
 		FirebaseMan.user_update_endless(int(endless_wave_counter.text))
+
 
 func _on_game_over_restart() -> void:
 	if GameMan.gamemode == "endless":
@@ -174,7 +176,10 @@ func _on_start_endless_wave_button_pressed() -> void:
 
 func _on_start_wave_button_pressed() -> void:
 	GameMan.start_support_towers()
-	WavesMan.start_next_wave()
+	if GameMan.gamemode == "standard":
+		WavesMan.start_next_wave_standard()
+	if GameMan.gamemode == "AI":
+		WavesMan.start_next_wave_AI()
 	start_wave_button.disabled = true
 	advice_button.disabled = true
 

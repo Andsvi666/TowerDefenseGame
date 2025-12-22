@@ -5,12 +5,16 @@ signal wave_start_support
 signal wave_complete_support
 signal game_setup_started
 signal update_log
+signal game_stopped_by_error
 
 var wave_active: bool = false
 var gamemode = null
 
 func _ready() -> void:
 	pass
+
+func forced_by_error() -> void:
+	emit_signal("game_stopped_by_error")
 
 func setup_fresh_game(tilemap: TileMapLayer, overlay: TileMapLayer, spawnPoint: Marker2D, endPoint: Marker2D, wave_label: Label, health_label: Label, coin_label: Label, hover_panel: Panel) -> void:
 	emit_signal("game_setup_started")

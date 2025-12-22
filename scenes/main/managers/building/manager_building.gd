@@ -49,10 +49,10 @@ var built_towers := {
 }
 
 var available_tiles_for_towers := {
-	"turret_tiles": 43,
-	"cannon_tiles": 43,
-	"missile_tiles": 31,
-	"support_tiles": 7,
+	"turret_tiles": 20,
+	"cannon_tiles": 20,
+	"missile_tiles": 20,
+	"support_tiles": 6,
 }
 
 # Setup function to inject the TileMap and Overlay
@@ -73,10 +73,10 @@ func reset_towers():
 
 	# Optional: reset available tiles in GameMan
 	available_tiles_for_towers = {
-		"turret_tiles": 43,
-		"cannon_tiles": 43,
-		"missile_tiles": 31,
-		"support_tiles": 7,
+		"turret_tiles": 20,
+		"cannon_tiles": 20,
+		"missile_tiles": 20,
+		"support_tiles": 6,
 	}
 
 	# Optional: reset built towers counts

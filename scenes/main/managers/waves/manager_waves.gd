@@ -21,22 +21,50 @@ func setup_waves(given_label: Label) -> void:
 	is_spawning = false
 	#print_debug("called")
 	waves_count = await FirebaseMan.read_waves_count(waves_type)
-	waves_count  = 1
 	#print_debug(waves_count)
 	emit_signal("update_label", current_wave_index, name_label)
 	
 
-func start_next_wave() -> void:
+func start_next_wave_standard() -> void:
 	#print_debug(current_wave_index)
 	if int(current_wave_index) >= int(waves_count):
 		#Force gamer over
 		HealthMan.take_damage(1000)
+		GameMan.forced_by_error()
 		return
 	var wave_data = await FirebaseMan.read_wave_from_db(waves_type, String.num_int64(current_wave_index))
+	print_debug(wave_data)
+	if wave_data.is_empty():
+		#Force gamer over
+		HealthMan.take_damage(1000)
+		GameMan.forced_by_error()
+		return
+	current_wave_index += 1
+	#print_debug(current_wave_index)
+	GameMan.wave_active = true
+	emit_signal("update_label", current_wave_index, name_label)
+	SpawnerMan.start_wave_coroutine(wave_data)
+
+func start_next_wave_AI() -> void:
+	#print_debug(current_wave_index)
+	var budget = 50 + current_wave_index * 50
+	var allowed_types = ["TroopEnemy"]
+	var allowed_max_tier = 1
+	if current_wave_index >= 2:
+		allowed_types = ["TroopEnemy", "TankEnemy"]
+	if current_wave_index >= 3:
+		allowed_max_tier = 2
+	if current_wave_index >= 5:
+		allowed_types = ["TroopEnemy", "TankEnemy", "PlaneEnemy"]
+	if current_wave_index >= 7:
+		allowed_max_tier = 3
+	#print_debug(allowed_types)
+	var wave_data = await AiMan.generate_wave(budget, allowed_max_tier, allowed_types)
 	#print_debug(wave_data)
 	if wave_data.is_empty():
 		#Force gamer over
 		HealthMan.take_damage(1000)
+		GameMan.forced_by_error()
 		return
 	current_wave_index += 1
 	#print_debug(current_wave_index)
