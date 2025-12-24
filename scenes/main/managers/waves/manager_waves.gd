@@ -46,6 +46,9 @@ func start_next_wave_standard() -> void:
 	SpawnerMan.start_wave_coroutine(wave_data)
 
 func start_next_wave_AI() -> void:
+	var message = "AI starts generating wave %s" % (current_wave_index + 1)
+	GameMan.log_event(message)
+	FirebaseMan.user_update_AI(current_wave_index)
 	#print_debug(current_wave_index)
 	var budget = 50 + current_wave_index * 50
 	var allowed_types = ["TroopEnemy"]

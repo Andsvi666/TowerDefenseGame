@@ -33,14 +33,14 @@ var enemy_files := {
 
 # === CONFIG ===
 var API_KEY := ""
-const MODEL := "openai/gpt-5.2-chat"
+const MODEL := "xiaomi/mimo-v2-flash:free"
 const URL := "https://openrouter.ai/api/v1/chat/completions"
 
 # === INTERNAL ===
 var _http := HTTPRequest.new()
 
 func setup():
-	API_KEY = await FirebaseMan.read_api_key("fresh key")
+	API_KEY = await FirebaseMan.read_api_key("api key")
 	add_child(_http)
 
 func send_request(prompt: String) -> String:
@@ -157,13 +157,13 @@ func generate_wave(budget: int, max_tier: int, allowed_types: Array) -> Array:
 	var prompt = await collect_waves_prompt(budget, max_tier, allowed_types)
 	#print_debug(prompt)
 	var response = await send_request(prompt)
+	print_debug("BUDGET:")
+	print_debug(budget)
 	print_debug("GENERATED RESPONSE:")
 	print_debug(response)
-	response = '[
-		{ "type": "TroopEnemy", "tier": 1 },
-		{ "type": "TankEnemy", "tier": 2 }
-	]'
 	var data = rework_response(response)
+	var message = "Wave has been generated"
+	GameMan.log_event(message)
 	print_debug("REWORKED RESPONSE:")
 	print_debug(data)
 	
