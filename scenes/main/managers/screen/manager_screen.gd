@@ -4,6 +4,7 @@ extends Node
 var login_scene: PackedScene = preload("res://scenes/main/screen/login/canvas_login.tscn")
 var menu_scene: PackedScene = preload("res://scenes/main/screen/menu/canvas_menu.tscn")
 var game_select: PackedScene = preload("res://scenes/main/screen/select/canvas_select.tscn")
+var game_info: PackedScene = preload("res://scenes/main/screen/info/canvas_info.tscn")
 var game_scene: PackedScene = preload("res://scenes/main/screen/gameMain/canvas_game_main.tscn")
 var game_ui_scene: PackedScene = preload("res://scenes/main/screen/gameUI/canvas_game_ui.tscn")
 
@@ -14,7 +15,7 @@ func change_screen(screen_name: String) -> void:
 		push_error("Main scene not found!")
 		return
 	
-		# Remove old children from Main
+	# Remove old children from Main
 	for child in main.get_children():
 		child.queue_free()
 	
@@ -28,6 +29,8 @@ func change_screen(screen_name: String) -> void:
 			main.add_child(menu_scene.instantiate())
 		"select":
 			main.add_child(game_select.instantiate())
+		"info":
+			main.add_child(game_info.instantiate())
 		"game":
 			# Create instances
 			var game := game_scene.instantiate()

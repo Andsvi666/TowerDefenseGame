@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1dvat1wtqjid"]
+[gd_scene load_steps=9 format=3 uid="uid://d1dvat1wtqjid"]
 
 [ext_resource type="Script" uid="uid://rfb45seah5vp" path="res://scenes/main/screen/select/canvas_select.gd" id="1_xwx5g"]
 [ext_resource type="Theme" uid="uid://c04p4lp6xvykg" path="res://assets/themes/button.tres" id="2_w4y4s"]
@@ -20,6 +20,18 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_npejt"]
 font_size = 18
 font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xwx5g"]
+font_size = 35
+font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_au861"]
+font_size = 35
+font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
 [node name="CanvasSelect" type="CanvasLayer"]
@@ -97,9 +109,9 @@ vertical_alignment = 1
 [node name="ControlStandart" type="Control" parent="SubViewportContainer/SubViewport"]
 layout_mode = 3
 anchor_left = 0.02
-anchor_top = 0.2
+anchor_top = 0.25
 anchor_right = 0.32
-anchor_bottom = 0.85
+anchor_bottom = 0.65
 
 [node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlStandart"]
 layout_mode = 1
@@ -129,9 +141,8 @@ color = Color(0.9137255, 0.69411767, 0.20784314, 1)
 [node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlStandart"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.05
 anchor_right = 1.0
-anchor_bottom = 0.15
+anchor_bottom = 0.25
 grow_horizontal = 2
 grow_vertical = 2
 text = "Standard Mode"
@@ -143,12 +154,12 @@ vertical_alignment = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.05
-anchor_top = 0.2
+anchor_top = 0.3
 anchor_right = 0.95
-anchor_bottom = 0.8
+anchor_bottom = 0.6
 grow_horizontal = 2
 grow_vertical = 2
-text = "Standard Mode is a classic tower defense experience with structured progression. Enemies attack in predefined waves that grow in size and difficulty over time. As you advance, new enemy types and tiers are introduced, demanding stronger strategies and upgrades. Completing this mode unlocks Endless Mode and AI Mode."
+text = "Standard Mode is a classic tower defense experience with structured progression."
 label_settings = SubResource("LabelSettings_npejt")
 horizontal_alignment = 1
 autowrap_mode = 2
@@ -157,18 +168,18 @@ autowrap_mode = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15
-anchor_top = 0.85
+anchor_top = 0.7
 anchor_right = 0.85
-anchor_bottom = 0.95
+anchor_bottom = 0.9
 theme = ExtResource("2_w4y4s")
 text = "Play Standard Mode"
 
 [node name="ControlEndless" type="Control" parent="SubViewportContainer/SubViewport"]
 layout_mode = 3
 anchor_left = 0.35
-anchor_top = 0.2
+anchor_top = 0.25
 anchor_right = 0.65
-anchor_bottom = 0.85
+anchor_bottom = 0.65
 
 [node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlEndless"]
 layout_mode = 1
@@ -198,9 +209,8 @@ color = Color(0.9137255, 0.69411767, 0.20784314, 1)
 [node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlEndless"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.05
 anchor_right = 1.0
-anchor_bottom = 0.15
+anchor_bottom = 0.25
 grow_horizontal = 2
 grow_vertical = 2
 text = "Endless Mode"
@@ -212,12 +222,12 @@ vertical_alignment = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.05
-anchor_top = 0.2
+anchor_top = 0.3
 anchor_right = 0.95
 anchor_bottom = 0.8
 grow_horizontal = 2
 grow_vertical = 2
-text = "Endless Mode challenges you to survive as long as possible against an unending stream of enemies. Over time, enemies spawn more frequently and stronger types begin to appear, steadily increasing the difficulty. There are no set waves—your survival time is your score, so the longer you last, the higher you rank."
+text = "Endless Mode challenges you to survive as long as possible against stream of enemies. "
 label_settings = SubResource("LabelSettings_npejt")
 horizontal_alignment = 1
 autowrap_mode = 2
@@ -226,16 +236,17 @@ autowrap_mode = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15
-anchor_top = 0.85
+anchor_top = 0.7
 anchor_right = 0.85
-anchor_bottom = 0.95
+anchor_bottom = 0.9
 theme = ExtResource("2_w4y4s")
 text = "Play Endless Mode"
 
 [node name="ColorRectHide" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlEndless"]
 z_index = 2
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
+anchor_top = 0.6
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -245,16 +256,14 @@ color = Color(0.30980393, 0.12156863, 0.22745098, 0.8627451)
 
 [node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlEndless/ColorRectHide"]
 layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
+anchors_preset = -1
+anchor_top = 1.2
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -56.5
-offset_bottom = 56.5
+anchor_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Complete Standard Mode to Unlock"
-label_settings = SubResource("LabelSettings_kgckk")
+label_settings = SubResource("LabelSettings_xwx5g")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -262,9 +271,9 @@ autowrap_mode = 2
 [node name="ControlAI" type="Control" parent="SubViewportContainer/SubViewport"]
 layout_mode = 3
 anchor_left = 0.68
-anchor_top = 0.2
+anchor_top = 0.25
 anchor_right = 0.98
-anchor_bottom = 0.85
+anchor_bottom = 0.65
 
 [node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlAI"]
 layout_mode = 1
@@ -294,9 +303,8 @@ color = Color(0.9137255, 0.69411767, 0.20784314, 1)
 [node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlAI"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.05
 anchor_right = 1.0
-anchor_bottom = 0.15
+anchor_bottom = 0.25
 grow_horizontal = 2
 grow_vertical = 2
 text = "AI Mode"
@@ -308,12 +316,12 @@ vertical_alignment = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.05
-anchor_top = 0.2
+anchor_top = 0.3
 anchor_right = 0.95
 anchor_bottom = 0.8
 grow_horizontal = 2
 grow_vertical = 2
-text = "AI Mode puts a dynamic twist on classic tower defense. Like Standard Mode, you face increasingly difficult waves, but these waves are generated by an adaptive AI rather than predefined. The AI learns from the towers you build and counters your strategy by creating stronger waves over time. Your goal is simple: survive as many waves as possible."
+text = "AI Mode puts a dynamic twist on classic tower defense experience."
 label_settings = SubResource("LabelSettings_npejt")
 horizontal_alignment = 1
 autowrap_mode = 2
@@ -322,16 +330,17 @@ autowrap_mode = 2
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15
-anchor_top = 0.85
+anchor_top = 0.7
 anchor_right = 0.85
-anchor_bottom = 0.95
+anchor_bottom = 0.9
 theme = ExtResource("2_w4y4s")
 text = "Play AI mode"
 
 [node name="ColorRectHide" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlAI"]
 z_index = 2
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
+anchor_top = 0.6
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
@@ -341,16 +350,14 @@ color = Color(0.30980393, 0.12156863, 0.22745098, 0.8627451)
 
 [node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlAI/ColorRectHide"]
 layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
+anchors_preset = -1
+anchor_top = 1.2
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -56.5
-offset_bottom = 56.5
+anchor_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Complete Endless Mode to Unlock"
-label_settings = SubResource("LabelSettings_kgckk")
+label_settings = SubResource("LabelSettings_au861")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2

@@ -1,0 +1,925 @@
+[gd_scene load_steps=29 format=3 uid="uid://booq17ffulaql"]
+
+[ext_resource type="Script" uid="uid://qkrfxtw6kkin" path="res://scenes/main/screen/info/canvas_info.gd" id="1_vr8gw"]
+[ext_resource type="Theme" uid="uid://c04p4lp6xvykg" path="res://assets/themes/button.tres" id="2_ulwhq"]
+[ext_resource type="Texture2D" uid="uid://lr3bngo1ue06" path="res://assets/tiles/enemy/troop_1.png" id="3_ljekb"]
+[ext_resource type="Texture2D" uid="uid://cclfp0lg3ehxy" path="res://assets/tiles/enemy/troop_2.png" id="4_1q5pw"]
+[ext_resource type="Texture2D" uid="uid://dwk6puacbawcv" path="res://assets/tiles/enemy/troop_3.png" id="5_8u8jq"]
+[ext_resource type="Texture2D" uid="uid://c3m2mytspx6jb" path="res://assets/tiles/enemy/tank_1.png" id="6_awbru"]
+[ext_resource type="Texture2D" uid="uid://bwbsjrbhp12m0" path="res://assets/tiles/enemy/tank_2.png" id="7_vovna"]
+[ext_resource type="Texture2D" uid="uid://r8emu3pexii2" path="res://assets/tiles/enemy/tank_3.png" id="8_qvcx2"]
+[ext_resource type="Texture2D" uid="uid://dborkolfytfrg" path="res://assets/tiles/enemy/plane_1.png" id="9_3omol"]
+[ext_resource type="Texture2D" uid="uid://cs1hj1qc33f22" path="res://assets/tiles/enemy/plane_2.png" id="10_jy1bo"]
+[ext_resource type="Texture2D" uid="uid://cnw78dop4n75w" path="res://assets/tiles/enemy/plane_3.png" id="11_2hu4g"]
+[ext_resource type="Texture2D" uid="uid://bpbxognnpraoa" path="res://assets/tiles/tower/turret/turret_1.png" id="12_4wvjo"]
+[ext_resource type="Texture2D" uid="uid://broreyys2odbi" path="res://assets/tiles/tower/turret/turret_2.png" id="13_ru3t0"]
+[ext_resource type="Texture2D" uid="uid://c7f0ithabga8e" path="res://assets/tiles/placement/turret.png" id="14_0u5lg"]
+[ext_resource type="Texture2D" uid="uid://0ng2t77ohl5x" path="res://assets/tiles/tower/cannon/cannon_1.png" id="15_m1ajb"]
+[ext_resource type="Texture2D" uid="uid://dfxic7evjyuy1" path="res://assets/tiles/tower/cannon/cannon_2.png" id="16_uw36x"]
+[ext_resource type="Texture2D" uid="uid://gl4wa8cp2d2p" path="res://assets/tiles/placement/cannon.png" id="17_bwsoe"]
+[ext_resource type="Texture2D" uid="uid://dblh7moppv1v0" path="res://assets/tiles/tower/missiles/missile_1.png" id="18_2ogpj"]
+[ext_resource type="Texture2D" uid="uid://e5jhk3qgrfpl" path="res://assets/tiles/tower/missiles/missile_2.png" id="19_4o6l5"]
+[ext_resource type="Texture2D" uid="uid://04iak6jv43kl" path="res://assets/tiles/placement/missile.png" id="20_j33yi"]
+[ext_resource type="Texture2D" uid="uid://di5nhd2wkfy6o" path="res://assets/tiles/tower/repair/repair_1.png" id="21_qcgj6"]
+[ext_resource type="Texture2D" uid="uid://cngn81ddc6f68" path="res://assets/tiles/tower/repair/repair_2.png" id="22_yjskf"]
+[ext_resource type="Texture2D" uid="uid://cmvd7nc8a6l3x" path="res://assets/tiles/placement/support.png" id="23_b624j"]
+
+[sub_resource type="Theme" id="Theme_vraol"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vr8gw"]
+font_size = 40
+font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_kgckk"]
+font_size = 40
+font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ljekb"]
+font_size = 22
+font_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_0dy1b"]
+default_font_size = 22
+
+[node name="CanvasInfo" type="CanvasLayer"]
+script = ExtResource("1_vr8gw")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -720.0
+offset_top = -320.0
+offset_right = 720.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1440, 640)
+render_target_update_mode = 4
+
+[node name="ControlButtons" type="Control" parent="SubViewportContainer/SubViewport"]
+layout_mode = 3
+anchor_left = 0.02
+anchor_top = 0.05
+anchor_right = 0.2
+anchor_bottom = 0.75
+
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlButtons"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.30980393, 0.12156863, 0.22745098, 1)
+
+[node name="ColorRectOuter" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlButtons"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.000061
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+
+[node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlButtons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.2
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game Info"
+label_settings = SubResource("LabelSettings_vr8gw")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/SubViewport/ControlButtons"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.2
+anchor_right = 0.9
+anchor_bottom = 0.95
+theme_override_constants/separation = 30
+
+[node name="ButtonGame" type="Button" parent="SubViewportContainer/SubViewport/ControlButtons/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ulwhq")
+text = "Terminus"
+
+[node name="ButtonHow" type="Button" parent="SubViewportContainer/SubViewport/ControlButtons/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ulwhq")
+text = "How to Play"
+
+[node name="ButtonModes" type="Button" parent="SubViewportContainer/SubViewport/ControlButtons/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ulwhq")
+text = "Game Modes"
+
+[node name="ButtonEnemies" type="Button" parent="SubViewportContainer/SubViewport/ControlButtons/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ulwhq")
+text = "Enemies"
+
+[node name="ButtonTowers" type="Button" parent="SubViewportContainer/SubViewport/ControlButtons/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ulwhq")
+text = "Towers"
+
+[node name="ControlReturn" type="Control" parent="SubViewportContainer/SubViewport"]
+layout_mode = 3
+anchor_left = 0.02
+anchor_top = 0.85
+anchor_right = 0.2
+anchor_bottom = 0.95
+
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlReturn"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.30980393, 0.12156863, 0.22745098, 1)
+
+[node name="ColorRectOuter" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlReturn"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.000061
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+
+[node name="ButtonReturn" type="Button" parent="SubViewportContainer/SubViewport/ControlReturn"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.17
+anchor_right = 0.95
+anchor_bottom = 0.2
+theme = ExtResource("2_ulwhq")
+text = "Return to menu"
+
+[node name="ControlTerminus" type="Control" parent="SubViewportContainer/SubViewport"]
+layout_mode = 3
+anchor_left = 0.25
+anchor_top = 0.05
+anchor_right = 0.98
+anchor_bottom = 0.95
+
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlTerminus"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.30980393, 0.12156863, 0.22745098, 1)
+
+[node name="ColorRectOuter" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlTerminus"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.000061
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+
+[node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlTerminus"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.15
+grow_horizontal = 2
+grow_vertical = 2
+text = "What is Terminus?"
+label_settings = SubResource("LabelSettings_kgckk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelDescription" type="Label" parent="SubViewportContainer/SubViewport/ControlTerminus"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_right = 0.98
+anchor_bottom = 0.95
+offset_left = -1.335144e-05
+offset_top = 112.0
+offset_bottom = 2.7999878
+grow_horizontal = 2
+grow_vertical = 2
+text = "Terminus is the final outpost standing against an overwhelming enemy advance. All other defenses have already fallen, erased one by one as hostile forces pushed relentlessly forward. Now, only Terminus remains. In Latin, terminus means end or limit—a fitting name for the last line that must not be crossed. As the commander of this outpost, your role is clear: hold the line at all costs, because if Terminus falls, nothing remains to stop the invasion.
+
+At its core, Terminus is a classic tower defense game built around strategic placement, resource management, and adaptation. While it stays true to the genre’s foundations, the game expands beyond the standard experience with additional game modes, including Endless Mode and AI Mode, each offering a different challenge and way to test your strategies. Whether you are defending against an inevitable collapse or experimenting with new tactics, Terminus is about pushing your defenses to their absolute limit."
+label_settings = SubResource("LabelSettings_ljekb")
+autowrap_mode = 2
+
+[node name="ControlHow" type="Control" parent="SubViewportContainer/SubViewport"]
+visible = false
+layout_mode = 3
+anchor_left = 0.25
+anchor_top = 0.05
+anchor_right = 0.98
+anchor_bottom = 0.95
+
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlHow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.30980393, 0.12156863, 0.22745098, 1)
+
+[node name="ColorRectOuter" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlHow"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.000061
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+
+[node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlHow"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.15
+grow_horizontal = 2
+grow_vertical = 2
+text = "H	ow to Play?"
+label_settings = SubResource("LabelSettings_kgckk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelDescription" type="Label" parent="SubViewportContainer/SubViewport/ControlHow"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_right = 0.98
+anchor_bottom = 0.95
+offset_left = -1.335144e-05
+offset_top = 80.0
+offset_bottom = 20.299988
+grow_horizontal = 2
+grow_vertical = 2
+text = "Terminus is played as a classic tower defense game. Enemies spawn in waves, follow a preset path, and attempt to reach your base at the end of the map. Your objective is to stop them by strategically building and upgrading towers along their route. Each tower is designed to counter specific enemy types, while support towers provide passive bonuses that enhance your overall defense. Detailed information about towers and enemies can be found in their respective sections.
+
+Every game mode revolves around two core resources: base health and coins. Your base has a limited amount of health, which decreases whenever enemies reach it, but can be sustained or increased through certain support towers. Coins are provided at the start of the game and can be earned by defeating enemies or generated over time by support structures. Coins are used to construct new towers and upgrade existing ones. As the game progresses, enemies grow stronger, more numerous, and more varied, with each game mode escalating the challenge in its own way."
+label_settings = SubResource("LabelSettings_ljekb")
+autowrap_mode = 2
+
+[node name="ControlGameModes" type="Control" parent="SubViewportContainer/SubViewport"]
+visible = false
+layout_mode = 3
+anchor_left = 0.25
+anchor_top = 0.05
+anchor_right = 0.98
+anchor_bottom = 0.95
+
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlGameModes"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.30980393, 0.12156863, 0.22745098, 1)
+
+[node name="ColorRectOuter" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlGameModes"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.000061
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+
+[node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlGameModes"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.15
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game Modes"
+label_settings = SubResource("LabelSettings_kgckk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelDescription" type="Label" parent="SubViewportContainer/SubViewport/ControlGameModes"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_right = 0.98
+anchor_bottom = 0.95
+offset_left = -1.335144e-05
+offset_top = 86.0
+offset_bottom = 20.299988
+grow_horizontal = 2
+grow_vertical = 2
+text = "Standard Mode - a classic tower defense experience with structured progression. Enemies attack in predefined waves that grow in size and difficulty over time. As you advance, new enemy types and tiers are introduced, demanding stronger strategies and upgrades. Completing this mode unlocks Endless Mode and AI Mode.
+
+Endless Mode - challenges you to survive as long as possible against an unending stream of enemies. Over time, enemies spawn more frequently and stronger types begin to appear, steadily increasing the difficulty. There are no set waves—your survival time is your score, so the longer you last, the higher you rank.
+
+AI Mode - puts a dynamic twist on classic tower defense. Like Standard Mode, you face increasingly difficult waves, but these waves are generated by an adaptive AI rather than predefined. The AI learns from the towers you build and counters your strategy by creating stronger waves over time. Your goal is simple: survive as many waves as possible."
+label_settings = SubResource("LabelSettings_ljekb")
+autowrap_mode = 2
+
+[node name="ControlEnemies" type="Control" parent="SubViewportContainer/SubViewport"]
+visible = false
+layout_mode = 3
+anchor_left = 0.25
+anchor_top = 0.05
+anchor_right = 0.98
+anchor_bottom = 0.95
+
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlEnemies"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.30980393, 0.12156863, 0.22745098, 1)
+
+[node name="ColorRectOuter" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlEnemies"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.000061
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+
+[node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlEnemies"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.15
+grow_horizontal = 2
+grow_vertical = 2
+text = "Enemies"
+label_settings = SubResource("LabelSettings_kgckk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SubViewportContainer/SubViewport/ControlEnemies"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.15
+anchor_right = 0.98
+anchor_bottom = 1.0
+offset_left = -1.335144e-05
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="DescriptionMain" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_0dy1b")
+theme_override_colors/default_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+text = "Terminus features three enemy types, each divided into three tiers, creating a total of nine unique enemies. All enemies spawn at the starting point and follow a fixed path toward your base, disappearing either when destroyed or after dealing damage upon reaching it. Defeating enemies rewards coins used to strengthen your defenses, and each enemy type can only be damaged by specific tower types, making correct countering and prioritization essential. Detailed information about each enemy type and tier is provided below."
+fit_content = true
+
+[node name="LabelTroops" type="Label" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Troops"
+label_settings = SubResource("LabelSettings_kgckk")
+vertical_alignment = 1
+
+[node name="DescriptionTroops" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_0dy1b")
+theme_override_colors/default_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+text = "Troops are the most common and basic enemy type, representing the front-line foot soldiers of the invading forces. They advance at a moderate pace and have relatively low health, making them the first enemies players will encounter. While individually weak, Troops often appear in large numbers, pressuring defenses through sheer volume and testing early-game tower placement and resource management. Troops can only be effectively targeted by Turret-type towers. Below is a list of Troop tiers:"
+fit_content = true
+
+[node name="HBoxTroopTiers" type="HBoxContainer" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxTroopTiers"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("3_ljekb")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxTroopTiers"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Unit Tier:
+Unit Health:
+Unit Speed:
+Unit Reward:
+Unit Damage:"
+fit_content = true
+
+[node name="TextureRect2" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxTroopTiers"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("4_1q5pw")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxTroopTiers"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Unit Tier: 1
+Unit "
+fit_content = true
+
+[node name="TextureRect3" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxTroopTiers"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("5_8u8jq")
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxTroopTiers"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Unit Tier: 1
+Unit "
+fit_content = true
+
+[node name="LabelTanks" type="Label" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Tanks"
+label_settings = SubResource("LabelSettings_kgckk")
+vertical_alignment = 1
+
+[node name="DescriptionTanks" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_0dy1b")
+theme_override_colors/default_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+text = "Tanks are heavily armored enemy units designed to absorb large amounts of damage. They move slowly along the path but possess very high health, allowing them to withstand sustained attacks. Tanks are meant to challenge defensive lines by soaking damage and forcing players to invest in stronger firepower. Due to their heavy armor, Tanks can only be damaged by Cannon-type towers. Below is a list of Tank tiers:"
+fit_content = true
+
+[node name="HBoxTankTiers" type="HBoxContainer" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxTankTiers"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("6_awbru")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxTankTiers"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Unit Tier:
+Unit Health:
+Unit Speed:
+Unit Reward:
+Unit Damage:"
+fit_content = true
+
+[node name="TextureRect2" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxTankTiers"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("7_vovna")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxTankTiers"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Unit Tier: 1
+Unit "
+fit_content = true
+
+[node name="TextureRect3" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxTankTiers"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("8_qvcx2")
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxTankTiers"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Unit Tier: 1
+Unit "
+fit_content = true
+
+[node name="LabelPlanes" type="Label" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Planes"
+label_settings = SubResource("LabelSettings_kgckk")
+vertical_alignment = 1
+
+[node name="DescriptionPlanes" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_0dy1b")
+theme_override_colors/default_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+text = "Planes are fast and highly dangerous enemy units, representing the most powerful forces of the invasion. They move quickly along the path and possess moderate durability, allowing them to break through weak or unprepared defenses. Planes are designed to pose a significant threat by combining speed and survivability, putting heavy pressure on reaction time and tower placement. Due to their aerial nature, Planes can only be damaged by Missile-type towers. Below is a list of Plane tiers:"
+fit_content = true
+
+[node name="HBoxPlaneTiers" type="HBoxContainer" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxPlaneTiers"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("9_3omol")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxPlaneTiers"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Unit Tier:
+Unit Health:
+Unit Speed:
+Unit Reward:
+Unit Damage:"
+fit_content = true
+
+[node name="TextureRect2" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxPlaneTiers"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("10_jy1bo")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxPlaneTiers"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Unit Tier: 1
+Unit "
+fit_content = true
+
+[node name="TextureRect3" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxPlaneTiers"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("11_2hu4g")
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer/HBoxPlaneTiers"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+text = "Unit Tier: 1
+Unit "
+fit_content = true
+
+[node name="DescriptionPadding" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlEnemies/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme = SubResource("Theme_0dy1b")
+theme_override_colors/default_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+fit_content = true
+
+[node name="ControlTowers" type="Control" parent="SubViewportContainer/SubViewport"]
+visible = false
+layout_mode = 3
+anchor_left = 0.25
+anchor_top = 0.05
+anchor_right = 0.98
+anchor_bottom = 0.95
+
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlTowers"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.30980393, 0.12156863, 0.22745098, 1)
+
+[node name="ColorRectOuter" type="ColorRect" parent="SubViewportContainer/SubViewport/ControlTowers"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 2.000061
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_vraol")
+color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+
+[node name="LabelTtile" type="Label" parent="SubViewportContainer/SubViewport/ControlTowers"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.15
+grow_horizontal = 2
+grow_vertical = 2
+text = "Towers"
+label_settings = SubResource("LabelSettings_kgckk")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SubViewportContainer/SubViewport/ControlTowers"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.15
+anchor_right = 0.98
+anchor_bottom = 1.0
+offset_left = -1.335144e-05
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="DescriptionMain" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_0dy1b")
+theme_override_colors/default_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+text = "Terminus features a variety of defensive towers designed to counter specific enemy types and control the battlefield. Towers can only be built on preset tiles along the map, making placement a critical part of your strategy. Players initially have access only to Tier 1 towers, which can be upgraded over time to unlock higher tiers with increased power and effectiveness. Towers are built and upgraded using coins earned from defeating enemies, and choosing the right towers and upgrade paths is essential for stopping increasingly powerful enemy waves. Detailed information about each tower type and tier is provided below."
+fit_content = true
+
+[node name="LabelTurrets" type="Label" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Turrets"
+label_settings = SubResource("LabelSettings_kgckk")
+vertical_alignment = 1
+
+[node name="DescriptionTurrets" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_0dy1b")
+theme_override_colors/default_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+text = "Turret Towers are fast-firing defensive structures designed to counter Troop-type enemies. They deal low damage per shot but compensate with a high rate of fire, making them effective at thinning out large groups of weaker units. Turret Towers can only target Troops and are best used to maintain control during the early stages of a wave. Turrets must be built on designated placement tiles and start at Tier 1, with higher tiers unlocked through upgrades. Below are the available Turret Tower tiers and their placement tile:"
+fit_content = true
+
+[node name="HBoxTurretTiers" type="HBoxContainer" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxTurretTiers"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+texture = ExtResource("12_4wvjo")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxTurretTiers"]
+custom_minimum_size = Vector2(270, 0)
+layout_mode = 2
+text = "Unit Tier:
+Unit Health:
+Unit Speed:
+Unit Reward:
+Unit Damage:"
+fit_content = true
+
+[node name="TextureRect2" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxTurretTiers"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+texture = ExtResource("13_ru3t0")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxTurretTiers"]
+custom_minimum_size = Vector2(270, 0)
+layout_mode = 2
+text = "Unit Tier: 1
+Unit "
+fit_content = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxTurretTiers"]
+layout_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxTurretTiers/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_direction = 2
+layout_mode = 2
+texture = ExtResource("14_0u5lg")
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxTurretTiers/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Placement Tile"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="LabelCannons" type="Label" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Cannons"
+label_settings = SubResource("LabelSettings_kgckk")
+vertical_alignment = 1
+
+[node name="DescriptionCannons" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_0dy1b")
+theme_override_colors/default_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+text = "Cannon Towers are heavy defensive structures built to eliminate Tank-type enemies. They fire powerful projectiles at a slow rate, dealing high damage with each hit. Due to their slower projectile speed, Cannons are most effective against heavily armored targets that rely on durability rather than speed. Cannon Towers can only target Tanks and must be placed on designated tiles, starting at Tier 1 with stronger tiers unlocked through upgrades. Below are the available Cannon Tower tiers and their placement tile:"
+fit_content = true
+
+[node name="HBoxCannonTiers" type="HBoxContainer" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxCannonTiers"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+texture = ExtResource("15_m1ajb")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxCannonTiers"]
+custom_minimum_size = Vector2(270, 0)
+layout_mode = 2
+text = "Unit Tier:
+Unit Health:
+Unit Speed:
+Unit Reward:
+Unit Damage:"
+fit_content = true
+
+[node name="TextureRect2" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxCannonTiers"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+texture = ExtResource("16_uw36x")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxCannonTiers"]
+custom_minimum_size = Vector2(270, 0)
+layout_mode = 2
+text = "Unit Tier: 1
+Unit "
+fit_content = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxCannonTiers"]
+layout_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxCannonTiers/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_direction = 2
+layout_mode = 2
+texture = ExtResource("17_bwsoe")
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxCannonTiers/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Placement Tile"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="LabelMissiles" type="Label" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Missiles"
+label_settings = SubResource("LabelSettings_kgckk")
+vertical_alignment = 1
+
+[node name="DescriptionMissiles" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_0dy1b")
+theme_override_colors/default_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+text = "Missile Towers are heavy defensive structures designed to counter Plane-type enemies. Like Cannons, they fire at a slower rate, but launch fast-moving rockets that deal heavy damage on impact. This combination allows Missile Towers to reliably engage fast aerial targets despite their lower firing speed. Missile Towers can only target Planes and must be placed on designated tiles, starting at Tier 1 with higher tiers unlocked through upgrades. Below are the available Missile Tower tiers and their placement tile:"
+fit_content = true
+
+[node name="HBoxMissileTiers" type="HBoxContainer" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxMissileTiers"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+texture = ExtResource("18_2ogpj")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxMissileTiers"]
+custom_minimum_size = Vector2(270, 0)
+layout_mode = 2
+text = "Unit Tier:
+Unit Health:
+Unit Speed:
+Unit Reward:
+Unit Damage:"
+fit_content = true
+
+[node name="TextureRect2" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxMissileTiers"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+texture = ExtResource("19_4o6l5")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxMissileTiers"]
+custom_minimum_size = Vector2(270, 0)
+layout_mode = 2
+text = "Unit Tier: 1
+Unit "
+fit_content = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxMissileTiers"]
+layout_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxMissileTiers/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_direction = 2
+layout_mode = 2
+texture = ExtResource("20_j33yi")
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxMissileTiers/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Placement Tile"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="LabelSupport" type="Label" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Support
+"
+label_settings = SubResource("LabelSettings_kgckk")
+vertical_alignment = 1
+
+[node name="DescriptionSupport" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_0dy1b")
+theme_override_colors/default_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+text = "Support Towers are non-combat structures that focus on sustaining your defenses rather than attacking enemies. They do not target or damage any units. Instead, each activation restores base health equal to the tower’s attack damage value and generates coins equal to 10× that value, with the tower’s fire rate acting as the cooldown between activations. Support Towers are essential for long-term survival, helping offset incoming damage and providing a steady source of resources. Like other towers, they must be built on designated tiles and start at Tier 1, with stronger tiers unlocked through upgrades. Below are the available Support Tower tiers and their placement tile:"
+fit_content = true
+
+[node name="HBoxSupportTiers" type="HBoxContainer" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxSupportTiers"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+texture = ExtResource("21_qcgj6")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxSupportTiers"]
+custom_minimum_size = Vector2(270, 0)
+layout_mode = 2
+text = "Unit Tier:
+Unit Health:
+Unit Speed:
+Unit Reward:
+Unit Damage:"
+fit_content = true
+
+[node name="TextureRect2" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxSupportTiers"]
+custom_minimum_size = Vector2(150, 100)
+layout_mode = 2
+texture = ExtResource("22_yjskf")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxSupportTiers"]
+custom_minimum_size = Vector2(270, 0)
+layout_mode = 2
+text = "Unit Tier: 1
+Unit "
+fit_content = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxSupportTiers"]
+layout_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxSupportTiers/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_direction = 2
+layout_mode = 2
+texture = ExtResource("23_b624j")
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer/HBoxSupportTiers/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Placement Tile"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="DescriptionPadding2" type="RichTextLabel" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme = SubResource("Theme_0dy1b")
+theme_override_colors/default_color = Color(0.9137255, 0.69411767, 0.20784314, 1)
+fit_content = true

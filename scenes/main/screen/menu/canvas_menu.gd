@@ -2,6 +2,7 @@ class_name CanvasMenu
 extends CanvasLayer
 
 @onready var play_button: Button = $SubViewportContainer/SubViewport/VBoxContainerMain/StartButton
+@onready var info_button: Button = $SubViewportContainer/SubViewport/VBoxContainerMain/InfoButton
 @onready var logout_button: Button = $SubViewportContainer/SubViewport/VBoxContainerMain/LogoutButton
 @onready var user_name_label: Label = $SubViewportContainer/SubViewport/VBoxContainerRight/LabelUserName
 @onready var user_image_rect: TextureRect = $SubViewportContainer/SubViewport/VBoxContainerRight/Control/ImageRect
@@ -15,6 +16,7 @@ var temp_user_pic_path := "res://temp files/temp_user_pic.png"
 
 func _ready() -> void:
 	play_button.pressed.connect(_on_play_button_pressed)
+	info_button.pressed.connect(_on_info_button_pressed)
 	logout_button.pressed.connect(_on_logout_button_pressed)
 	setup_user_profile()
 
@@ -24,6 +26,9 @@ func _on_play_button_pressed() -> void:
 func _on_logout_button_pressed() -> void:
 	FirebaseMan.logout_user()
 	ScreenMan.change_screen("login")
+
+func _on_info_button_pressed() -> void:
+	ScreenMan.change_screen("info")
 
 func setup_user_profile() -> void:
 	var user_data = FirebaseMan.current_user

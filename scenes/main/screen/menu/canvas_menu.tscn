@@ -96,7 +96,7 @@ anchor_bottom = 0.85
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_4xvik")
-theme_override_constants/separation = 25
+theme_override_constants/separation = 35
 
 [node name="Label" type="Label" parent="SubViewportContainer/SubViewport/VBoxContainerMain"]
 layout_mode = 2
@@ -108,15 +108,10 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "Start Game"
 
-[node name="PlaceholderButton1" type="Button" parent="SubViewportContainer/SubViewport/VBoxContainerMain"]
+[node name="InfoButton" type="Button" parent="SubViewportContainer/SubViewport/VBoxContainerMain"]
 layout_mode = 2
 theme = SubResource("Theme_8tsqr")
-text = "placeholder"
-
-[node name="PlaceholderButton2" type="Button" parent="SubViewportContainer/SubViewport/VBoxContainerMain"]
-layout_mode = 2
-theme = SubResource("Theme_8tsqr")
-text = "placeholder"
+text = "Game Info"
 
 [node name="LogoutButton" type="Button" parent="SubViewportContainer/SubViewport/VBoxContainerMain"]
 layout_mode = 2
