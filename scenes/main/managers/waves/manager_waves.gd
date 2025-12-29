@@ -17,7 +17,7 @@ func _ready() -> void:
 
 func setup_waves(given_label: Label) -> void:
 	name_label = given_label
-	current_wave_index = 5
+	current_wave_index = 0
 	is_spawning = false
 	#print_debug("called")
 	waves_count = await FirebaseMan.read_waves_count(waves_type)
