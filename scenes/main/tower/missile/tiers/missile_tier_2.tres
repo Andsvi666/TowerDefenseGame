@@ -7,10 +7,10 @@
 script = ExtResource("2_q1txi")
 tower_name = "missile"
 attack_range = 250.0
-attack_cooldown = 2.0
-attack_damage = 100.0
-build_cost = 2500
-projectile_speed = 750.0
+attack_cooldown = 1.0
+attack_damage = 60.0
+build_cost = 5000
+projectile_speed = 600.0
 target_group = "plane"
 tower_sprite = "missiles/missile_2"
 firing_sprite = ""

@@ -311,14 +311,6 @@ texture = ExtResource("2_jlrvx")
 margins = Vector2i(2, 0)
 texture_region_size = Vector2i(192, 192)
 0:0/0 = 0
-1:0/0 = 0
-2:0/0 = 0
-0:1/0 = 0
-1:1/0 = 0
-2:1/0 = 0
-0:2/0 = 0
-1:2/0 = 0
-2:2/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_b1x3f"]
 tile_size = Vector2i(64, 64)

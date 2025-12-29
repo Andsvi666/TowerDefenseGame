@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_vj3nx")
 movement_speed = 175.0
-max_health = 100
+max_health = 150
 damage_cost = 20
 coin_reward = 50
 group = "troop"

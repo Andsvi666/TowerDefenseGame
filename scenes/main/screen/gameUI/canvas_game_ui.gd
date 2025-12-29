@@ -12,7 +12,6 @@ extends CanvasLayer
 @onready var menu_button: Button = $PanelPauseMenu/VBoxContainer/MenuButton
 @onready var menu_button_1: Button = $PanelGameOver/VBoxContainer/MenuButton
 @onready var advice_label: RichTextLabel = $BarsControl/SideBar/AdvicePanel/AdviceLabel
-@onready var game_over_popup: AcceptDialog = $GameOverPopup
 @onready var pause_panel: Panel = $PanelPauseMenu
 @onready var game_panel: Panel = $PanelGameOver
 # UI elements for gamemode configurations
@@ -139,7 +138,8 @@ func _on_wave_complete() -> void:
 
 func show_wave_complete_message() -> void:
 	var popup = AcceptDialog.new()
-	popup.dialog_text = "Congrats! Wave Complete!"
+	popup.title = "Wave Complete!"
+	popup.dialog_text = "Congrats! To continue press OK"
 	add_child(popup)
 	popup.popup_centered()
 

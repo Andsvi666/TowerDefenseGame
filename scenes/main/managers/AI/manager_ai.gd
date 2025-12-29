@@ -31,26 +31,37 @@ var enemy_files := {
 	"plane_tier_3": "res://scenes/main/enemy/plane/tiers/plane_tier_3.tres"
 }
 
-# === CONFIG ===
-var API_KEY := ""
-const MODEL := "xiaomi/mimo-v2-flash:free"
-const URL := "https://openrouter.ai/api/v1/chat/completions"
+# === CONFIG OPEN ===
+var API_KEY = ""
+const MODEL_FREE_GOOD = "xiaomi/mimo-v2-flash:free"
+const MODEL_BEST = "openai/gpt-5.2-pro"
+const MODEL_GOOD = "openai/chatgpt-4o-latest"
+const MODEL_FREE_TRY = "mistralai/devstral-2512:free"
+const URL = "https://openrouter.ai/api/v1/chat/completions"
+# === CONFIG OPEN ===
+var API_KEY_GEM = ""
+var MODEL_GEM = "gemini-2.5-flash-lite"
+var URL_GEMINI = "https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent" % MODEL_GEM
 
 # === INTERNAL ===
 var _http := HTTPRequest.new()
 
 func setup():
-	API_KEY = await FirebaseMan.read_api_key("api key")
+	#"api key" for original api
+	API_KEY = await FirebaseMan.read_api_key("pyro")
+	API_KEY_GEM = await FirebaseMan.read_api_key("gemini key")
 	add_child(_http)
 
 func send_request(prompt: String) -> String:
+	#print_debug(MODEL_FREE_TRY)
+	
 	var headers = [
 		"Content-Type: application/json",
 		"Authorization: Bearer %s" % API_KEY
 	]
 
 	var body = {
-		"model": MODEL,
+		"model": MODEL_FREE_TRY,
 		"messages": [
 		{ "role": "user", "content": prompt }
 		],
@@ -80,6 +91,62 @@ func send_request(prompt: String) -> String:
 	var choice = data["choices"][0]
 	if choice.has("message") and choice["message"].has("content"):
 		return str(choice["message"]["content"]).strip_edges()
+
+	return ""
+
+func send_request_gemini(prompt: String, type: String) -> String:
+	# Gemini uses 'x-goog-api-key' header
+	var headers = [
+		"Content-Type: application/json",
+		"x-goog-api-key: %s" % API_KEY_GEM
+	]
+
+	# Base generation config
+	var generation_config := {
+		"temperature": 0.6,
+		"maxOutputTokens": 1024
+	}
+
+	# Force JSON ONLY for wave generation
+	if type == "wave":
+		generation_config["responseMimeType"] = "application/json"
+
+	var body = {
+		"contents": [
+			{
+				"parts": [
+					{ "text": prompt }
+				]
+			}
+		],
+		"generationConfig": generation_config
+	}
+
+	var err = _http.request(URL_GEMINI, headers, HTTPClient.METHOD_POST, JSON.stringify(body))
+	if err != OK:
+		print_debug("HTTP Request Error: ", err)
+		return ""
+
+	var result = await _http.request_completed
+	
+	# Check for successful response (HTTP 200)
+	if result[1] != 200:
+		print_debug("Gemini Error Code: ", result[1])
+		print_debug("Gemini Response: ", result[3].get_string_from_utf8())
+		return ""
+
+	var json := JSON.new()
+	if json.parse(result[3].get_string_from_utf8()) != OK:
+		print_debug("Failed to parse Gemini JSON")
+		return ""
+
+	var data = json.get_data()
+	
+	# Navigate the Gemini response tree
+	if data.has("candidates") and not data["candidates"].is_empty():
+		var first_candidate = data["candidates"][0]
+		if first_candidate.has("content") and first_candidate["content"].has("parts"):
+			return str(first_candidate["content"]["parts"][0]["text"]).strip_edges()
 
 	return ""
 
@@ -129,13 +196,12 @@ func collect_advice_prompt() -> String:
 
 	# --- CORE RULES (COMPRESSED) ---
 	ai_prompt += "=== CORE RULES ===\n"
-	ai_prompt += "- Towers attack only their target enemy type.\n"
 	ai_prompt += "- Tier 1 towers require empty tiles; higher tiers require upgrading.\n"
-	ai_prompt += "- Turrets persist across waves; plan long-term.\n"
 	ai_prompt += "- Priority: survival > damage > coin generation.\n\n"
 
 	# --- GAME CONTEXT ---
 	ai_prompt += "Next wave enemies (Type, Tier):\n%s\n" % next_wave
+	ai_prompt += "=== GAME STATE and BASIC RULES ===\n"
 	ai_prompt += current_game_state()
 	
 	var enemy_stats = get_enemy_stats_summary() 
@@ -170,29 +236,54 @@ func generate_wave(budget: int, max_tier: int, allowed_types: Array) -> Array:
 	return data
 
 func rework_response(response: String) -> Array:
-	var wave = []
+	var wave := []
 	if response == "":
 		return wave
-	# Parse JSON safely
+
+	# Step 1: Find start of array
+	var start := response.find("[")
+	if start == -1:
+		print_debug("No JSON array start found")
+		return wave
+
+	# Step 2: Walk through and find last complete object
+	var depth := 0
+	var last_valid_index := -1
+	for i in range(start, response.length()):
+		var c := response[i]
+		if c == "{":
+			depth += 1
+		elif c == "}":
+			depth -= 1
+			if depth == 0:
+				last_valid_index = i
+
+	# No complete objects
+	if last_valid_index == -1:
+		print_debug("No complete JSON objects found")
+		return wave
+
+	# Step 3: Rebuild valid JSON array
+	var safe_json := response.substr(start, last_valid_index - start + 1) + "]"
+
+	# Step 4: Parse salvaged JSON
 	var json := JSON.new()
-	var err = json.parse(response)
-	if err != OK:
-		print_debug("Failed to parse AI response JSON")
+	if json.parse(safe_json) != OK:
+		print_debug("Salvaged JSON still invalid")
 		return wave
 
 	var raw_wave = json.get_data()
 	if typeof(raw_wave) != TYPE_ARRAY:
-		print_debug("AI response is not an array")
 		return wave
 
-	# Convert to expected wave format
+	# Step 5: Convert to wave format
 	for e in raw_wave:
 		if typeof(e) != TYPE_DICTIONARY:
 			continue
 		if not e.has("type") or not e.has("tier"):
 			continue
 
-		var tier_index = int(e["tier"]) - 1
+		var tier_index := int(e["tier"]) - 1
 		if tier_index < 0:
 			tier_index = 0
 
@@ -211,11 +302,16 @@ func collect_waves_prompt(budget: int, max_tier: int, allowed_types: Array) -> S
 	# --- CORE DIRECTIVE ---
 	prompt += "You are an enemy commander in a tower defense game. "
 	prompt += "Your goal is to defeat the player by designing a single enemy wave. "
-	prompt += "You may reason internally using the full game state, but your output must ONLY be the wave.\n\n"
+	prompt += "You may reason internally using the full game state, but your output must ONLY be the wave JSON response.\n\n"
 
 	# --- HARD CONSTRAINTS ---
 	prompt += "=== HARD CONSTRAINTS ===\n"
 	prompt += "- Total budget: %d (each enemy costs its damage value)\n" % budget
+	prompt += "- MIXING IS MANDATORY:
+  - If more than one enemy type is available, the wave MUST contain at least 2 different enemy types.
+  - If more than one enemy tier is available, the wave MUST contain at least 2 different tiers.
+  - No single enemy type may exceed 70% of the total number of enemies.
+  - A wave that violates these rules is INVALID and must be corrected.\n"
 	prompt += "- Maximum enemy tier allowed: %d\n" % max_tier
 	prompt += "- You may only use these enemies (type and tier):\n"
 
@@ -232,10 +328,8 @@ func collect_waves_prompt(budget: int, max_tier: int, allowed_types: Array) -> S
 	prompt += "- Do NOT include more enemies than the budget allows.\n"
 	prompt += "- Do NOT exceed budget. Do NOT leave budget unused if you can reasonably spend it.\n"
 	prompt += "- Output MUST be a valid JSON array.\n"
-	prompt += "- Do NOT include explanations, comments, or extra text.\n"
-	prompt += "- Example for budget of 30 you could only pick 3 TroopEnemy tier 1 units (because TroopEnemy tier 1 has Damage Cost of 10 which is also it is price):\n"
-
-
+	prompt += "- Do NOT include explanations, comments, extra text or comma after last entry.\n"
+	prompt += "- Example for budget of 30 you could only pick 3 TroopEnemy tier 1 units (because TroopEnemy tier 1 has Damage Cost of 10 which is also it is price)\n\n"
 	# --- STRATEGY GUIDELINES ---
 	prompt += "=== STRATEGY GUIDELINES ===\n"
 	prompt += "- Read the full game state below and try to counter the player's towers.\n"
@@ -243,7 +337,7 @@ func collect_waves_prompt(budget: int, max_tier: int, allowed_types: Array) -> S
 	prompt += "- Prioritize survival of wave > reward > variety.\n\n"
 
 	# --- GAME STATE ---
-	prompt += "=== GAME STATE ===\n"
+	prompt += "=== GAME STATE and BASIC RULES ===\n"
 	prompt += current_game_state() + "\n\n"
 
 	# --- OUTPUT FORMAT ---
@@ -283,6 +377,9 @@ func current_game_state() -> String:
 	game_state += "Already built towers(tower name with tier and count):%s\n" % built_towers_info 
 	game_state += "Available tiles: %s\n" % available_tiles_info 
 	game_state += "Each tower stats: %s\n" % tower_stats_info 
+	game_state += "BASIC RULES"
+	game_state += "Turrets attack Troops, Cannons attack Tanks, Missiles attack Planes, Support towers heal base and generate coins passively"
+	game_state += "Towers once built stay persistent trought all waves"
 	#print_debug(game_state) 
 	return game_state 
 

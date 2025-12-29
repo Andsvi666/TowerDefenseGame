@@ -50,11 +50,9 @@ func start_next_wave_AI() -> void:
 	GameMan.log_event(message)
 	FirebaseMan.user_update_AI(current_wave_index)
 	#print_debug(current_wave_index)
-	var budget = 50 + current_wave_index * 50
-	var allowed_types = ["TroopEnemy"]
+	var budget = 50 + current_wave_index * 20
+	var allowed_types = ["TroopEnemy", "TankEnemy"]
 	var allowed_max_tier = 1
-	if current_wave_index >= 2:
-		allowed_types = ["TroopEnemy", "TankEnemy"]
 	if current_wave_index >= 3:
 		allowed_max_tier = 2
 	if current_wave_index >= 5:

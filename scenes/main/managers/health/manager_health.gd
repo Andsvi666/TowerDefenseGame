@@ -2,7 +2,7 @@ class_name ManagerHealth
 extends Node
 
 @export var base_health: int = 100
-@export var max_health: int = 500
+@export var max_health: int = 300
 var name_label: Label = null
 
 var current_health: int
