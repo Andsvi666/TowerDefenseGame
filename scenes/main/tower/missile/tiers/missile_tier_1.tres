@@ -7,8 +7,8 @@
 script = ExtResource("2_hvhle")
 tower_name = "missile"
 attack_range = 200.0
-attack_cooldown = 2.0
-attack_damage = 30.0
+attack_cooldown = 1.0
+attack_damage = 50.0
 build_cost = 500
 projectile_speed = 400.0
 target_group = "plane"
