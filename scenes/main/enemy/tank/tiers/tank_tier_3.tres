@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_xsv5w")
-movement_speed = 90.0
-max_health = 2500
+movement_speed = 100.0
+max_health = 3000
 damage_cost = 60
 coin_reward = 150
 group = "tank"

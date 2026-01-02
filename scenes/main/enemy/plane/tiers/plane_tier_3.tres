@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_mcr8e")
 movement_speed = 300.0
-max_health = 750
+max_health = 1200
 damage_cost = 90
 coin_reward = 300
 group = "plane"
