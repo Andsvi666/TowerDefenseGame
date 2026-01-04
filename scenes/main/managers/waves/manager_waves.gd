@@ -53,16 +53,19 @@ func start_next_wave_AI() -> void:
 	FirebaseMan.user_update_AI(current_wave_index)
 	#print_debug(current_wave_index)
 	var budget = 50 + current_wave_index * 20
-	var allowed_types = ["TroopEnemy", "TankEnemy"]
-	var allowed_max_tier = 1
-	if current_wave_index >= 3:
-		allowed_max_tier = 2
-	if current_wave_index >= 5:
-		allowed_types = ["TroopEnemy", "TankEnemy", "PlaneEnemy"]
-	if current_wave_index >= 7:
-		allowed_max_tier = 3
+	var allowed_enemies = ["troop_tier_1", "tank_tier_1"]
+	if current_wave_index >= 2:
+		allowed_enemies = ["troop_tier_1", "troop_tier_2", "tank_tier_1"]
+	if current_wave_index >= 4:
+		allowed_enemies = ["troop_tier_1", "troop_tier_2", "tank_tier_1", "tank_tier_2"]
+	if current_wave_index >= 6:
+		allowed_enemies = ["troop_tier_1", "troop_tier_2", "tank_tier_1", "tank_tier_2", "plane_tier_1"]
+	if current_wave_index >= 8:
+		allowed_enemies = ["troop_tier_1", "troop_tier_2", "tank_tier_1", "tank_tier_2", "plane_tier_1", "plane_tier_2"]
+	if current_wave_index >= 10:
+		allowed_enemies = ["troop_tier_1", "troop_tier_2", "troop_tier_3", "tank_tier_1", "tank_tier_2", "tank_tier_3", "plane_tier_1", "plane_tier_2", "plane_tier_3"]
 	#print_debug(allowed_types)
-	var wave_data = await AiMan.generate_wave(budget, allowed_max_tier, allowed_types)
+	var wave_data = await AiMan.generate_wave(budget, allowed_enemies)
 	#print_debug(wave_data)
 	if wave_data.is_empty():
 		#Force gamer over

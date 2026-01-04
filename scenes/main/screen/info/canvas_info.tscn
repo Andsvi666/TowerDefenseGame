@@ -859,8 +859,7 @@ horizontal_alignment = 1
 
 [node name="LabelSupport" type="Label" parent="SubViewportContainer/SubViewport/ControlTowers/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-text = "Support
-"
+text = "Support"
 label_settings = SubResource("LabelSettings_kgckk")
 vertical_alignment = 1
 

@@ -162,7 +162,7 @@ func ask_AI_advice() -> String:
 	var response = await send_request(prompt)
 
 	if response == "":
-		return "AI did not return advice."
+		return "AI model did not return any advice."
 
 	return response
 
@@ -218,21 +218,23 @@ func collect_advice_prompt() -> String:
 # ---------------------------- WAVES ------------------------------
 # ==================================================================
 
-func generate_wave(budget: int, max_tier: int, allowed_types: Array) -> Array:
+func generate_wave(budget: int, allowed_enemies: Array) -> Array:
 	var generated_wave = []
-	var prompt = await collect_waves_prompt(budget, max_tier, allowed_types)
-	#print_debug(prompt)
+	var prompt = await collect_waves_prompt(budget, allowed_enemies)
+	print_debug(prompt)
 	var response = await send_request(prompt)
-	print_debug("BUDGET:")
-	print_debug(budget)
-	print_debug("GENERATED RESPONSE:")
 	print_debug(response)
+	#print_debug("BUDGET:")
+	#print_debug(budget)
+	#print_debug("GENERATED RESPONSE:")
+	#print_debug(response)
 	var data = rework_response(response)
+	print_debug(data)
 	var message = "Wave has been generated"
 	GameMan.log_event(message)
-	print_debug("REWORKED RESPONSE:")
-	print_debug(data)
-	
+	#print_debug("REWORKED RESPONSE:")
+	#print_debug(data)
+
 	return data
 
 func rework_response(response: String) -> Array:
@@ -296,35 +298,28 @@ func rework_response(response: String) -> Array:
 	return wave
 
 
-func collect_waves_prompt(budget: int, max_tier: int, allowed_types: Array) -> String:
+func collect_waves_prompt(budget: int, allowed_enemies: Array) -> String:
 	var prompt := ""
 
 	# --- CORE DIRECTIVE ---
 	prompt += "You are an enemy commander in a tower defense game. "
-	prompt += "Your goal is to defeat the player by designing a single enemy wave. "
+	prompt += "Your goal is to defeat the player by designing an enemy wave. "
 	prompt += "You may reason internally using the full game state, but your output must ONLY be the wave JSON response.\n\n"
 
 	# --- HARD CONSTRAINTS ---
 	prompt += "=== HARD CONSTRAINTS ===\n"
 	prompt += "- Total budget: %d (each enemy costs its damage value)\n" % budget
-	prompt += "- MIXING IS MANDATORY:
-  - If more than one enemy type is available, the wave MUST contain at least 2 different enemy types.
-  - If more than one enemy tier is available, the wave MUST contain at least 2 different tiers.
-  - No single enemy type may exceed 70% of the total number of enemies.
-  - A wave that violates these rules is INVALID and must be corrected.\n"
-	prompt += "- Maximum enemy tier allowed: %d\n" % max_tier
 	prompt += "- You may only use these enemies (type and tier):\n"
 
+	#print_debug(allowed_enemies)
 	var enemies = get_enemy_stats_summary()
 	for key in enemies.keys():
-		var tier = int(key.get_slice("_", 2))
 		var e = enemies[key]
+		# Filter by allowed_enemies
+		if key in allowed_enemies:
+			prompt += "enemy %s tier %d cost %d\n" % [e.type, e.tier, e.damage]
+			#print_debug("enemy %s tier %d cost %d\n" % [e.type, e.tier, e.damage] )
 
-		# Filter by max_tier AND allowed_types
-		if tier <= max_tier and e.type in allowed_types:
-			prompt += "%s tier %d cost %d\n" % [e.type, tier, e.damage]
-
-	prompt += "- You MUST only include enemies such that the sum of their costs <= total budget.\n"
 	prompt += "- Do NOT include more enemies than the budget allows.\n"
 	prompt += "- Do NOT exceed budget. Do NOT leave budget unused if you can reasonably spend it.\n"
 	prompt += "- Output MUST be a valid JSON array.\n"
@@ -333,6 +328,7 @@ func collect_waves_prompt(budget: int, max_tier: int, allowed_types: Array) -> S
 	# --- STRATEGY GUIDELINES ---
 	prompt += "=== STRATEGY GUIDELINES ===\n"
 	prompt += "- Read the full game state below and try to counter the player's towers.\n"
+	prompt += "- Based on state try to spawn units for which user has no towers built (example no cannons - spam tanks).\n"
 	prompt += "- Mix enemy types to maximize challenge given player's towers.\n"
 	prompt += "- Prioritize survival of wave > reward > variety.\n\n"
 
@@ -342,8 +338,8 @@ func collect_waves_prompt(budget: int, max_tier: int, allowed_types: Array) -> S
 
 	# --- OUTPUT FORMAT ---
 	prompt += "=== OUTPUT FORMAT ===\n"
-	prompt += "Return ONLY a JSON array. Each element MUST be exactly:\n"
-	prompt += "{ \"type\": \"%s\", \"tier\": number }\n" % "|".join(allowed_types)
+	prompt += "Return ONLY a JSON array. Each element MUST be formated this:\n"
+	prompt += "{ type: [TroopEnemy, TankEnemy or PlaneEnemy], tier: [number for tier 1, 2 or 3] }\n"
 	prompt += "Do not include anything else."
 
 	return prompt
@@ -357,14 +353,10 @@ func current_game_state() -> String:
 	var health = HealthMan.current_health # Built towers info compact 
 	var built_towers_info := "" 
 	for t_name in BuildingMan.built_towers.keys(): 
-		built_towers_info += "%s: %d, " % [t_name, BuildingMan.built_towers[t_name]] 
-		if built_towers_info.length() > 2: 
-			built_towers_info = built_towers_info.substr(0, built_towers_info.length() - 2) # Available tiles info 
+		built_towers_info += "%s: %d, \n" % [t_name, BuildingMan.built_towers[t_name]] 
 	var available_tiles_info := "" 
 	for t_type in BuildingMan.available_tiles_for_towers.keys(): 
-		available_tiles_info += "%s: %d, " % [t_type, BuildingMan.available_tiles_for_towers[t_type]] 
-		if available_tiles_info.length() > 2:
-			available_tiles_info = available_tiles_info.substr(0, available_tiles_info.length() - 2) # Tower stats summary 
+		available_tiles_info += "%s: %d, \n" % [t_type, BuildingMan.available_tiles_for_towers[t_type]] 
 	var tower_stats = get_tower_stats_summary() 
 	var tower_stats_info := "" 
 	for key in tower_stats.keys(): 
@@ -374,12 +366,12 @@ func current_game_state() -> String:
 	game_state += "Game status:\n" 
 	game_state += "Current coins: %d\n" % coins 
 	game_state += "Current health: %d\n" % health 
-	game_state += "Already built towers(tower name with tier and count):%s\n" % built_towers_info 
-	game_state += "Available tiles: %s\n" % available_tiles_info 
+	game_state += "Already built towers(tower name with tier and count):\n%s" % built_towers_info 
+	game_state += "Available tiles:\n%s" % available_tiles_info 
 	game_state += "Each tower stats: %s\n" % tower_stats_info 
-	game_state += "BASIC RULES"
-	game_state += "Turrets attack Troops, Cannons attack Tanks, Missiles attack Planes, Support towers heal base and generate coins passively"
-	game_state += "Towers once built stay persistent trought all waves"
+	game_state += "BASIC RULES\n"
+	game_state += "Turrets attack Troops, Cannons attack Tanks, Missiles attack Planes, Support towers heal base and generate coins passively\n"
+	game_state += "Towers once built stay persistent trought all waves\n"
 	#print_debug(game_state) 
 	return game_state 
 
@@ -405,6 +397,7 @@ func get_enemy_stats_summary() -> Dictionary:
 		if res:
 			stats_summary[key] = {
 				"type": res.group,         # enemy group: "troop", "tank", "plane"
+				"tier": res.tier,
 				"health": res.max_health,       # enemy HP
 				"speed": res.movement_speed,    # movement speed
 				"damage": res.damage_cost,      # damage to base
