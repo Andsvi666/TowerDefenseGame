@@ -45,7 +45,7 @@ anchors_preset = -1
 anchor_left = 0.35
 anchor_top = 0.5
 anchor_right = 0.65
-anchor_bottom = 0.8
+anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_vraol")
@@ -57,7 +57,7 @@ anchors_preset = -1
 anchor_left = 0.35
 anchor_top = 0.5
 anchor_right = 0.65
-anchor_bottom = 0.8
+anchor_bottom = 0.9
 offset_left = -2.0
 offset_top = -2.0
 offset_right = 2.0
@@ -70,7 +70,7 @@ color = Color(0.9137255, 0.69411767, 0.20784314, 1)
 [node name="Label" type="Label" parent="SubViewportContainer/SubViewport"]
 anchors_preset = -1
 anchor_left = 0.4
-anchor_top = 0.54
+anchor_top = 0.5
 anchor_right = 0.6
 anchor_bottom = 0.64
 offset_left = 0.19199753
@@ -81,18 +81,31 @@ grow_vertical = 2
 text = "Welcome"
 label_settings = SubResource("LabelSettings_kgckk")
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="LoginButton" type="Button" parent="SubViewportContainer/SubViewport"]
 anchors_preset = -1
 anchor_left = 0.4
-anchor_top = 0.67
+anchor_top = 0.65
 anchor_right = 0.6
-anchor_bottom = 0.77
+anchor_bottom = 0.74
 offset_left = 0.015991211
 offset_top = 0.015991211
 offset_bottom = 0.0079956055
 theme = ExtResource("2_qugs5")
 text = "Sign in with Google"
+
+[node name="TestButton" type="Button" parent="SubViewportContainer/SubViewport"]
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.77
+anchor_right = 0.6
+anchor_bottom = 0.86
+offset_left = 0.015991211
+offset_top = 0.015991211
+offset_bottom = 0.0079956055
+theme = ExtResource("2_qugs5")
+text = "Test without Google"
 
 [node name="TitleLabel" type="Label" parent="SubViewportContainer/SubViewport"]
 anchors_preset = -1

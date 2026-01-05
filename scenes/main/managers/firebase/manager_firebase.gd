@@ -18,12 +18,8 @@ func _ready():
 	await get_tree().process_frame
 	Firebase.Auth.login_succeeded.connect(_on_login_succeeded)
 	Firebase.Auth.login_failed.connect(_on_login_failed)
-	
-	# Automatic login for testing
-	#login_with_email()
 
-
-func login_with_email() -> void:
+func login_with_test_user() -> void:
 	Firebase.Auth.login_with_email_and_password(test_email, test_password)
 
 func login_with_google() -> void:
@@ -39,7 +35,9 @@ func _on_login_succeeded(user: Dictionary):
 		setup_new_user()
 	else:
 		var uid = current_user["localid"]
+		#print_debug(uid)
 		current_user_doc = await users_collection.get_doc(uid)
+		#print_debug(current_user_doc)
 	ScreenMan.change_screen("menu")
 
 func _on_login_failed(error_code, message) -> void:
@@ -54,7 +52,7 @@ func logout_user() -> void:
 # ==================================================================
 
 func setup_new_user() -> void:
-	print_debug(current_user)
+	#print_debug(current_user)
 	var user_stats = {
 		"name" : current_user["fullname"],
 		"beat_standard": false,
@@ -77,6 +75,7 @@ func read_user_stats() -> Dictionary:
 		return stats
 	
 	var keys = current_user_doc.keys()
+	#print_debug(keys)
 	
 	for key in keys:
 		stats[key] = current_user_doc.get_value(key)

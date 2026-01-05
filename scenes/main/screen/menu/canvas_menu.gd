@@ -32,11 +32,14 @@ func _on_info_button_pressed() -> void:
 
 func setup_user_profile() -> void:
 	var user_data = FirebaseMan.current_user
+	print_debug(user_data)
 	var custom_name = ""
 	if user_data.has("fullname") and user_data["fullname"] != "":
 		var user_name = user_data["fullname"]
 		custom_name = format_name_by_width(user_name, user_name_label, 300)
 		user_name_label.text = custom_name
+	elif user_data["localid"] == "Bh50sCo0hqV7g4XvmfrfDjgyizm1":
+		user_name_label.text = "Test User"
 	else:
 		user_name_label.text = "No name found"
 	# Check and set user picture

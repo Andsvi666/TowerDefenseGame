@@ -221,15 +221,16 @@ func collect_advice_prompt() -> String:
 func generate_wave(budget: int, allowed_enemies: Array) -> Array:
 	var generated_wave = []
 	var prompt = await collect_waves_prompt(budget, allowed_enemies)
-	print_debug(prompt)
+	#print_debug(prompt)
 	var response = await send_request(prompt)
-	print_debug(response)
+	#print_debug(response)
 	#print_debug("BUDGET:")
 	#print_debug(budget)
 	#print_debug("GENERATED RESPONSE:")
 	#print_debug(response)
 	var data = rework_response(response)
-	print_debug(data)
+	
+	#print_debug(data)
 	var message = "Wave has been generated"
 	GameMan.log_event(message)
 	#print_debug("REWORKED RESPONSE:")
